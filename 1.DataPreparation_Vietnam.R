@@ -7,6 +7,7 @@ library(labelled)
 library(foreign)
 library(sjlabelled)
 library(stringr)
+library(tidyr)
 #dta format (from Ky) datasets import
 setwd("C:/Users/titou/OneDrive/Bureau/ASSET Stats/WORKDIRECTORY/1.ASSET_data_cleaning-Titouan/ASSET_data_cleaning")
 #We import all the dta files transmitted by Ky as *Vietnam* database
@@ -14,6 +15,7 @@ HouseholdVietnam <- read_dta("asset_household_survey_vietnam.dta")
 ClowlandVietnam <- read_dta("d2_1_lowland_vietnam.dta")
 CuplandVietnam <- read_dta("d2_2_upland_vietnam.dta")
 HouMemberVietnam <- read_dta("household_rooster_vietnam.dta")
+
 
 #ColViet <- colnames(HouseholdVietnam)
 #ColViet2 <- ColViet
@@ -5474,47 +5476,51 @@ summary(HouMemberVietnam[,60])
 
 #C1 = FACT, (id of household, to link with other dataframes)
 #C2 = FACT, (id of crop per household)
-#C3 = OK, (the answer is still in Vietnamese, Ky will maybe solve it)
-#C4 = FACT, (number corresponding to crops), replace label: "d2_12. select crop crop1_now with keyword searchcrop1"
+#C3 = FACT, We create a new column here as the combination of crop and household id
+ClowlandVietnam$pid <- paste(ClowlandVietnam$hhid_re2,ClowlandVietnam$crop1_now)
+#We move this column at the right place
+ClowlandVietnam <- ClowlandVietnam %>% relocate(pid, .after = hhid_re2)
+#C4 = OK, (the answer is still in Vietnamese, Ky will maybe solve it)
+#C5 = FACT, (number corresponding to crops), replace label: "d2_12. select crop crop1_now with keyword searchcrop1"
 var_label(ClowlandVietnam$d2_12) <- "d2_12. select crop crop1_now with keyword searchcrop1"
-#C5 = OK, (the answer is still in Vietnamese, Ky will maybe solve it)
-#C6 = REMOVE, (empty)
-#C7 = OK, (crop name in Vietnamese) replace label: "d2_13v. Crop name (Vietnamese)"
+#C6 = OK, (the answer is still in Vietnamese, Ky will maybe solve it)
+#C7 = REMOVE, (empty)
+#C8 = OK, (crop name in Vietnamese) replace label: "d2_13v. Crop name (Vietnamese)"
 var_label(ClowlandVietnam$d2_13v) <- "d2_13v. Crop name (Vietnamese)"
-#C8 = OK, (crop name in English) replace label: "d2_13e. Crop name (English)"
+#C9 = OK, (crop name in English) replace label: "d2_13e. Crop name (English)"
 var_label(ClowlandVietnam$d2_13e) <- "d2_13e. Crop name (English)"
-#C9 = ???
-#C10 = NUM, replace label: "d2_132. what is the total area of all plots where you grow crop_1 (m2) ?"
+#C10 = ???
+#C11 = NUM, replace label: "d2_132. what is the total area of all plots where you grow crop_1 (m2) ?"
 var_label(ClowlandVietnam$d2_132) <- "d2_132. what is the total area of all plots where you grow crop_1 (m2) ?"
-#C11 = FACT, (table of correspondence), (see option below), replace label: "d2_133. which unit of d2_13v ?"
+#C12 = FACT, (table of correspondence), (see option below), replace label: "d2_133. which unit of d2_13v ?"
 var_label(ClowlandVietnam$d2_133) <- "d2_133. which unit of d2_13v ?"
 #Kg of seed
 #Gr of seed
 #Number of seedlings
-#C12 = OK, replace label: "d2_134. number of seed units of d2_13v that household used?"
+#C13 = OK, replace label: "d2_134. number of seed units of d2_13v that household used?"
 var_label(ClowlandVietnam$d2_134) <- "d2_134. number of seed units of d2_13v that household used?"
-#C13 = OK, replace label: "d2_135. number of kg produced of d2_13v ?"
+#C14 = OK, replace label: "d2_135. number of kg produced of d2_13v ?"
 var_label(ClowlandVietnam$d2_135) <- "d2_135. number of kg produced of d2_13v ?"
-#C14 = OK, replace label: "d2_136.number of kg sold of d2_13v"
+#C15 = OK, replace label: "d2_136.number of kg sold of d2_13v"
 var_label(ClowlandVietnam$d2_136) <- "d2_136.number of kg sold of d2_13v"
-#C15 = OK, replace label: "d2_137.number of kg sold of d2_13v"
+#C16 = OK, replace label: "d2_137.number of kg sold of d2_13v"
 var_label(ClowlandVietnam$d2_137) <- "d2_137. selling price/ kg of d2_13v"
-#C16 = OK, replace label: "d2_138. how many species or varieties of d2_13v ?"
+#C17 = OK, replace label: "d2_138. how many species or varieties of d2_13v ?"
 var_label(ClowlandVietnam$d2_138) <- "d2_138. how many species or varieties of d2_13v ?"
 
 # FOR FOLLOWING COLUMNS, DECIDE TO REMOVE IT OR NOT
-#C17 = FACT, (CROP id)
-#C18 = OK, (useless??)
-#C19 = FACT, (parent index)
-#C20 = FACT, (id)
+#C18 = FACT, (CROP id)
+#C19 = OK, (useless??)
+#C20 = FACT, (parent index)
 #C21 = FACT, (id)
-#C22 = FACT, (time)
-#C23 = FACT, (empty)
-#C24 = OK, (empty)
+#C22 = FACT, (id)
+#C23 = FACT, (time)
+#C24 = FACT, (empty)
 #C25 = OK, (empty)
-#C26 = OK, (useless?)
+#C26 = OK, (empty)
 #C27 = OK, (useless?)
-#C28 = OK, (empty)
+#C28 = OK, (useless?)
+#C29 = OK, (empty)
 
 summary(ClowlandVietnam[,15])
 
@@ -5528,47 +5534,51 @@ summary(ClowlandVietnam[,15])
 
 #C1 = FACT, (id of household, to link with other dataframes)
 #C2 = FACT, (id of crop per household)
-#C3 = OK, (the answer is still in Vietnamese, Ky will maybe solve it)
-#C4 = FACT, (number corresponding to crops), replace label: "d2_22. select crop crop1_now with keyword searchcrop1"
+#C3 = FACT, We create a new column here as the combination of crop and household id
+CuplandVietnam$pid <- paste(CuplandVietnam$hhid_re3,CuplandVietnam$crop2_now)
+#We move this column at the right place
+CuplandVietnam <- CuplandVietnam %>% relocate(pid, .after = hhid_re3)
+#C4 = OK, (the answer is still in Vietnamese, Ky will maybe solve it)
+#C5 = FACT, (number corresponding to crops), replace label: "d2_22. select crop crop1_now with keyword searchcrop1"
 var_label(CuplandVietnam$d2_22) <- "d2_22. select crop crop1_now with keyword searchcrop1"
-#C5 = OK, (the answer is still in Vietnamese, Ky will maybe solve it)
-#C6 = OK, (crop name in Vietnamese) replace label: "d2_23v. Crop name (Vietnamese)"
+#C6 = OK, (the answer is still in Vietnamese, Ky will maybe solve it)
+#C7 = OK, (crop name in Vietnamese) replace label: "d2_23v. Crop name (Vietnamese)"
 var_label(CuplandVietnam$d2_23v) <- "d2_23v. Crop name (Vietnamese)"
-#C7 = OK, (crop name in English) replace label: "d2_23e. Crop name (English)"
+#C8 = OK, (crop name in English) replace label: "d2_23e. Crop name (English)"
 var_label(CuplandVietnam$d2_23e) <- "d2_23e. Crop name (English)"
-#C8 = ???
-#C9 = NUM, replace label: "d2_232. what is the total area of all plots where you grow crop_1 (m2) ?"
+#C9 = ???
+#C10 = NUM, replace label: "d2_232. what is the total area of all plots where you grow crop_1 (m2) ?"
 var_label(CuplandVietnam$d2_232) <- "d2_232. what is the total area of all plots where you grow crop_1 (m2) ?"
-#C10 = FACT, (table of correspondence), (see option below), replace label: "d2_233. which unit of d2_23v ?"
+#C11 = FACT, (table of correspondence), (see option below), replace label: "d2_233. which unit of d2_23v ?"
 var_label(CuplandVietnam$d2_233) <- "d2_233. which unit of d2_23v ?"
 #Kg of seed
 #Gr of seed
 #Number of seedlings
-#C11 = OK, replace label: "d2_234. number of seed units of d2_23v that household used?"
+#C12 = OK, replace label: "d2_234. number of seed units of d2_23v that household used?"
 var_label(CuplandVietnam$d2_234) <- "d2_234. number of seed units of d2_23v that household used?"
-#C12 = OK, replace label: "d2_235. number of kg produced of d2_23v ?"
+#C13 = OK, replace label: "d2_235. number of kg produced of d2_23v ?"
 var_label(CuplandVietnam$d2_235) <- "d2_235. number of kg produced of d2_23v ?"
-#C13 = OK, replace label: "d2_236.number of kg sold of d2_23v"
+#C14 = OK, replace label: "d2_236.number of kg sold of d2_23v"
 var_label(CuplandVietnam$d2_236) <- "d2_236.number of kg sold of d2_23v"
-#C14 = OK, replace label: "d2_237.number of kg sold of d2_23v"
+#C15 = OK, replace label: "d2_237.number of kg sold of d2_23v"
 var_label(CuplandVietnam$d2_237) <- "d2_237. selling price/ kg of d2_23v"
-#C15 = OK, replace label: "d2_238. how many species or varieties of d2_23v ?"
+#C16 = OK, replace label: "d2_238. how many species or varieties of d2_23v ?"
 var_label(CuplandVietnam$d2_238) <- "d2_238. how many species or varieties of d2_23v ?"
 
 # FOR FOLLOWING COLUMNS, DECIDE TO REMOVE IT OR NOT
-#C16 = ??
-#C17 = FACT, (CROP id)
-#C18 = OK, (useless??)
-#C19 = FACT, (parent index)
-#C20 = FACT, (id)
+#C17 = ??
+#C18 = FACT, (CROP id)
+#C19 = OK, (useless??)
+#C20 = FACT, (parent index)
 #C21 = FACT, (id)
-#C22 = FACT, (time)
+#C22 = FACT, (id)
 #C23 = FACT, (time)
-#C24 = OK, (empty)
-#C25 = OK, (useless?)
-#C26 = OK, (empty)
-#C27 = OK, (useless?)
-#C28 = OK, (empty)
+#C24 = FACT, (time)
+#C25 = OK, (empty)
+#C26 = OK, (useless?)
+#C27 = OK, (empty)
+#C28 = OK, (useless?)
+#C29 = OK, (empty)
 
 summary(CuplandVietnam[,15])
 
@@ -5576,6 +5586,8 @@ summary(CuplandVietnam[,15])
 
 
 ### 3. Columns data type changing and removing
+
+
 ##3.1 Change column data types base on previous Columns ID
 #Convert the tbl_df into a dataframe for each database
 HouseholdVietnam_2 <- as.data.frame(HouseholdVietnam)
@@ -5655,30 +5667,203 @@ for (i in  c(67,151,153,668,676)){
     HouseholdVietnam_2[,i] <- as.character(HouseholdVietnam_2[,i])
   }
 #Convert columns to CHARACTER - "HouMemberVietnam"
-    HouMemberVietnam_2[,33] <- as.factor(HouMemberVietnam_2[,i])
+HouMemberVietnam_2[,33] <- as.factor(HouMemberVietnam_2[,33])
     
 
 
 ##3.2 REMOVE Unwanted columns (1st Version)
 #Remove unwanted columns for each datasets
-HouseholdVietnam_2C <- HouseholdVietnam_2[,-c(5:6,43:47,58,73:76,86:97,99,105:112,
-                                              114:118,135,171,573,589,600:601,633,
-                                              654,656,675,684,846,858:860,1914,1942,
-                                              1961,2018,2037,2079,2098,2140,2160,2205,
-                                              2221,2300,2306,2330:2334,2342,2347:2709)]
-HouMemberVietnam_2C <- HouMemberVietnam_2[,-c(59:83)]
-ClowlandVietnam_2C <- ClowlandVietnam_2C[,-6]
+#HouseholdVietnam_2C <- HouseholdVietnam_2[,-c(5:6,43:47,58,73:76,86:97,99,105:112,
+                                              #114:118,135,171,573,589,600:601,633,
+                                              #654,656,675,684,846,858:860,1914,1942,
+                                              #1961,2018,2037,2079,2098,2140,2160,2205,
+                                              #2221,2300,2306,2330:2334,2342,2347:2709)]
+#HouMemberVietnam_2C <- HouMemberVietnam_2[,-c(59:83)]
+#ClowlandVietnam_2C <- ClowlandVietnam_2C[,-6]
+
+
+
+### 4. Data Cleaning 1 (Based on Ky comments)
+
+## 4.1 Data cleaning for "HouseholdVietnam_2"
+
+# # #a. Duplicates
+#Check if all households agreed to participate on the survey (% of "yes" answer)
+count_if("1",HouseholdVietnam_2$consent)/nrow(HouseholdVietnam_2)
+# Check household duplicates, for some of them it correspond to answer from the man
+#and from the woman to the survey
+#1st we move the household ID column at 1st column
+HouseholdVietnam_2 <- HouseholdVietnam_2 %>% relocate(o9 , .before = start_time)
+#Check the number and id of duplicates
+count_if("TRUE",duplicated(HouseholdVietnam_2$o9))
+Dum <- HouseholdVietnam[duplicated(HouseholdVietnam_2$o9),]
+IdDup <- Dum$o9
+#Create a loop to merge all the household values in a same column
+for (i in (IdDup)){
+  Temp <- subset(HouseholdVietnam_2, o9 == i)
+  for (j in 1:ncol(HouseholdVietnam_2)){
+    ifelse(is.na(Temp[1,j]), Temp[1,j] <- Temp[2,j], Temp[1,j] <- Temp[1,j])
+  }
+  HouseholdVietnam_2[HouseholdVietnam_2$o9 == i,] <- Temp[1,]
+}
+#Select all duplicates rows and delete the unnecessary
+Dupli <- rownames(HouseholdVietnam_2[HouseholdVietnam_2$o9 %in% IdDup,])
+row_odd <- seq_len(length(Dupli)) %% 2
+Dupli <- Dupli[row_odd == 0]
+HouseholdVietnam_2 <- HouseholdVietnam_2[! rownames(HouseholdVietnam_2) %in% Dupli,]
+#Check again the duplicates: 
+count_if("TRUE",duplicated(HouseholdVietnam_2$o9))
+
+# # #b Outliers part 1
+#HHid 397 (row 318) declared no land according to KY, we will check this assumption
+sum(is.na(HouseholdVietnam_2[HouseholdVietnam_2$o9 == "397",660:1868]))
+#The row is empty, we delete this row
+HouseholdVietnam_2 <- HouseholdVietnam_2[!HouseholdVietnam_2$o9 == "397", ]
+
+#HHid 199 (row 161) declared 2,940,000 m2 of forest land (Ky), we check: 
+h199 <- HouseholdVietnam_2[HouseholdVietnam_2$o9 == "199", ]
+#@The value will be checked with enumerators, but removed for now
+HouseholdVietnam_2$d5_3 <- ifelse(HouseholdVietnam_2$d5_3 > 100000, NA,HouseholdVietnam_2$d5_3)
+
+
+#High number of plots for some Households, number of plots rented-in and owned
+
+#I found some sensitive figure for number of breed (e5_a) of the 1st, 2nd and 3rd most important
+#livestock as table below. The team can cross-check and validate if it’s not consistent
+
+#please do cross-check number of Motor pump sprayer" (k2_15) and Irrigation system (k2_19).
+#It seems to me that they are outliers or mistaken by typing errors
+
+# # #c. Corresponding fields
+#At o6_oth and a7_oth we have 92 and 72 household members respectively with specified other job,
+#but I see many of them listed from the option. So please check and validate them
+
+#-	There were 13 households who did no selling agri-products (at b1) but they still selected 3
+#main sources of income from crop production and livestock raising (b3). Please review list below
+#to know and check record for validating data
+
+#For selling livestock, we based on b1 & b2 to find 308 households selling fresh or processed
+#livestock product, but there were 318 ones answered at b17. So, we should delete 10 households
+#through check_b10inc_liv (0=no sell livestock products, 1=sold livestock products). Households
+#are removed data at b17 including: 675, 673, 670, 680, 561, 575, 397, 674, 677 & 689
+
+#Another problem that we missed data for 45 households at b13_01, we had 362 households sold
+#crop products for the 1st buyers (at b12_1), but only 317 households listed crop they sold at
+#b13_01. 
+
+#Another problem that we missed data for 45 households at b13_01, we had 362 households sold
+#crop products for the 1st buyers (at b12_1), but only 317 households listed crop they sold at
+#b13_01. 
+
+#Need validate unlogic between d81 (576 respondents) and d81_1a (578 respondents)
+#Need validate unlogic between d82 (521 respondents) and d82_1a (533 respondents)
+#Need validate unlogic between d83 (397 respondents) and d83_1a (414 respondents)
+
+#We have 578 hhs with lowland or upland but d12 on water conservation practice have 581
+#households answered  need to check and validate
+#Same than previous for all following kind of practices
+
+#We have 213 households sold 1st most important livestock in the last 3 years at e5_4. However,
+#there were 225 households who answered at b18_1 (1st buyers of 1st most important livestock).
+#WHY? –> deleted redundant data
+
+#There were 317 households raised buffalo and cattle as important animals. However, I found 328 
+#households participated in the module E3. So please check and delete redundant data
+
+#There were 330 households raised pigs as important animals, but 318 households participated in
+#the module E4. So please check and impute missing data for 12 households
+
+#There were 391 households raised poultries as important animals, but 378 households participated
+#in the module E4. So please check and impute missing data for 13 households
+
+#Only households raised buffalo and cattle as important animals (317) will be asked e58,
+#but we have 338 ones replied the question in reality. So please check and redundant data
+
+
+
+## 4.2C Data cleaning for "HouMemberVietnam_2"
+
+# # #a. Duplicates
+#Check the number and id of duplicates
+count_if("TRUE",duplicated(HouMemberVietnam_2$pid))
+#Check and remove the real duplicates through automated method
+Dum <- HouMemberVietnam_2[duplicated(HouMemberVietnam_2$pid),]
+idDup <- unique(Dum$hhid_re1)
+DumReal <- HouMemberVietnam_2[HouMemberVietnam_2$hhid_re1 %in% idDup,]
+DumReal$check <- paste(DumReal$p_no, DumReal$hhid_re1, DumReal$a2, DumReal$a4_1)
+DumReal <- DumReal %>% relocate(check , .after = pid)
+Dupli <- DumReal[duplicated(DumReal$check),]
+Duplic <- rownames(Dupli)
+HouMemberVietnam_2 <- HouMemberVietnam_2[!rownames(HouMemberVietnam_2) %in% Duplic,]
+#For some duplicates, we have to do it manually:
+#TO ADAPT TO EACH DATABASE
+HouMemberVietnam_2 <- HouMemberVietnam_2[-c(21,2443),]
+#Re-attribute household members numbers when the household id is duplicated for different household members
+Dum <- HouMemberVietnam_2[duplicated(HouMemberVietnam_2$pid),]
+idDup <- unique(Dum$hhid_re1)
+for (i in idDup){
+  HouMemberVietnam_2$p_no[HouMemberVietnam_2$hhid_re1 == i] <- 1:sum(HouMemberVietnam_2$hhid_re1 == i)
+}
+HouMemberVietnam_2$pid <- paste(HouMemberVietnam_2$hhid_re1,HouMemberVietnam_2$p_no)
+#Check again the duplicates: 
+count_if("TRUE",duplicated(HouMemberVietnam_2$pid))
+
+## 4.3 Data cleaning for "ClowlandVietnam_2"
+
+# # #a. Duplicates
+#Check the number and id of duplicates
+count_if("TRUE",duplicated(ClowlandVietnam_2$pid))
+#Check and remove the real duplicates through automated method
+Dum <- ClowlandVietnam_2[duplicated(ClowlandVietnam_2$pid),]
+idDup <- unique(Dum$hhid_re2)
+DumReal <- ClowlandVietnam_2[ClowlandVietnam_2$hhid_re2 %in% idDup,]
+DumReal$check <- paste(DumReal$pid, DumReal$d2_13v, DumReal$d2_132)
+DumReal <- DumReal %>% relocate(check , .after = pid)
+Dupli <- DumReal[duplicated(DumReal$check),]
+Duplic <- rownames(Dupli)
+Dupli$pid
+ClowlandVietnam_2 <- ClowlandVietnam_2[!rownames(ClowlandVietnam_2) %in% Duplic,]
+#Check again the duplicates:
+
+count_if("TRUE",duplicated(ClowlandVietnam_2$pid))
+
+# # #b Outliers part 1
+#Check amount of seeds according to Ky excel file
+
+## 4.4 Data cleaning for "CuplandVietnam_2"
+
+# # #a. Duplicates
+#Check the number and id of duplicates
+count_if("TRUE",duplicated(CuplandVietnam_2$pid))
+#Check and remove the real duplicates through automated method
+Dum <- CuplandVietnam_2[duplicated(CuplandVietnam_2$pid),]
+idDup <- unique(Dum$hhid_re3)
+DumReal <- CuplandVietnam_2[CuplandVietnam_2$hhid_re3 %in% idDup,]
+DumReal$check <- paste(DumReal$pid, DumReal$d2_13v, DumReal$d2_132)
+DumReal <- DumReal %>% relocate(check , .after = pid)
+Dupli <- DumReal[duplicated(DumReal$check),]
+Duplic <- rownames(Dupli)
+CuplandVietnam_2 <- CuplandVietnam_2[!rownames(CuplandVietnam_2) %in% Duplic,]
+#Check again the duplicates: 
+count_if("TRUE",duplicated(CuplandVietnam_2$pid))
+
+# Virer les NA
+# Inclure les données des cultures/ménages ou trouver un moyen de faire le lien
+# Corriger les cases contradictoires selon le rapport de Ky
+
+
+###5. Data export
+
 #Add the proper labels to each columns
-HouseholdVietnam_2C <- copy_labels(HouseholdVietnam_2C, HouseholdVietnam)
-HouMemberVietnam_2C <- copy_labels(HouMemberVietnam_2C, HouMemberVietnam)
-ClowlandVietnam_2C <- copy_labels(ClowlandVietnam_2C, ClowlandVietnam)
+HouseholdVietnam_2C <- copy_labels(HouseholdVietnam_2, HouseholdVietnam)
+HouMemberVietnam_2C <- copy_labels(HouMemberVietnam_2, HouMemberVietnam)
+ClowlandVietnam_2C <- copy_labels(ClowlandVietnam_2, ClowlandVietnam)
 CuplandVietnam_2 <- copy_labels(CuplandVietnam_2, CuplandVietnam)
-
 ##3.3 Export of the database under dta format
-saveRDS(HouseholdVietnam_2C, "HouseholdVietnam_2C.rds")
-saveRDS(HouMemberVietnam_2C, "HouMemberVietnam_2C.rds")
-saveRDS(ClowlandVietnam_2C, "ClowlandVietnam_2C.rds")
-saveRDS(CuplandVietnam_2, "CuplandVietnam_2.rds")
+#saveRDS(HouseholdVietnam_2C, "HouseholdVietnam_2C.rds")
+#saveRDS(HouMemberVietnam_2C, "HouMemberVietnam_2C.rds")
+#saveRDS(ClowlandVietnam_2C, "ClowlandVietnam_2C.rds")
+#saveRDS(CuplandVietnam_2, "CuplandVietnam_2.rds")
 
 
-#rstudioapi::writeRStudioPreference("data_viewer_max_columns", 10L)
+#rstudioapi::writeRStudioPreference("data_viewer_max_columns", 30L)
