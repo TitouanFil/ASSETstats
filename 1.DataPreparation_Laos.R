@@ -15,7 +15,6 @@ CuplandLaos <- read_dta("d2_2_upland_Laos.dta")
 HouMemberLaos <- read_dta("household_roster_laos.dta")
 
 
-
 ### 2. Columns and sub-columns name changing
 ##2.1. Work on the first database: "HouseholdLaos" (C = Column)
 ## For each column we determine if necessary to change the name, label or remove it
@@ -1221,21 +1220,21 @@ var_label(HouseholdLaos$b13_0111) <- "Upland crop n6"
 #C673 = CHAR, (Useless answer-MultipleCombined, use the following columns), replace label: "does b12_1 provide any of the following"
 var_label(HouseholdLaos$b14_1) <- "does b12_1 provide any of the following"
 #C674 = FACT, empty, replace label: "Nothing"
-var_label(HouseholdVietnam$b14_10) <- "Nothing"
+var_label(HouseholdLaos$b14_10) <- "Nothing"
 #We move this column at the right place
-HouseholdVietnam <- HouseholdVietnam %>% relocate(b14_10 , .after = b14_1)
+HouseholdLaos <- HouseholdLaos %>% relocate(b14_10 , .after = b14_1)
 #C675 = FACT, empty, replace label: "Inputs (sold)"
-var_label(HouseholdVietnam$b14_11) <- "Inputs (sold)"
+var_label(HouseholdLaos$b14_11) <- "Inputs (sold)"
 #C676 = FACT, empty, replace label: "Inputs on credit"
-var_label(HouseholdVietnam$b14_12) <- "Inputs on credit"
+var_label(HouseholdLaos$b14_12) <- "Inputs on credit"
 #C677 = FACT, empty, replace label: "Gas Credit"
-var_label(HouseholdVietnam$b14_13) <- "Gas Credit"
+var_label(HouseholdLaos$b14_13) <- "Gas Credit"
 #C678 = FACT, empty, replace label: "Technical advice/training"
-var_label(HouseholdVietnam$b14_14) <- "Technical advice/training"
+var_label(HouseholdLaos$b14_14) <- "Technical advice/training"
 #C679 = FACT, empty, replace label: "Market information"
-var_label(HouseholdVietnam$b14_15) <- "Market information"
+var_label(HouseholdLaos$b14_15) <- "Market information"
 #C680 = FACT, empty, UNKNOWN, replace label: "Regular sales"
-var_label(HouseholdVietnam$b14_16) <- "Regular sales"
+var_label(HouseholdLaos$b14_16) <- "Regular sales"
 #C681 = FACT, empty, replace label: "Other"
 var_label(HouseholdLaos$b14_199) <- "Other"
 #C682 = FACT, empty, replace label: "Do not know"

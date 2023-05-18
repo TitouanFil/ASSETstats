@@ -16,7 +16,6 @@ ClowlandVietnam <- read_dta("d2_1_lowland_vietnam.dta")
 CuplandVietnam <- read_dta("d2_2_upland_vietnam.dta")
 HouMemberVietnam <- read_dta("household_rooster_vietnam.dta")
 
-
 #ColViet <- colnames(HouseholdVietnam)
 #ColViet2 <- ColViet
 #ColVietnameses <- colnames(HouseholdVietnameses)
@@ -5681,7 +5680,11 @@ HouMemberVietnam_2[,33] <- as.factor(HouMemberVietnam_2[,33])
 #HouMemberVietnam_2C <- HouMemberVietnam_2[,-c(59:83)]
 #ClowlandVietnam_2C <- ClowlandVietnam_2C[,-6]
 
-
+#Add the proper labels to each columns
+HouseholdVietnam_2C <- copy_labels(HouseholdVietnam_2, HouseholdVietnam)
+HouMemberVietnam_2C <- copy_labels(HouMemberVietnam_2, HouMemberVietnam)
+ClowlandVietnam_2C <- copy_labels(ClowlandVietnam_2, ClowlandVietnam)
+CuplandVietnam_2 <- copy_labels(CuplandVietnam_2, CuplandVietnam)
 
 ### 4. Data Cleaning 1 (Based on Ky comments)
 
@@ -5689,79 +5692,103 @@ HouMemberVietnam_2[,33] <- as.factor(HouMemberVietnam_2[,33])
 
 # # #a. Duplicates
 #Check if all households agreed to participate on the survey (% of "yes" answer)
-count_if("1",HouseholdVietnam_2$consent)/nrow(HouseholdVietnam_2)
+count_if("1",HouseholdVietnam_2C$consent)/nrow(HouseholdVietnam_2C)
 # Check household duplicates, for some of them it correspond to answer from the man
 #and from the woman to the survey
 #1st we move the household ID column at 1st column
-HouseholdVietnam_2 <- HouseholdVietnam_2 %>% relocate(o9 , .before = start_time)
+HouseholdVietnam_2C <- HouseholdVietnam_2C %>% relocate(o9 , .before = start_time)
 #Check the number and id of duplicates
-count_if("TRUE",duplicated(HouseholdVietnam_2$o9))
-Dum <- HouseholdVietnam[duplicated(HouseholdVietnam_2$o9),]
+count_if("TRUE",duplicated(HouseholdVietnam_2C$o9))
+Dum <- HouseholdVietnam_2C[duplicated(HouseholdVietnam_2C$o9),]
 IdDup <- Dum$o9
 #Create a loop to merge all the household values in a same column
 for (i in (IdDup)){
-  Temp <- subset(HouseholdVietnam_2, o9 == i)
-  for (j in 1:ncol(HouseholdVietnam_2)){
+  Temp <- subset(HouseholdVietnam_2C, o9 == i)
+  for (j in 1:ncol(HouseholdVietnam_2C)){
     ifelse(is.na(Temp[1,j]), Temp[1,j] <- Temp[2,j], Temp[1,j] <- Temp[1,j])
   }
-  HouseholdVietnam_2[HouseholdVietnam_2$o9 == i,] <- Temp[1,]
+  HouseholdVietnam_2C[HouseholdVietnam_2C$o9 == i,] <- Temp[1,]
 }
 #Select all duplicates rows and delete the unnecessary
-Dupli <- rownames(HouseholdVietnam_2[HouseholdVietnam_2$o9 %in% IdDup,])
+Dupli <- rownames(HouseholdVietnam_2C[HouseholdVietnam_2C$o9 %in% IdDup,])
 row_odd <- seq_len(length(Dupli)) %% 2
 Dupli <- Dupli[row_odd == 0]
-HouseholdVietnam_2 <- HouseholdVietnam_2[! rownames(HouseholdVietnam_2) %in% Dupli,]
+HouseholdVietnam_2C <- HouseholdVietnam_2C[! rownames(HouseholdVietnam_2C) %in% Dupli,]
 #Check again the duplicates: 
-count_if("TRUE",duplicated(HouseholdVietnam_2$o9))
+count_if("TRUE",duplicated(HouseholdVietnam_2C$o9))
 
 # # #b Outliers part 1
 #HHid 397 (row 318) declared no land according to KY, we will check this assumption
-sum(is.na(HouseholdVietnam_2[HouseholdVietnam_2$o9 == "397",660:1868]))
+sum(is.na(HouseholdVietnam_2C[HouseholdVietnam_2C$o9 == "397",660:1868]))
 #The row is empty, we delete this row
-HouseholdVietnam_2 <- HouseholdVietnam_2[!HouseholdVietnam_2$o9 == "397", ]
+HouseholdVietnam_2C <- HouseholdVietnam_2C[!HouseholdVietnam_2C$o9 == "397", ]
 
 #HHid 199 (row 161) declared 2,940,000 m2 of forest land (Ky), we check: 
-h199 <- HouseholdVietnam_2[HouseholdVietnam_2$o9 == "199", ]
+h199 <- HouseholdVietnam_2C[HouseholdVietnam_2C$o9 == "199", ]
 #@The value will be checked with enumerators, but removed for now
-HouseholdVietnam_2$d5_3 <- ifelse(HouseholdVietnam_2$d5_3 > 100000, NA,HouseholdVietnam_2$d5_3)
-
+HouseholdVietnam_2C$d5_3 <- ifelse(HouseholdVietnam_2C$d5_3 > 100000, NA,HouseholdVietnam_2C$d5_3)
 
 #High number of plots for some Households, number of plots rented-in and owned
+HouseholdVietnam_2C$d9_2 <- ifelse(HouseholdVietnam_2C$d9_2 > 100, NA,HouseholdVietnam_2C$d9_2)
+HouseholdVietnam_2C$d10_2 <- ifelse(HouseholdVietnam_2C$d10_2 > 100, NA,HouseholdVietnam_2C$d10_2)
+HouseholdVietnam_2C$d11_2 <- ifelse(HouseholdVietnam_2C$d11_2 > 100, NA,HouseholdVietnam_2C$d11_2)
 
-#I found some sensitive figure for number of breed (e5_a) of the 1st, 2nd and 3rd most important
-#livestock as table below. The team can cross-check and validate if it’s not consistent
+#Some sensitive figure for number of breed (e5_a) of the 1st, 2nd and 3rd most important
+#livestock as table below
+HouseholdVietnam_2C$e5_a <- ifelse(HouseholdVietnam_2C$e5_a > 6, NA,HouseholdVietnam_2C$e5_a)
+HouseholdVietnam_2C$e6_a <- ifelse(HouseholdVietnam_2C$e6_a > 6, NA,HouseholdVietnam_2C$e6_a)
+HouseholdVietnam_2C$e7_a <- ifelse(HouseholdVietnam_2C$e7_a > 6, NA,HouseholdVietnam_2C$e7_a)
 
 #please do cross-check number of Motor pump sprayer" (k2_15) and Irrigation system (k2_19).
 #It seems to me that they are outliers or mistaken by typing errors
+HouseholdVietnam_2C$k2_15 <- ifelse(HouseholdVietnam_2C$k2_15 > 10, NA,HouseholdVietnam_2C$k2_15)
+HouseholdVietnam_2C$k2_19 <- ifelse(HouseholdVietnam_2C$k2_19 > 10, NA,HouseholdVietnam_2C$k2_19)
+
 
 # # #c. Corresponding fields
-#At o6_oth and a7_oth we have 92 and 72 household members respectively with specified other job,
-#but I see many of them listed from the option. So please check and validate them
-
 #-	There were 13 households who did no selling agri-products (at b1) but they still selected 3
 #main sources of income from crop production and livestock raising (b3). Please review list below
 #to know and check record for validating data
+#MANUAL, NEED TO MODIFY IT
+HouseholdVietnam_2C[c(65,96,119,132,154,166,492),80] <- "1"
+HouseholdVietnam_2C[c(93,174),80] <- "2"
+HouseholdVietnam_2C[c(67,318),80] <- "3"
 
 #For selling livestock, we based on b1 & b2 to find 308 households selling fresh or processed
 #livestock product, but there were 318 ones answered at b17. So, we should delete 10 households
 #through check_b10inc_liv (0=no sell livestock products, 1=sold livestock products). Households
-#are removed data at b17 including: 675, 673, 670, 680, 561, 575, 397, 674, 677 & 689
+#MANUAL, NEED TO MODIFY IT
+HouseholdVietnam_2C[424,80] <- "3"
+HouseholdVietnam_2C[177,80] <- "0"
+HouseholdVietnam_2C[c(67,93,174,319),242] <- "88"
 
 #Another problem that we missed data for 45 households at b13_01, we had 362 households sold
 #crop products for the 1st buyers (at b12_1), but only 317 households listed crop they sold at
 #b13_01. 
-
-#Another problem that we missed data for 45 households at b13_01, we had 362 households sold
-#crop products for the 1st buyers (at b12_1), but only 317 households listed crop they sold at
-#b13_01. 
+#NOTHING TO DO HERE FOR NOW
 
 #Need validate unlogic between d81 (576 respondents) and d81_1a (578 respondents)
+HouseholdVietnam_2C$d81_1a <- ifelse(is.na(HouseholdVietnam_2C$d81) & !is.na(HouseholdVietnam_2C$d81_1a), NA, HouseholdVietnam_2C$d81_1a)
+
 #Need validate unlogic between d82 (521 respondents) and d82_1a (533 respondents)
+HouseholdVietnam_2C$d82_1a <- ifelse(is.na(HouseholdVietnam_2C$d82) & !is.na(HouseholdVietnam_2C$d82_1a), NA, HouseholdVietnam_2C$d82_1a)
+
 #Need validate unlogic between d83 (397 respondents) and d83_1a (414 respondents)
+HouseholdVietnam_2C$d83_1a <- ifelse(is.na(HouseholdVietnam_2C$d83) & !is.na(HouseholdVietnam_2C$d83_1a), NA, HouseholdVietnam_2C$d83_1a)
 
 #We have 578 hhs with lowland or upland but d12 on water conservation practice have 581
-#households answered  need to check and validate
-#Same than previous for all following kind of practices
+#NOT FINISHED
+HouseholdVietnam_2C$d83_1a <- ifelse(is.na(HouseholdVietnam_2C$d83) & !is.na(HouseholdVietnam_2C$d83_1a), NA, HouseholdVietnam_2C$d83_1a)
+
+#We have 578 hhs with lowland or upland but d12 on water conservation practice have 581
+
+sum(!is.na(HouseholdVietnam_2C$no_crop1 | HouseholdVietnam_2C$no_crop2))
+sum(!is.na(HouseholdVietnam_2C$d1))
+Check <- cbind(HouseholdVietnam_2C$no_crop1,HouseholdVietnam_2C$no_crop2,HouseholdVietnam_2C$d1)
+
+Check <- cbind(HouseholdVietnam_2C$o9,HouseholdVietnam_2C$d83,HouseholdVietnam_2C$d83_1a)
+match("d81",names(HouseholdVietnam_2C))
+
 
 #We have 213 households sold 1st most important livestock in the last 3 years at e5_4. However,
 #there were 225 households who answered at b18_1 (1st buyers of 1st most important livestock).
@@ -5854,11 +5881,7 @@ count_if("TRUE",duplicated(CuplandVietnam_2$pid))
 
 ###5. Data export
 
-#Add the proper labels to each columns
-HouseholdVietnam_2C <- copy_labels(HouseholdVietnam_2, HouseholdVietnam)
-HouMemberVietnam_2C <- copy_labels(HouMemberVietnam_2, HouMemberVietnam)
-ClowlandVietnam_2C <- copy_labels(ClowlandVietnam_2, ClowlandVietnam)
-CuplandVietnam_2 <- copy_labels(CuplandVietnam_2, CuplandVietnam)
+
 ##3.3 Export of the database under dta format
 #saveRDS(HouseholdVietnam_2C, "HouseholdVietnam_2C.rds")
 #saveRDS(HouMemberVietnam_2C, "HouMemberVietnam_2C.rds")
