@@ -2411,8 +2411,8 @@ var_label(HouseholdVietnam$d18_10111) <- "Upland crop n6"
 #C1265 = FACT, (table of correspondence)
 #C1266 = OK, (empty)
 #C1267 = CHAR, (empty), (correspond to crops numbers), (Useless answer-MultipleCombined, use the following columns)
-#replace label: "d18_111_a. for which crop(s) do you use organic agro-industrial waste?"
-var_label(HouseholdVietnam$d18_111_a) <- "d18_111_a. for which crop(s) do you use organic agro-industrial waste?"
+#replace label: "d18_111_a_a. for which crop(s) do you use organic agro-industrial waste?"
+var_label(HouseholdVietnam$d18_111_a) <- "d18_111_a_a. for which crop(s) do you use organic agro-industrial waste?"
 #C1268 = FACT, (empty), replace label: "Lowland crop n1"
 var_label(HouseholdVietnam$d18_1111_a) <- "Lowland crop n1"
 #C1269 = FACT, (empty), replace label: "Lowland crop n2"
@@ -5686,9 +5686,12 @@ HouMemberVietnam_2C <- copy_labels(HouMemberVietnam_2, HouMemberVietnam)
 ClowlandVietnam_2C <- copy_labels(ClowlandVietnam_2, ClowlandVietnam)
 CuplandVietnam_2 <- copy_labels(CuplandVietnam_2, CuplandVietnam)
 
+
+
 ### 4. Data Cleaning 1 (Based on Ky comments)
 
-## 4.1 Data cleaning for "HouseholdVietnam_2"
+## 4.1 Data cleaning for "HouseholdLaos_2"
+
 
 # # #a. Duplicates
 #Check if all households agreed to participate on the survey (% of "yes" answer)
@@ -5745,11 +5748,13 @@ HouseholdVietnam_2C$k2_15 <- ifelse(HouseholdVietnam_2C$k2_15 > 10, NA,Household
 HouseholdVietnam_2C$k2_19 <- ifelse(HouseholdVietnam_2C$k2_19 > 10, NA,HouseholdVietnam_2C$k2_19)
 
 
+
 # # #c. Corresponding fields
 #-	There were 13 households who did no selling agri-products (at b1) but they still selected 3
 #main sources of income from crop production and livestock raising (b3). Please review list below
 #to know and check record for validating data
 #MANUAL, NEED TO MODIFY IT
+HouseholdVietnam_2C$b1 <- as.character(HouseholdVietnam_2C$b1)
 HouseholdVietnam_2C[c(65,96,119,132,154,166,492),80] <- "1"
 HouseholdVietnam_2C[c(93,174),80] <- "2"
 HouseholdVietnam_2C[c(67,318),80] <- "3"
@@ -5760,7 +5765,10 @@ HouseholdVietnam_2C[c(67,318),80] <- "3"
 #MANUAL, NEED TO MODIFY IT
 HouseholdVietnam_2C[424,80] <- "3"
 HouseholdVietnam_2C[177,80] <- "0"
+HouseholdVietnam_2C$b1 <- as.factor(HouseholdVietnam_2C$b1)
+HouseholdVietnam_2C$b1 <- as.character(HouseholdVietnam_2C$b17)
 HouseholdVietnam_2C[c(67,93,174,319),242] <- "88"
+HouseholdVietnam_2C$b1 <- as.factor(HouseholdVietnam_2C$b17)
 
 #Another problem that we missed data for 45 households at b13_01, we had 362 households sold
 #crop products for the 1st buyers (at b12_1), but only 317 households listed crop they sold at
@@ -5768,43 +5776,338 @@ HouseholdVietnam_2C[c(67,93,174,319),242] <- "88"
 #NOTHING TO DO HERE FOR NOW
 
 #Need validate unlogic between d81 (576 respondents) and d81_1a (578 respondents)
+HouseholdVietnam_2C$d81_1a <- as.character(HouseholdVietnam_2C$d81_1a)
 HouseholdVietnam_2C$d81_1a <- ifelse(is.na(HouseholdVietnam_2C$d81) & !is.na(HouseholdVietnam_2C$d81_1a), NA, HouseholdVietnam_2C$d81_1a)
+HouseholdVietnam_2C$d81_1a <- as.factor(HouseholdVietnam_2C$d81_1a)
 
 #Need validate unlogic between d82 (521 respondents) and d82_1a (533 respondents)
+HouseholdVietnam_2C$d82_1a <- as.character(HouseholdVietnam_2C$d82_1a)
 HouseholdVietnam_2C$d82_1a <- ifelse(is.na(HouseholdVietnam_2C$d82) & !is.na(HouseholdVietnam_2C$d82_1a), NA, HouseholdVietnam_2C$d82_1a)
+HouseholdVietnam_2C$d82_1a  <- as.factor(HouseholdVietnam_2C$d82_1a)
 
 #Need validate unlogic between d83 (397 respondents) and d83_1a (414 respondents)
+HouseholdVietnam_2C$d83_1a <- as.character(HouseholdVietnam_2C$d83_1a)
 HouseholdVietnam_2C$d83_1a <- ifelse(is.na(HouseholdVietnam_2C$d83) & !is.na(HouseholdVietnam_2C$d83_1a), NA, HouseholdVietnam_2C$d83_1a)
+HouseholdVietnam_2C$d83_1a  <- as.factor(HouseholdVietnam_2C$d83_1a)
+
 
 #We have 578 hhs with lowland or upland but d12 on water conservation practice have 581
-#NOT FINISHED
-HouseholdVietnam_2C$d83_1a <- ifelse(is.na(HouseholdVietnam_2C$d83) & !is.na(HouseholdVietnam_2C$d83_1a), NA, HouseholdVietnam_2C$d83_1a)
+#MANUAL, NEED TO MODIFY IT
+HouseholdVietnam_2C$d12 <- ifelse(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2), NA, HouseholdVietnam_2C$d12)
+for (i in c(865:874)){
+  HouseholdVietnam_2C[,i] <- as.character(HouseholdVietnam_2C[,i])
+  HouseholdVietnam_2C[,i] <- ifelse(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2), NA, HouseholdVietnam_2C[,i])
+  HouseholdVietnam_2C[,i] <- as.factor(HouseholdVietnam_2C[,i])
+}
 
-#We have 578 hhs with lowland or upland but d12 on water conservation practice have 581
+#Check for d131_1 & d131_2, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d131_1 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d131_2))
+#Check for d133_1 & d133_2, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d133_1 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d133_2))
+#Check for d134_1 & d134_2, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d134_1 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d134_2))
+#Check for d135_1 & d135_2, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d135_1 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d135_2))
+#Check for d136_1 & d136_2, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d136_1 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d136_2))
+#Check for d137_1 & d137_2, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d137_1 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d137_2))
+#Check for d138_1 & d138_2, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d138_1 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d138_2))
 
-sum(!is.na(HouseholdVietnam_2C$no_crop1 | HouseholdVietnam_2C$no_crop2))
-sum(!is.na(HouseholdVietnam_2C$d1))
-Check <- cbind(HouseholdVietnam_2C$no_crop1,HouseholdVietnam_2C$no_crop2,HouseholdVietnam_2C$d1)
 
-Check <- cbind(HouseholdVietnam_2C$o9,HouseholdVietnam_2C$d83,HouseholdVietnam_2C$d83_1a)
-match("d81",names(HouseholdVietnam_2C))
+#We have 578 hhs with lowland or upland but d14 on soil conservation practice have 575
+#MANUAL, NEED TO MODIFY IT
+#1st, there are 2 '0' values for households with no crops, we replace it by ''
+HouseholdVietnam_2C$d14 <- ifelse(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2), NA, HouseholdVietnam_2C$d14)
+for (i in c(989:997)){
+  HouseholdVietnam_2C[,i] <- as.character(HouseholdVietnam_2C[,i])
+  HouseholdVietnam_2C[,i] <- ifelse(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2), NA, HouseholdVietnam_2C[,i])
+  HouseholdVietnam_2C[,i] <- as.factor(HouseholdVietnam_2C[,i])
+}
+
+#Then, there are 7 values with answers to column corresponding to each practices,
+#but not on column 13, we replace '' by '0':
+HouseholdVietnam_2C$d14 <- ifelse(HouseholdVietnam_2C$d14 == '' & HouseholdVietnam_2C$d140 == 2, '0', HouseholdVietnam_2C$d14)
+
+#Check for d151_1 & d151_2, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d151_1 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d151_2))
+#Check for d152_1 & d152_2, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d152_1 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d152_2))
+#Check for d153_1 & d153_2, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d153_1 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d153_2))
+#Check for d154_1 & d154_2, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d154_1 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d154_2))
+#Check for d155_1 & d155_2, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d155_1 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d155_2))
+#Check for d156_1 & d156_2, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d156_1 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d156_2))
+#Check for d157_1 & d157_2, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d157_1 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d157_2))
+#Check for d158_1 & d158_2, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d158_1 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d158_2))
+
+#We have 3 answers for d16 for hhs without lowland or upland
+#MANUAL, NEED TO MODIFY IT
+HouseholdVietnam_2C$d16 <- as.character(HouseholdVietnam_2C$d16)
+HouseholdVietnam_2C$d16 <- ifelse(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2), NA, HouseholdVietnam_2C$d16)
+HouseholdVietnam_2C$d16 <- as.factor(HouseholdVietnam_2C$d16)
+
+#For d18, there are different issues solved below
+#MANUAL, NEED TO MODIFY IT
+HouseholdVietnam_2C$d18 <- ifelse(HouseholdVietnam_2C$d181 == '1' & HouseholdVietnam_2C$d18 == '', '1', HouseholdVietnam_2C$d18)
+HouseholdVietnam_2C$d18 <- ifelse(HouseholdVietnam_2C$d1899 == '1' & HouseholdVietnam_2C$d18 == '', as.character('99'), HouseholdVietnam_2C$d18)
+#For d17, there are 3 '0' values for households with no crops, we replace it by ''
+HouseholdVietnam_2C$d17 <- as.character(HouseholdVietnam_2C$d17)
+HouseholdVietnam_2C$d17 <- ifelse(HouseholdVietnam_2C$d17 != '2' & !is.na(HouseholdVietnam_2C$d18), '2', HouseholdVietnam_2C$d17)
+HouseholdVietnam_2C$d17 <- ifelse(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2), NA, HouseholdVietnam_2C$d17)
+HouseholdVietnam_2C$d17 <- as.factor(HouseholdVietnam_2C$d17)
+
+## 3 NA remains for households with crops, see later if necesary to change it
+#for "no practice"
+
+#Check for d18_11 & d18_12, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d18_11 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d18_12))
+#Check for d18_21 & d18_22, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d18_21 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d18_22))
+#Check for d18_31 & d18_32, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d18_31 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d18_32))
+#Check for d18_41 & d18_42, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d18_41 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d18_42))
+#Check for d18_51 & d18_52, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d18_51 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d18_52))
+#Check for d18_61 & d18_62, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d18_61 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d18_62))
+#Check for d18_71 & d18_72, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d18_71 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d18_72))
+#Check for d18_81 & d18_82, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d18_81 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d18_82))
+#Check for d18_91 & d18_92, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d18_91 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d18_92))
+#Check for d18_101 & d18_102, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d18_101 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d18_102))
+#Check for d18_111_a & d18_112, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d18_111_a != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d18_112))
 
 
-#We have 213 households sold 1st most important livestock in the last 3 years at e5_4. However,
-#there were 225 households who answered at b18_1 (1st buyers of 1st most important livestock).
-#WHY? –> deleted redundant data
+#For d19, one hh answered while he mentionned to have implemented this practice
+HouseholdVietnam_2C$d19 <- as.character(HouseholdVietnam_2C$d19)
+HouseholdVietnam_2C$d19 <- ifelse(HouseholdVietnam_2C$d17 == '2' & !is.na(HouseholdVietnam_2C$d19), NA, HouseholdVietnam_2C$d19)
+HouseholdVietnam_2C$d19 <- as.factor(HouseholdVietnam_2C$d19)
+
+#For d20 & d21, there are different issues solved below
+#MANUAL, NEED TO MODIFY IT
+HouseholdVietnam_2C$d21 <- ifelse(HouseholdVietnam_2C$d2110 == '1' & HouseholdVietnam_2C$d21 == '', '10', HouseholdVietnam_2C$d21)
+#For d20, different issues solved below
+HouseholdVietnam_2C$d20 <- as.character(HouseholdVietnam_2C$d20)
+HouseholdVietnam_2C$d20 <- ifelse(HouseholdVietnam_2C$no_crop1 == '' & HouseholdVietnam_2C$no_crop2 == '' , NA, HouseholdVietnam_2C$d20)
+x <- paste(HouseholdVietnam_2C$no_crop1,HouseholdVietnam_2C$no_crop2)
+HouseholdVietnam_2C$d20 <- ifelse( x != " " & is.na(HouseholdVietnam_2C$d20), '0', HouseholdVietnam_2C$d20)
+HouseholdVietnam_2C$d20 <- as.factor(HouseholdVietnam_2C$d20)
+
+
+#Check for d21_12 & d21_13, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d21_12 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d21_13))
+#Check for d21_22 & d21_23, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d21_22 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d21_23))
+#Check for d21_32 & d21_33, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d21_32 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d21_33))
+#Check for d21_42 & d21_43, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d21_42 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d21_43))
+#Check for d21_52 & d21_53, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d21_52 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d21_53))
+#Check for d21_62 & d21_63, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d21_62 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d21_63))
+#Check for d21_72 & d21_73, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d21_72 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d21_73))
+#Check for d21_82 & d21_83, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d21_82 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d21_83))
+#Check for d21_92 & d21_93, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d21_92 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d21_93))
+#Check for d21_102 & d21_103, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d21_102 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d21_103))
+#Check for d21_112 & d21_113, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d21_112 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d21_113))
+#Check for d21_122 & d21_123, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d21_122 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d21_123))
+#Check for d21_132 & d21_133, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d21_132 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d21_133))
+#Check for d21_992 & d21_993, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d21_992 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d21_993))
+
+
+#For d22, one hh answered while he mentionned to have implemented this practice
+HouseholdVietnam_2C$d22 <- as.character(HouseholdVietnam_2C$d22)
+HouseholdVietnam_2C$d22 <- ifelse(HouseholdVietnam_2C$d20 == '2' & !is.na(HouseholdVietnam_2C$d22), NA, HouseholdVietnam_2C$d22)
+HouseholdVietnam_2C$d22 <- as.factor(HouseholdVietnam_2C$d22)
+
+#One household didn't answered to d22 but we don't fulfil it as we don't know his answer
+
+#For d24, different issues solved below
+HouseholdVietnam_2C$d24 <- as.character(HouseholdVietnam_2C$d24)
+HouseholdVietnam_2C$d24 <- ifelse(HouseholdVietnam_2C$no_crop1 == '' & HouseholdVietnam_2C$no_crop2 == '' , NA, HouseholdVietnam_2C$d24)
+HouseholdVietnam_2C$d24 <- as.factor(HouseholdVietnam_2C$d24)
+
+#For d26, different issues solved below
+HouseholdVietnam_2C$d26 <- as.character(HouseholdVietnam_2C$d26)
+HouseholdVietnam_2C$d26 <- ifelse(HouseholdVietnam_2C$no_crop1 == '' & HouseholdVietnam_2C$no_crop2 == '' , NA, HouseholdVietnam_2C$d26)
+HouseholdVietnam_2C$d26 <- as.factor(HouseholdVietnam_2C$d26)
+
+#Check for d27_11 & d27_12, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d27_11 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d27_12))
+#Check for d27_21 & d27_22, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d27_21 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d27_22))
+#Check for d27_31 & d27_32, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d27_31 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d27_32))
+#Check for d27_41 & d27_42, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d27_41 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d27_42))
+#Check for d27_51 & d27_52, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d27_51 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d27_52))
+#Check for d27_61 & d27_62, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d27_61 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d27_62))
+#Check for d27_71 & d27_72, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d27_71 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d27_72))
+#Check for d27_81 & d27_82, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d27_81 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d27_82))
+#Check for d27_91 & d27_92, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d27_91 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d27_92))
+#Check for d27_101 & d27_102, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d27_101 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d27_102))
+#Check for d27_111_a & d27_112_a, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d27_111_a != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d27_112_a))
+#Check for d27_121 & d27_122, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d27_121 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d27_122))
+#Check for d27_131 & d27_132, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d27_131 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d27_132))
+#Check for d27_141 & d27_142, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d27_141 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d27_142))
+#Check for d27_991 & d27_992, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d27_991 != '')
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d27_992))
+
+#For d28, different issues solved below
+HouseholdVietnam_2C$d28 <- as.character(HouseholdVietnam_2C$d28)
+HouseholdVietnam_2C$d28 <- ifelse(is.na(HouseholdVietnam_2C$d26) & !is.na(HouseholdVietnam_2C$d28), NA, HouseholdVietnam_2C$d28)
+HouseholdVietnam_2C$d28 <- as.factor(HouseholdVietnam_2C$d28)
+
+#For d30_1, different issues solved below
+HouseholdVietnam_2C$d30_1 <- as.character(HouseholdVietnam_2C$d30_1)
+HouseholdVietnam_2C$d30_1 <- ifelse(HouseholdVietnam_2C$d30_2 == '' & HouseholdVietnam_2C$d30_1 == '1' , '0', HouseholdVietnam_2C$d30_1)
+HouseholdVietnam_2C$d30_1 <- ifelse(HouseholdVietnam_2C$no_crop1 == '' & HouseholdVietnam_2C$no_crop2 == '' , NA, HouseholdVietnam_2C$d30_1)
+HouseholdVietnam_2C$d30_1 <- as.factor(HouseholdVietnam_2C$d30_1)
+
+#Check for d30_3 & d30_4, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d30_3))
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d30_4))
+#Check for d30_5 & d30_6, Crops for which you use this practice and main motivation
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d30_5))
+sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d30_6))
+
+#For d32 & d32_2, different issues solved below
+HouseholdVietnam_2C$d32 <- as.character(HouseholdVietnam_2C$d32)
+HouseholdVietnam_2C$d32 <- ifelse(HouseholdVietnam_2C$no_crop1 == '' & HouseholdVietnam_2C$no_crop2 == '' , NA, HouseholdVietnam_2C$d32)
+HouseholdVietnam_2C$d32 <- ifelse(HouseholdVietnam_2C$d32_1 == '' & HouseholdVietnam_2C$d32 == '2' , '1', HouseholdVietnam_2C$d32)
+HouseholdVietnam_2C$d32 <- as.factor(HouseholdVietnam_2C$d32)
+HouseholdVietnam_2C$d32_2 <- as.character(HouseholdVietnam_2C$d32_2)
+HouseholdVietnam_2C$d32_2 <- ifelse(HouseholdVietnam_2C$no_crop1 == '' & HouseholdVietnam_2C$no_crop2 == '' , NA, HouseholdVietnam_2C$d32_2)
+HouseholdVietnam_2C$d32_2 <- as.factor(HouseholdVietnam_2C$d32_2)
+
+#For module E3. Cattle and buffalo system, households having other kind of cattle 
+#didn't fulfil this part
+
+#One household is raising cattle/buffalo and didn't fulfil E3 = Nothing more to do...
 
 #There were 317 households raised buffalo and cattle as important animals. However, I found 328 
-#households participated in the module E3. So please check and delete redundant data
+#households participated in the module E3. In fact, these households raise pig and the data
+#In module E3 is probably the data supposed to be in module E4, so we'll transfer these data at the right place
+#First we set columns in the same order
+HouseholdVietnam_2C <- HouseholdVietnam_2C %>% relocate(e3899 , .after = e3888)
+#Then we extract household id of concerned households
+x <- HouseholdVietnam_2C[HouseholdVietnam_2C$e2_1 == '0' & HouseholdVietnam_2C$e2_2 == '0' & !is.na(HouseholdVietnam_2C$e16),]
+hid <- x$o9
+#And finally we create a loop to replace the values in E4 and remove them from E3
+for (i in hid){
+  HouseholdVietnam_2C[HouseholdVietnam_2C$o9 == i,c(2044:2102)] <- HouseholdVietnam_2C[HouseholdVietnam_2C$o9 == i,c(1982:1996,1998:2041)]
+  HouseholdVietnam_2C[HouseholdVietnam_2C$o9 == i,c(1982:1996,1998:2041)] <- 'NA'
+}
 
-#There were 330 households raised pigs as important animals, but 318 households participated in
-#the module E4. So please check and impute missing data for 12 households
+#For module E4, There are 11 households raising pigs without information at E4,
+#nothing more to do here
 
+#For module E5, A lot of households are raising poultry (mainly chicken), but didn't fulfiled E5
+#Nothing more to do here for now
 #There were 391 households raised poultries as important animals, but 378 households participated
-#in the module E4. So please check and impute missing data for 13 households
+#in the module E5. So please check and impute missing data for 13 households (in fact more than 13)
 
 #Only households raised buffalo and cattle as important animals (317) will be asked e58,
 #but we have 338 ones replied the question in reality. So please check and redundant data
+#We create a loop to solve this issue
+for (i in 2165:2178){
+HouseholdVietnam_2C[,i] <- ifelse(HouseholdVietnam_2C$e2_1 == '0' & HouseholdVietnam_2C$e2_2 == '0',
+                                             NA,HouseholdVietnam_2C[,i])
+}
+
+Check <- cbind(HouseholdVietnam_2C$e2_1,HouseholdVietnam_2C$e2_2,
+               HouseholdVietnam_2C$e58)
+
+Check2 <- cbind(var_label(HouseholdVietnam_2C)[1982:2041],var_label(HouseholdVietnam_2C)[2044:2102])
+
+Check3 <- cbind(HouseholdVietnam_2C$o9,HouseholdVietnam_2C$e2_1,HouseholdVietnam_2C$e2_2,
+                HouseholdVietnam_2C$e16,HouseholdVietnam_2C[,c(2044:2102)])
 
 
 
@@ -5812,47 +6115,47 @@ match("d81",names(HouseholdVietnam_2C))
 
 # # #a. Duplicates
 #Check the number and id of duplicates
-count_if("TRUE",duplicated(HouMemberVietnam_2$pid))
+count_if("TRUE",duplicated(HouMemberVietnam_2C$pid))
 #Check and remove the real duplicates through automated method
-Dum <- HouMemberVietnam_2[duplicated(HouMemberVietnam_2$pid),]
+Dum <- HouMemberVietnam_2C[duplicated(HouMemberVietnam_2C$pid),]
 idDup <- unique(Dum$hhid_re1)
-DumReal <- HouMemberVietnam_2[HouMemberVietnam_2$hhid_re1 %in% idDup,]
+DumReal <- HouMemberVietnam_2C[HouMemberVietnam_2C$hhid_re1 %in% idDup,]
 DumReal$check <- paste(DumReal$p_no, DumReal$hhid_re1, DumReal$a2, DumReal$a4_1)
 DumReal <- DumReal %>% relocate(check , .after = pid)
 Dupli <- DumReal[duplicated(DumReal$check),]
 Duplic <- rownames(Dupli)
-HouMemberVietnam_2 <- HouMemberVietnam_2[!rownames(HouMemberVietnam_2) %in% Duplic,]
+HouMemberVietnam_2C <- HouMemberVietnam_2C[!rownames(HouMemberVietnam_2C) %in% Duplic,]
 #For some duplicates, we have to do it manually:
 #TO ADAPT TO EACH DATABASE
-HouMemberVietnam_2 <- HouMemberVietnam_2[-c(21,2443),]
+HouMemberVietnam_2C <- HouMemberVietnam_2C[-c(21,2443),]
 #Re-attribute household members numbers when the household id is duplicated for different household members
-Dum <- HouMemberVietnam_2[duplicated(HouMemberVietnam_2$pid),]
+Dum <- HouMemberVietnam_2C[duplicated(HouMemberVietnam_2C$pid),]
 idDup <- unique(Dum$hhid_re1)
 for (i in idDup){
-  HouMemberVietnam_2$p_no[HouMemberVietnam_2$hhid_re1 == i] <- 1:sum(HouMemberVietnam_2$hhid_re1 == i)
+  HouMemberVietnam_2C$p_no[HouMemberVietnam_2C$hhid_re1 == i] <- 1:sum(HouMemberVietnam_2C$hhid_re1 == i)
 }
-HouMemberVietnam_2$pid <- paste(HouMemberVietnam_2$hhid_re1,HouMemberVietnam_2$p_no)
+HouMemberVietnam_2C$pid <- paste(HouMemberVietnam_2C$hhid_re1,HouMemberVietnam_2C$p_no)
 #Check again the duplicates: 
-count_if("TRUE",duplicated(HouMemberVietnam_2$pid))
+count_if("TRUE",duplicated(HouMemberVietnam_2C$pid))
 
-## 4.3 Data cleaning for "ClowlandVietnam_2"
+## 4.3 Data cleaning for "ClowlandVietnam_2C"
 
 # # #a. Duplicates
 #Check the number and id of duplicates
-count_if("TRUE",duplicated(ClowlandVietnam_2$pid))
+count_if("TRUE",duplicated(ClowlandVietnam_2C$pid))
 #Check and remove the real duplicates through automated method
-Dum <- ClowlandVietnam_2[duplicated(ClowlandVietnam_2$pid),]
+Dum <- ClowlandVietnam_2C[duplicated(ClowlandVietnam_2C$pid),]
 idDup <- unique(Dum$hhid_re2)
-DumReal <- ClowlandVietnam_2[ClowlandVietnam_2$hhid_re2 %in% idDup,]
+DumReal <- ClowlandVietnam_2C[ClowlandVietnam_2C$hhid_re2 %in% idDup,]
 DumReal$check <- paste(DumReal$pid, DumReal$d2_13v, DumReal$d2_132)
 DumReal <- DumReal %>% relocate(check , .after = pid)
 Dupli <- DumReal[duplicated(DumReal$check),]
 Duplic <- rownames(Dupli)
 Dupli$pid
-ClowlandVietnam_2 <- ClowlandVietnam_2[!rownames(ClowlandVietnam_2) %in% Duplic,]
+ClowlandVietnam_2C <- ClowlandVietnam_2C[!rownames(ClowlandVietnam_2C) %in% Duplic,]
 #Check again the duplicates:
 
-count_if("TRUE",duplicated(ClowlandVietnam_2$pid))
+count_if("TRUE",duplicated(ClowlandVietnam_2C$pid))
 
 # # #b Outliers part 1
 #Check amount of seeds according to Ky excel file
@@ -5878,15 +6181,20 @@ count_if("TRUE",duplicated(CuplandVietnam_2$pid))
 # Inclure les données des cultures/ménages ou trouver un moyen de faire le lien
 # Corriger les cases contradictoires selon le rapport de Ky
 
+HouseholdVietnam_2C <- copy_labels(HouseholdVietnam_2C, HouseholdVietnam)
+HouMemberVietnam_2C <- copy_labels(HouMemberVietnam_2C, HouMemberVietnam)
+ClowlandVietnam_2C <- copy_labels(ClowlandVietnam_2C, ClowlandVietnam)
+CuplandVietnam_2 <- copy_labels(CuplandVietnam_2, CuplandVietnam)
+
 
 ###5. Data export
 
 
 ##3.3 Export of the database under dta format
-#saveRDS(HouseholdVietnam_2C, "HouseholdVietnam_2C.rds")
-#saveRDS(HouMemberVietnam_2C, "HouMemberVietnam_2C.rds")
-#saveRDS(ClowlandVietnam_2C, "ClowlandVietnam_2C.rds")
-#saveRDS(CuplandVietnam_2, "CuplandVietnam_2.rds")
+saveRDS(HouseholdVietnam_2C, "HouseholdVietnam_2C.rds")
+saveRDS(HouMemberVietnam_2C, "HouMemberVietnam_2C.rds")
+saveRDS(ClowlandVietnam_2C, "ClowlandVietnam_2C.rds")
+saveRDS(CuplandVietnam_2, "CuplandVietnam_2.rds")
 
 
 #rstudioapi::writeRStudioPreference("data_viewer_max_columns", 30L)
