@@ -135,7 +135,7 @@ ListBPlotNO <- function(data,title,list,pond,xT,ylimn,dig){
   print(Plota)
 }
 
-# # #1.2.d. Province Plot for One column results
+# # #1.2.c. List PLOT with province information (as x)
 ListBPlotProv <- function(data,title,pond,ylimn,dig){
   dcount <- data
   #We convert absolute values to % y divinding by the total number of households
@@ -145,6 +145,26 @@ ListBPlotProv <- function(data,title,pond,ylimn,dig){
   dcount$Percentage_of_households <- round(dcount$n/as.numeric(dcount$nbHHtot)*100, digits=0)
   #And now a distribution plot
   plotb <- ggplot(data=dcount, aes(x= `province name (english)`, y=Percentage_of_households, fill = Answer))+
+    geom_bar(colour="black",stat="identity",position = 'dodge')+
+    theme(axis.text.x = element_text(face="bold", size=10,angle = 60))+
+    geom_text(aes(label = Percentage_of_households), vjust = -1, position = position_dodge(0.9))+
+    ylim(ylimn, max(dcount$Percentage_of_households)+20)+
+    scale_fill_brewer(palette="YIGn")+
+    theme_stata()+
+    ggtitle(paste(title,"\n N=", pond))
+  print(plotb)
+}
+
+# # #1.2.d. List PLOT with province information (as fill)
+ListBPlotProv2 <- function(data,title,pond,ylimn,dig){
+  dcount <- data
+  #We convert absolute values to % y divinding by the total number of households
+  dcount$nbHHtot <- ifelse(dcount$'province name (english)' == 'Dien Bien province',
+                           sum(HouseholdVietnam_2C$province_eng_preload == 'Dien Bien province'),
+                           sum(HouseholdVietnam_2C$province_eng_preload == 'Son La province'))
+  dcount$Percentage_of_households <- round(dcount$n/as.numeric(dcount$nbHHtot)*100, digits=0)
+  #And now a distribution plot
+  plotb <- ggplot(data=dcount, aes(x= Answer, y=Percentage_of_households, fill = `province name (english)`))+
     geom_bar(colour="black",stat="identity",position = 'dodge')+
     theme(axis.text.x = element_text(face="bold", size=10,angle = 60))+
     geom_text(aes(label = Percentage_of_households), vjust = -1, position = position_dodge(0.9))+
@@ -336,6 +356,46 @@ CropPlot <- function(data,pond, title,ylimn,ylimx,dig){
   print(Plotb)
 }
 
+# # #1.2.h. CROP PLOT small tables
+#For this function, we should use a database including column with household id 
+#+ 11 columns with binary values for each crops
+CropPlot2 <- function(data,pond, title,ylimn,ylimx,dig){
+  #We replace binary values by crop names
+  for (i in 2:12){
+    data[,i] <- as.character(data[,i])
+    for (j in 1:594){
+      data[j,i] <- ifelse(data[j,i] == '1', dcrops[j,i], data[j,i])
+    }
+  }
+  # We melt data frame into long format
+  dmelt <- melt(data, id.vars = "o9")
+  #We count the answers and filter NA and "no" values
+  dcount <- dmelt %>% count(value)
+  dcountNAR <- dcount %>%  filter(!is.na(value) & value != 0)
+  #We convert absolute values to % y divinding by the total number of households
+  dcountNAR$Percentage_of_households <- round(dcountNAR$n/as.numeric(pond)*100, digits=dig)
+  #We order the table
+  dcountNAR <- dcountNAR[order(-dcountNAR$Percentage_of_households), ]
+  #And now a distribution plot
+  Plota <- ggplot(data=dcountNAR, aes(x= reorder(value, -Percentage_of_households), y=Percentage_of_households, fill = value))+
+    geom_bar(colour="black",stat="identity") +
+    theme_stata()+
+    theme(axis.text.x = element_text(face="bold", size=11, angle = 85), legend.position = "none"
+          , axis.title.x = element_blank())+
+    geom_text(aes(label = Percentage_of_households, vjust = -1))+
+    ylim(ylimn,ylimx)+
+    ggtitle(paste(title,"\n N=",pond))+
+    scale_fill_viridis_d(alpha = 1,
+                         begin = 0,
+                         end = 1,
+                         direction = 1,
+                         option = "E",
+                         na.value = "grey50",
+                         guide = "colourbar",
+                         aesthetics = "fill")
+  print(Plota)
+}
+
 # # #1.2.h. ANIMAL PLOT
 AnimalPlot <- function(data,title,pond){
   data[,2] <- as.character(data[,2])
@@ -371,6 +431,7 @@ AnimalPlot <- function(data,title,pond){
 }
 
 # # #1.3 Preparation of Crops reference table
+{
 #First we turn upland and lowland data to wide format (Duplicate alert = Normal,
 #we had no time to take care of it yet)
 dlowc <- ClowlandVietnam_2C[,c(1:2,9)]
@@ -387,20 +448,22 @@ dcrops <- merge(HHid, dlowcwide, by.x = "hhid_re2", all = T)
 dcrops <- merge(dcrops, dupcwide, by.x = "hhid_re2", all = T)
 #And we remove useless columns
 dcrops <- dcrops[,-c(2,8)]
+}
 
 # # #Preparation of household head table
+{
 Province <- cbind(as.character(HouseholdVietnam_2C$o9),as.character(HouseholdVietnam_2C$province_eng_preload))
 HouMemberProv <- merge(Province, HouMemberVietnam_2C, by.x = "V1", by.y = "hhid_re1")
 HouHead <- HouMemberProv[HouMemberProv$a2 == '1',]
 HouHead <- copy_labels(HouHead, HouMemberVietnam_2C)
 colnames(HouMemberProv)[1:2] <- c("o9","Province")
 colnames(HouHead)[1:2] <- c("o9","Province")
-
+}
 
 ###2. Data analyzes - General
 
 ##2.1 Household characteristics
-
+{
 # # #2.1.a. o10. Are both the man and the woman available for the interview?
 #We create a counting table and a title
 o10count <- count(HouseholdVietnam_2C, o10)
@@ -504,10 +567,10 @@ ylimn <- 0
 dig <- 0
 title <- "How many members in the household ?"
 ListBPlotProvHouM(nhmcount,title,pond,ylimn,dig)
-
+}
 
 ##2.2 Land & Crops characteristics
-
+{
 # # #2.2.a. d1. What kinds of land did your household have in the past 12 months?
 #First, we select the useful data
 d1dat <- HouseholdVietnam_2C[,c(1,23,661:667)]
@@ -756,14 +819,15 @@ ylimx <- 85
 title <- "e2. Which below animal does your household have?"
 dig = 0
 PracticePlot(e2dat,title,pond,pond2,xT,ylimn,ylimx,dig)
-
+}
 
 
 ###3. Data analyzes for Agroecological principles
 
-##3.2 - Recycling
+##3.1 - Recycling
+{
 
-# # #3.2.a. d17. Does your household use ecological/agroecological/integrated practices...
+# # #3.1.a. d17. Does your household use ecological/agroecological/integrated practices...
 #First, we select the useful data
 #We convert it to the proper format
 HouseholdVietnam_2C$d17 <- as.factor(HouseholdVietnam_2C$d17)
@@ -778,7 +842,7 @@ list <- c("yes","no","do not know", "NA")
 #Now we create the table with the corresponding function
 PiePlotYN(d17count,title,list)
 
-# # #3.2.b. d18 - Which of the following ecological/agroecological/integrated practices
+# # #3.1.b. d18 - Which of the following ecological/agroecological/integrated practices
 #does your household use to maintain/enhance soil fertility in your fields?
 #First, we select the useful data
 d18dat <- HouseholdVietnam_2C[,c(1,23,1114:1125)]
@@ -802,35 +866,119 @@ ylimx <- 100
 dig = 0
 PracticePlot(d18dat,title,pond,pond2,xT,ylimn,ylimx,dig)
 
-# # #3.2.c. d18_11. For which crop(s) do you use animal manure?
+# # #3.1.c. d18_11. For which crop(s) do you use animal manure?
 #We prepare the data we want to analyze by replacing yes (&) values by crop name
 d1811dat <- HouseholdVietnam_2C[,c(1,1128:1138)]
 sum(d18dat$d181 == '1')
 s <- summary(d18dat$d181)
 val <- s[2]
-title <- "d18_11. For which crop(s) do you use animal manure? (% of households using animal manure)"
+title <- "d18_11. For which crop(s) do you use animal manure?
+(% of households using animal manure)"
 ylimn <- -20
 ylimx <- 100
 dig = 0
 #We apply the plotting function
 CropPlot(d1811dat,val,title,ylimn,ylimx,dig)
 
-# # #3.2.d d18_21. For which crop(s) do you use Compost (heap)?
+# # #3.1.d. d18_21. For which crop(s) do you use Compost (heap)?
 #We prepare the data we want to analyze by replacing yes (&) values by crop name
 d1821dat <- HouseholdVietnam_2C[,c(1,1142:1152)]
 s <- summary(d18dat$d182)
 val <- s[2]
 title <- "18_21. For which crop(s) do you use compost (heap)?
-(% of households using compost (heap)"
+(% of households using compost)"
 ylimn <- -20
 ylimx <- 60
 dig = 0
 #We apply the plotting function
-CropPlot(d1821dat,val,title,ylimn,ylimx,dig)
+CropPlot2(d1821dat,val,title,ylimn,ylimx,dig)
 
-##3.3 - Input reduction
+# # #3.1.e. d18_31. For which crop(s) do you use Bokashi (fermented organic matter)?
+#We prepare the data we want to analyze by replacing yes (&) values by crop name
+d1831dat <- HouseholdVietnam_2C[,c(1,1156:1166)]
+s <- summary(d18dat$d183)
+val <- s[2]
+title <- "d18_31. For which crop(s) do you use Bokashi (fermented organic matter)?
+(% of households using Bokashi)"
+ylimn <- -20
+ylimx <- 60
+dig = 0
+#We apply the plotting function
+CropPlot2(d1831dat,val,title,ylimn,ylimx,dig)
 
-# # #3.3.a d20. Does your household use any ecological/ agroecological/ integrated practices to control weeds in your fields?
+# # #3.1.f. d18_41. For which crop(s) do you use legume-based green manure?
+#We prepare the data we want to analyze by replacing yes (&) values by crop name
+d1841dat <- HouseholdVietnam_2C[,c(1,1170:1180)]
+s <- summary(d18dat$d184)
+val <- s[2]
+title <- "d18_41. For which crop(s) do you use legume-based green manure?
+(% of households using legume-based green manure)"
+ylimn <- -20
+ylimx <- 80
+dig = 0
+#We apply the plotting function
+CropPlot2(d1841dat,val,title,ylimn,ylimx,dig)
+
+# # #3.1.g. d18_51. For which crop(s) do you use pulses in association and/or rotation with main crop ?
+#We prepare the data we want to analyze by replacing yes (&) values by crop name
+d1851dat <- HouseholdVietnam_2C[,c(1,1184:1194)]
+s <- summary(d18dat$d185)
+val <- s[2]
+title <- "d18_51. For which crop(s) do you use pulses in association and/or rotation with main crop ?
+(% of households using pulses)"
+ylimn <- -20
+ylimx <- 80
+dig = 0
+#We apply the plotting function
+CropPlot2(d1851dat,val,title,ylimn,ylimx,dig)
+
+# # #3.1.h. d18_61. For which crop(s) do you use cover crops in association and/or rotation with main crop ?
+#We prepare the data we want to analyze by replacing yes (&) values by crop name
+d1861dat <- HouseholdVietnam_2C[,c(1,1198:1208)]
+s <- summary(d18dat$d186)
+val <- s[2]
+title <- "d18_61. For which crop(s) do you use cover crops in association and/or rotation with main crop ?
+(% of households using cover crops)"
+ylimn <- -20
+ylimx <- 80
+dig = 0
+#We apply the plotting function
+CropPlot2(d1861dat,val,title,ylimn,ylimx,dig)
+
+# # #3.1.i. d18_71. For which crop(s) do you use Biochar ?
+#No household use biochar
+
+# # #3.1.j. d18_81. For which crop(s) do you use crop residue maintenance?
+#We prepare the data we want to analyze by replacing yes (&) values by crop name
+d1881dat <- HouseholdVietnam_2C[,c(1,1226:1236)]
+s <- summary(d18dat$d188)
+val <- s[2]
+title <- "d18_81. For which crop(s) do you use crop residue maintenance?
+(% of households using crop residue maintenance)"
+ylimn <- -20
+ylimx <- 80
+dig = 0
+#We apply the plotting function
+CropPlot2(d1881dat,val,title,ylimn,ylimx,dig)
+
+# # #3.1.k. d18_91. For which crop(s) do you use recycling crop waste?
+#No household use recycling crop waste
+
+# # #3.1.l. d18_71. d18_101. For which crop(s) do you use ramial Wood Chip (RWC) or other wood chips?
+#No household use RWC
+
+# # #3.1.m. d18_71. d18_101. d18_11. For which crop(s) do you use Organic agro-industrial waste ? 
+#No household use waste
+
+# # #3.1.n. d18_99. For which crop(s) do you use Other ?
+#No interest in these answers as no translation for now
+
+}
+
+##3.2 - Input reduction
+{
+  
+# # #3.2.a. d20. Does your household use any ecological/ agroecological/ integrated practices to control weeds in your fields?
 #First, we select the useful data
 #We convert it to the proper format
 HouseholdVietnam_2C$d20 <- as.factor(HouseholdVietnam_2C$d20)
@@ -842,7 +990,7 @@ list <- c("yes","no","do not know","NA")
 #Now we create the table with the corresponding function
 PiePlotYN(d20count,title,list)
 
-# # #3.3.b d21. Which of the following ecological/agroecological/integrated practices
+# # #3.2.b. d21. Which of the following ecological/agroecological/integrated practices
 #does your household use to control weeds in your fields?
 #First, we select the useful data
 d21dat <- HouseholdVietnam_2C[,c(1,23,1298:1312)]
@@ -863,9 +1011,99 @@ dig = 0
 #Function call
 PracticePlot(d21dat,title,pond,pond2,xT,ylimn,ylimx,dig)
 
+# # #3.2.c. e13. Does your household fertilize the forage or improved pasture?
+#We select appropriate data
+data <- HouseholdVietnam_2C[,c(1,23,1978)]
+#And we change columns names for label names
+colnames(data) <- var_label(data)
+#We can now create a counting table
+dcount <- data %>%
+  count(`province name (english)`,`e13. does your household fertilize the forage or improved pasture?`)
+colnames(dcount)[2] <- "Answer" 
+dcount$Answer <- c("No","Yes","NA","No","Yes","NA")
+title <- "e13. Does your household fertilize the forage or improved pasture?
+- /Province"
+pond <- nrow(HouseholdVietnam_2C)
+ylimn <- 0
+ListBPlotProv(dcount,title,pond,ylimn)
+
+# # #3.2.d. e13_1. if yes, is it with Synthetic fertilizer, Organic manure or Both above ?
+#We select appropriate data
+data <- HouseholdVietnam_2C[,c(1,23,1979)]
+#And we change columns names for label names
+colnames(data) <- var_label(data)
+#We can now create a counting table
+dcount <- data %>%
+  count(`province name (english)`,`e13_1. if yes, is it with`)
+colnames(dcount)[2] <- "Answer"
+dcount <- dcount %>% filter(!is.na(dcount$Answer))
+dcount$Answer <- c("1.Synthetic fertilizer","2.Organic manure","3.Both")
+title <- "e13. Does your household fertilize the forage or improved pasture?
+- /Province"
+pond <- sum(nrow(HouseholdVietnam_2C))
+ylimn <- 0
+ListBPlotProv(dcount,title,pond,ylimn)
+
+# # #3.2.e. e29. Does your household use antibiotics on your cattle/buffalo?
+#First, we select the useful data
+e29dat <- HouseholdVietnam_2C[,c(1,23,2033:2036)]
+#We modify long label names
+var_label(e29dat$e291) <- "For treatment\n diseases only"
+var_label(e29dat$e292) <- "For prevention of\n diseases only"
+var_label(e29dat$e293) <- "For growth\n promotion"
+var_label(e29dat$e290) <- "I don’t use\n antibiotics at all"
+pond <- sum(!is.na(HouseholdVietnam_2C$e16))
+pond2 <- nrow(HouseholdVietnam_2C)
+title <- "e29. Does your household use antibiotics on your cattle/buffalo?"
+xT <- "Answer"
+ylimn <- -15
+ylimx <- 100
+dig = 0
+#Function call
+PracticePlot(e29dat,title,pond,pond2,xT,ylimn,ylimx,dig)
+
+# # #3.2.f. e43. Does your household use antibiotics on your pigs?
+#First, we select the useful data
+e43dat <- HouseholdVietnam_2C[,c(1,23,2094:2097)]
+#We modify long label names
+var_label(e43dat$e431) <- "For treatment\n diseases only"
+var_label(e43dat$e432) <- "For prevention of\n diseases only"
+var_label(e43dat$e433) <- "For growth\n promotion"
+var_label(e43dat$e430) <- "I don’t use\n antibiotics at all"
+pond <- sum(!is.na(HouseholdVietnam_2C$e31))
+pond2 <- nrow(HouseholdVietnam_2C)
+title <- "e43. Does your household use antibiotics on your pigs?"
+xT <- "Answer"
+ylimn <- -15
+ylimx <- 100
+dig = 0
+#Function call
+PracticePlot(e43dat,title,pond,pond2,xT,ylimn,ylimx,dig)
+
+# # #3.2.g. e57. Does your household use antibiotics on your poultry?
+#First, we select the useful data
+e57dat <- HouseholdVietnam_2C[,c(1,23,2156:2159)]
+#We modify long label names
+var_label(e57dat$e571) <- "For treatment\n diseases only"
+var_label(e57dat$e572) <- "For prevention of\n diseases only"
+var_label(e57dat$e573) <- "For growth\n promotion"
+var_label(e57dat$e570) <- "I don’t use\n antibiotics at all"
+pond <- sum(!is.na(HouseholdVietnam_2C$e44))
+pond2 <- nrow(HouseholdVietnam_2C)
+title <- "e57. Does your household use antibiotics on your poultry?"
+xT <- "Answer"
+ylimn <- -15
+ylimx <- 100
+dig = 0
+#Function call
+PracticePlot(e57dat,title,pond,pond2,xT,ylimn,ylimx,dig)
+
+}
   
-##3.4 - Soil health
-# # #3.4.a. Soil conservation practices Yes or No
+##3.3 - Soil health
+{
+
+# # #3.3.a. Soil conservation practices Yes or No
 #First, we select the useful data
 #We convert it to the proper format
 HouseholdVietnam_2C$d140 <- as.factor(HouseholdVietnam_2C$d140)
@@ -877,7 +1115,7 @@ list <- c("yes","no","NA")
 #Now we create the table with the corresponding function
 PiePlotYN(d140count,title,list)
 
-# # #3.4.b. d14. Which of the following soil conservation practices do you use ?
+# # #3.3.b. d14. Which of the following soil conservation practices do you use ?
 #First, we select the useful data
 d14dat <- HouseholdVietnam_2C[,c(1,23,990:997)]
 for (i in 3:10){
@@ -904,10 +1142,12 @@ ylimn <- -10
 ylimx <- 30
 dig = 0
 PracticePlot(d14dat,title,pond,pond2,xT,ylimn,ylimx,dig)
+}
 
+##3.4 - Animal health
+{
 
-##3.5 - Animal health
-# # #3.5.a e58. Can you see the Ribs/ Bones of the ruminants, in the past 1 year?
+# # #3.4.a. e58. Can you see the Ribs/ Bones of the ruminants, in the past 1 year?
 #First, we select the useful data
 #We convert it to the proper format
 HouseholdVietnam_2C$e58 <- as.factor(HouseholdVietnam_2C$e58)
@@ -919,7 +1159,7 @@ list <- c("yes","no","NA")
 #Now we create the table with the corresponding function
 PiePlotYN(e58count,title,list)
 
-# # #3.5.a e58_1. If yes to e58, which months?
+# # #3.4.b. e58_1. If yes to e58, which months?
 #First, we select the useful data
 e58_1dat <- HouseholdVietnam_2C[,c(1,23,2167:2178)]
 #We prepare the parameters for the function
@@ -933,7 +1173,7 @@ ylimx <- 15
 dig = 0
 Monthplot(e58_1dat,title,pond,pond2,xT,ylimn,ylimx,dig)
 
-# # #3.5.c e59. Is there any month in the year when there is a lack of feed for the animals?
+# # #3.4.c e59. Is there any month in the year when there is a lack of feed for the animals?
 #First, we select the useful data
 #We convert it to the proper format
 HouseholdVietnam_2C$e59 <- as.factor(HouseholdVietnam_2C$e59)
@@ -946,7 +1186,7 @@ list <- c("yes","no","NA")
 #Now we create the table with the corresponding function
 PiePlotYN(e59count,title,list)
 
-# # #3.5.a e59_1. If yes to e59, which months?
+# # #3.4.d. e59_1. If yes to e59, which months?
 #First, we select the useful data
 e59_1dat <- HouseholdVietnam_2C[,c(1,23,2181:2192)]
 #We prepare the parameters for the function
@@ -960,9 +1200,117 @@ ylimx <- 40
 dig = 0
 Monthplot(e59_1dat,title,pond,pond2,xT,ylimn,ylimx,dig)
 
-##3.6 - Biodiversity
+# # #3.4.f. e60. Do the animals have access to the water?
+#We select appropriate data
+data <- HouseholdVietnam_2C[,c(1,23,2193)]
+#And we change columns names for label names
+colnames(data) <- var_label(data)
+#We can now create a counting table
+dcount <- data %>%
+  count(`province name (english)`,`e60. do the animals have access to the water?`)
+colnames(dcount)[2] <- "Answer" 
+dcount$Answer <- c("No","Yes","NA","No","Yes","NA")
+title <- "e60. Do the animals have access to the water?
+- /Province"
+pond <- nrow(HouseholdVietnam_2C)
+ylimn <- 0
+ListBPlotProv(dcount,title,pond,ylimn)
 
-# # #3.6.a d32. Do you conserve and use traditional/local seeds?
+# # #3.4.g. e26. Does your household have problems with Cattle/Buffalo parasites?
+#We select appropriate data
+data <- HouseholdVietnam_2C[,c(1,23,2021)]
+#And we change columns names for label names
+colnames(data) <- var_label(data)
+#We can now create a counting table
+dcount <- data %>%
+  count(`province name (english)`,`e26.does your household have problems with cattle/buffalo parasites?`)
+colnames(dcount)[2] <- "Answer" 
+dcount$Answer <- c("No","Yes","NA","No","Yes","NA")
+title <- "e26. Does your household have problems with Cattle/Buffalo parasites?
+- /Province"
+pond <- nrow(HouseholdVietnam_2C)
+ylimn <- 0
+ListBPlotProv(dcount,title,pond,ylimn)
+
+# # #3.4.h. e27. How does your household deal with it? Nothing/ Traditional treatment/
+#Chemicals (define)
+#First, we select the useful data
+e27dat <- HouseholdVietnam_2C[,c(1,23,2024:2026)]
+pond <- sum(!is.na(HouseholdVietnam_2C$e16))
+pond2 <- nrow(HouseholdVietnam_2C)
+title <- "e27. How does your household deal with Cattle/Buffalo parasites?"
+xT <- "Answer"
+ylimn <- -15
+ylimx <- 100
+dig = 0
+#Function call
+PracticePlot(e27dat,title,pond,pond2,xT,ylimn,ylimx,dig)
+
+# # #3.4.i. e40. Does your household have problems with Pigs parasites?
+#We select appropriate data
+data <- HouseholdVietnam_2C[,c(1,23,2082)]
+#And we change columns names for label names
+colnames(data) <- var_label(data)
+#We can now create a counting table
+dcount <- data %>%
+  count(`province name (english)`,`e40. does your household have problems with pigs parasites?`)
+colnames(dcount)[2] <- "Answer" 
+dcount$Answer <- c("No","Yes","NA","No","Yes","NA")
+title <- "e40. Does your household have problems with pigs parasites?
+- /Province"
+pond <- nrow(HouseholdVietnam_2C)
+ylimn <- 0
+ListBPlotProv(dcount,title,pond,ylimn)
+
+# # #3.4.j. e41. How does your household deal with it? Nothing/ Traditional treatment/
+#Chemicals (define)
+#First, we select the useful data
+e41dat <- HouseholdVietnam_2C[,c(1,23,2085:2087)]
+pond <- sum(!is.na(HouseholdVietnam_2C$e31))
+pond2 <- nrow(HouseholdVietnam_2C)
+title <- "e41. How does your household deal with pigs parasites?"
+xT <- "Answer"
+ylimn <- -15
+ylimx <- 100
+dig = 0
+#Function call
+PracticePlot(e41dat,title,pond,pond2,xT,ylimn,ylimx,dig)
+
+# # #3.4.k. e54. Does your household have problems with Poultry parasites?
+#We select appropriate data
+data <- HouseholdVietnam_2C[,c(1,23,2143)]
+#And we change columns names for label names
+colnames(data) <- var_label(data)
+#We can now create a counting table
+dcount <- data %>%
+  count(`province name (english)`,`e54. does your household have problems with poultry parasites?`)
+colnames(dcount)[2] <- "Answer" 
+dcount$Answer <- c("No","Yes","NA","No","Yes","NA")
+title <- "e54. Does your household have problems with poultry parasites?
+- /Province"
+pond <- nrow(HouseholdVietnam_2C)
+ylimn <- 0
+ListBPlotProv(dcount,title,pond,ylimn)
+
+# # #3.4.l. e41. How does your household deal with it? Nothing/ Traditional treatment/
+#Chemicals (define)
+#First, we select the useful data
+e41dat <- HouseholdVietnam_2C[,c(1,23,2146:2148)]
+pond <- sum(!is.na(HouseholdVietnam_2C$e44))
+pond2 <- nrow(HouseholdVietnam_2C)
+title <- "e41. How does your household deal with pigs parasites?"
+xT <- "Answer"
+ylimn <- -15
+ylimx <- 100
+dig = 0
+#Function call
+PracticePlot(e41dat,title,pond,pond2,xT,ylimn,ylimx,dig)
+}
+
+##3.5 - Biodiversity
+{
+
+# # #3.5.a d32. Do you conserve and use traditional/local seeds?
 #First, we select the useful data
 #We create a counting table and a title
 d32count <- count(HouseholdVietnam_2C, d32)
@@ -972,7 +1320,7 @@ list <- c("yes","no","NA")
 #Now we create the table with the corresponding function
 PiePlotYN(d32count,title,list)
 
-# # #3.6.b. d32_1. If Yes to d32, for which crops? 
+# # #3.5.b. d32_1. If Yes to d32, for which crops? 
 #We prepare the data we want to analyze by replacing yes (&) values by crop name
 d32_1dat <- HouseholdVietnam_2C[,c(1,1786:1796)]
 s <- summary(HouseholdVietnam_2C$d32)
@@ -984,7 +1332,7 @@ dig = 0
 #We apply the plotting function
 CropPlot(d32_1dat,val,title,ylimn,ylimx,dig)
 
-# # #3.6.c. e5_b. Do you have any local breeds of  e4_1 at the time of the survey?
+# # #3.5.c. e5_b. Do you have any local breeds of  e4_1 at the time of the survey?
 #First, we select the useful data
 #We create a counting table and a title
 e5_bcount <- count(HouseholdVietnam_2C, e5_b)
@@ -995,7 +1343,7 @@ list <- c("yes","no","NA")
 #Now we create the table with the corresponding function
 PiePlotYN(e5_bcount,title,list)
 
-# # #3.6.c. e5_b_1. Animal diversity for local breeds (most important animal)
+# # #3.5.d. e5_b_1. Animal diversity for local breeds (most important animal)
 #First, we select the useful data
 #We create a counting table and a title
 e5_b_1count <- HouseholdVietnam_2C[,c(1905,1911)]
@@ -1005,9 +1353,30 @@ pond <- s[2]
 #Now we create the table with the corresponding function
 AnimalPlot(e5_b_1count,title,pond)
 
-##3.7 - Synergy
+# # #3.5.e. Number of crops grown during the last 12 months
+HouseholdVietnam_2C$TotCrop <- ifelse(!is.na(HouseholdVietnam_2C$no_crop1),HouseholdVietnam_2C$no_crop1,0) +
+                                ifelse(!is.na(HouseholdVietnam_2C$no_crop2),HouseholdVietnam_2C$no_crop2,0)
+HouseholdVietnam_2C$TotCrop <- as.factor(HouseholdVietnam_2C$TotCrop)
+data <- HouseholdVietnam_2C[,c(1,23,2731)]
+#And we change columns names for label names
+colnames(data) <- var_label(data)
+colnames(data)[3] <- 'ncrop'
+#We can now create a counting table
+dcount <- data %>%
+  count(`province name (english)`,`ncrop`)
+colnames(dcount)[2] <- "Answer" 
+title <- "Number of crops grown during the last 12 months
+- /Province"
+pond <- nrow(HouseholdVietnam_2C)
+ylimn <- 0
+ListBPlotProv(dcount,title,pond,ylimn)
 
-# # #3.7.a. d26. Does your household use agroecological/integrated practices to control pests and disease in your fields? 
+}
+
+##3.6 - Synergy
+{
+
+# # #3.6.a. d26. Does your household use agroecological/integrated practices to control pests and disease in your fields? 
 #First, we select the useful data
 #We create a counting table and a title
 d26count <- count(HouseholdVietnam_2C, d26)
@@ -1018,7 +1387,7 @@ list <- c("yes","no","do not know")
 #Now we create the table with the corresponding function
 PiePlotYN(d26count,title,list)
 
-# # #3.7.b. d27. Which ecological/agroecological/integrated practices do you
+# # #3.6.b. d27. Which ecological/agroecological/integrated practices do you
 #use to control pets and diseases in your fields?
 #First, we select the useful data
 d27dat <- HouseholdVietnam_2C[,c(1,23,1517:1531)]
@@ -1043,15 +1412,89 @@ ylimx <- 30
 dig = 1
 #Function call
 PracticePlot(d27dat,title,pond,pond2,xT,ylimn,ylimx,dig)
+}
 
+##3.7 - Economic diversification
+{
 
-##3.8- Economic diversification
+# # #3.7.a. b1. Does your household sell agricultural products 
+#(crops, vegetables, fruits or processed products) and/or livestock? 
+#First we select useful data
+data <- HouseholdVietnam_2C[,c(1,23,80)]
+#And we change columns names for label names
+colnames(data) <- var_label(data)
+#We can now create a counting table
+dcount <- data %>%
+    count(`province name (english)`,`b1. does your household sell agricultural products (crops, vegetables, fruits or`)
+colnames(dcount)[2] <- "Answer" 
+title <- "b1. Does your household sell agricultural products 
+(crops, vegetables, fruits or processed products) and/or livestock?
+- /Province"
+dcount$Answer <- c("4.No selling\n agri-products","1.Selling own\n crops/fruits/\n vegetable",
+                     "2.Selling own\n livestock products","3.Selling both own\n crops/fruits/vegetables\n and livestock products",
+                     "5.Do not know","6.NA")
+pond <- nrow(HouseholdVietnam_2C)
+ylimn <- 0
+ListBPlotProv2(dcount,title,pond,ylimn)
 
-# # #3.8.a. (Need to create an indicator including all the product household sell,
+# # #3.7.b. b2. Does your household sell derived/processed products and which?
+#First we select useful data
+data <- HouseholdVietnam_2C[,c(1,23,81)]
+#And we change columns names for label names
+colnames(data) <- var_label(data)
+#We can now create a counting table
+dcount <- data %>%
+  count(`province name (english)`,`b2. does your household sell derived/processed products and which?`)
+colnames(dcount)[2] <- "Answer" 
+title <- "b2. Does your household sell derived/processed products and which?
+- /Province"
+dcount$Answer <- c("4.No processed/derived agri-products","1.Selling processed products from crops","3.Selling both above processed/derived agri-products")
+pond <- nrow(HouseholdVietnam_2C)
+ylimn <- 0
+ListBPlotProv2(dcount,title,pond,ylimn)
+  
+# # #3.7.c. (Need to create an indicator including all the product household sell,
 #animal and crops)
-#TO DO
+#1st for lowland
+Province <- cbind(as.character(HouseholdVietnam_2C$o9),as.character(HouseholdVietnam_2C$province_eng_preload))
+LowlandProv <- merge(Province, ClowlandVietnam_2C, by.x = "V1", by.y = "hhid_re2")
+colnames(LowlandProv)[1:2] <- c("o9","Province")
+LowlandSold <- LowlandProv %>% filter(LowlandProv$d2_136 == 0)
+ncrop_soldl <- LowlandSold %>%
+  count(`Province`,`o9`)
+#2nd for upland
+UplandProv <- merge(Province, CuplandVietnam_2C, by.x = "V1", by.y = "hhid_re3")
+colnames(UplandProv)[1:2] <- c("o9","Province")
+UplandSold <- UplandProv %>% filter(UplandProv$d2_236 == 0)
+ncrop_soldu <- UplandSold %>%
+  count(`Province`,`o9`)
+#3rd for the 3 main animals
+AniSold <- HouseholdVietnam_2C[,c(1,23,1918,1946,1965)]
+for (i in 3:5){
+  AniSold[,i] <- ifelse(AniSold[,i] > 0, '1', '0')
+  AniSold[,i] <- as.numeric(AniSold[,i])
+}
+AniSold$Nani <- AniSold$e5_4 + AniSold$e6_4 + AniSold$e7_4
+#Now we merge these 3 tables together
+Dummy <- merge(ncrop_soldl, ncrop_soldu, by = "o9", all = T)
+SoldProd <- merge(AniSold,Dummy, by = "o9", all = T)
+SoldProd$SoldProdTot <- as.numeric(ifelse(!is.na(SoldProd$Nani), SoldProd$Nani,'0'))+ 
+  as.numeric(ifelse(!is.na(SoldProd$n.x), SoldProd$n.x,'0'))+
+  as.numeric(ifelse(!is.na(SoldProd$n.y), SoldProd$n.y,'0'))
+SoldProd <- SoldProd[,c(1:2,11)]
+colnames(SoldProd)[2] <- "province name (english)"
+dcount <- SoldProd %>%
+  count(`province name (english)`,`SoldProdTot`)
+colnames(dcount)[2] <- "Answer"
+dcount$Answer <- as.factor(dcount$Answer)
+title <- "Number of crop or animal products sold by the household
+(Including only the 3 first animal products)
+- /Province"
+pond <- nrow(HouseholdVietnam_2C)
+ylimn <- 0
+ListBPlotProv2(dcount,title,pond,ylimn)
 
-# # #3.8.b. b9.Are there specific months of the year in which you face financial difficulties?
+# # #3.7.d. b9.Are there specific months of the year in which you face financial difficulties?
 #First, we select the useful data
 #We convert it to the proper format
 HouseholdVietnam_2C$b9 <- as.factor(HouseholdVietnam_2C$b9)
@@ -1064,7 +1507,7 @@ list <- c("yes","no")
 #Now we create the table with the corresponding function
 PiePlotYN(b9count,title,list)
 
-# # #3.8.c. b9_1. If yes to b9, which months?
+# # #3.7.e. b9_1. If yes to b9, which months?
 #First, we select the useful data
 b9_1dat <- HouseholdVietnam_2C[,c(1,23,182:193)]
 #We prepare the parameters for the function
@@ -1077,10 +1520,12 @@ ylimn <- 0
 ylimx <- 60
 dig = 0
 Monthplot(b9_1dat,title,pond,pond2,xT,ylimn,ylimx,dig)
+}
 
-##3.9 - Co-creation of knowledge
+##3.8 - Co-creation of knowledge
+{
 
-# # #3.9.a. c14. Do you exchange your agricultural products,
+# # #3.8.a. c14. Do you exchange your agricultural products,
 #equipment or animals with other farmers? 
 #First, we select the useful data
 #We convert it to the proper format
@@ -1094,7 +1539,7 @@ list <- c("yes","no")
 #Now we create the table with the corresponding function
 PiePlotYN(c14count,title,list)
 
-# # #3.9.b. f4. Do you have sufficient time to acquire new knowledge
+# # #3.8.b. f4. Do you have sufficient time to acquire new knowledge
 #and improve your skills?
 #We convert data to the proper format
 HouseholdVietnam_2C$f4 <- as.factor(HouseholdVietnam_2C$f4)
@@ -1109,10 +1554,12 @@ xT = "Answer"
 ylimn <- -20
 #Now we create the table with the corresponding function
 ListBPlotNO(f4count,title,list,pond,xT,ylimn)
+}
 
-##3.10 - Social value and diet
+##3.9 - Social value and diet
+{
 
-# # #3.10.a. i1. In general, what is the proportion of the food (rice, vegetable, animal
+# # #3.9.a. i1. In general, what is the proportion of the food (rice, vegetable, animal
 #products, etc.) consumed by your family that comes from your own farm or homegarden?
 #First, we select the useful data
 #We convert it to the proper format
@@ -1127,7 +1574,7 @@ xT = "Answer"
 ylimn <- -20
 ListBPlotNO(i1count,title,list,pond,xT,ylimn)
 
-# # #3.10.b g5. Do you think the working hours (including household chores and taking 
+# # #3.9.b g5. Do you think the working hours (including household chores and taking 
 #care of family members) across family members are equitably distributed?
 #First, we select the useful data
 #We convert it to the proper format
@@ -1141,9 +1588,83 @@ members are equitably distributed?"
 #Now we create the table with the corresponding function
 PiePlotYN(g5count,title,list)
 
-##3.11 - Fairness
+# # #3.9.c. i2. Were there months, in the past 12 months, in which you did 
+#not have enough food to meet your family’s needs?
+#We create a counting table and a title
+i2count <- count(HouseholdVietnam_2C, i2)
+title <- "i2. Are there specific months of the year in which
+you face financial difficulties?"
+i2count <- i2count[c("2","1"),]
+list <- c("yes","no")
+#Now we create the table with the corresponding function
+PiePlotYN(i2count,title,list)
 
-# # #3.11.a. b22. Did you sell any certified crop/vegetables/fruit/livestock
+# # #3.9.d. i3. If yes, which were the months in the past 12 months during 
+#which you did not have enough food to meet your family’s needs? 
+#First, we select the useful data
+i3dat <- HouseholdVietnam_2C[,c(1,23,2225:2236)]
+#We prepare the parameters for the function
+s <- summary(as.factor(HouseholdVietnam_2C$i2))
+pond <- s[2]
+pond2 <- nrow(HouseholdVietnam_2C)
+title <- "i3. If yes, which were the months in the past 12 months during 
+#which you did not have enough food to meet your family’s needs?"
+xT <- "Months"
+ylimn <- 0
+ylimx <- 60
+dig = 0
+Monthplot(i3dat,title,pond,pond2,xT,ylimn,ylimx,dig)
+
+# # #3.9.e. g1. Who makes the decision on what (e.g. crops, animals) and how to 
+#produce (e.g., with or without herbicide, tillage or no tillage, compost or chemical fertiliser)?
+#We create a counting table and a title
+g1count <- count(HouseholdVietnam_2C, g1)
+title <- "g1.  Who makes the decision on what (e.g. crops, animals) 
+and how to produce ?"
+list <- c("Myself alone","Me in consultation with spouse/other family members",
+          "My spouse/other family members")
+pond <- sum(g1count$n)
+#Now we create the table with the corresponding function
+PiePlot(g1count,title,list)
+
+# # #3.9.f. g2. Who makes the decision on purchasing, selling, or transferring major 
+#household assets (land, cattle, equipment)?
+#We create a counting table and a title
+g2count <- count(HouseholdVietnam_2C, g2)
+title <- "g2.  Who makes the decision on purchasing, selling,
+or transferring major household assets ?"
+list <- c("Myself alone","Me in consultation with spouse/other family members",
+          "My spouse/other family members", "Do not know")
+pond <- sum(g2count$n)
+#Now we create the table with the corresponding function
+PiePlot(g2count,title,list)
+
+# # #3.9.g. g3. Who makes the decision on borrowing or lending money?
+#We create a counting table and a title
+g3count <- count(HouseholdVietnam_2C, g3)
+title <- "g3. Who makes the decision on borrowing or lending money?"
+list <- c("Myself alone","Me in consultation with spouse/other family members",
+          "My spouse/other family members", "Do not know")
+pond <- sum(g3count$n)
+#Now we create the table with the corresponding function
+PiePlot(g3count,title,list)
+
+# # #3.9.h. g4. Who makes the decision about how the household income is used?
+#We create a counting table and a title
+g4count <- count(HouseholdVietnam_2C, g4)
+title <- "g4. Who makes the decision about how the household income is used?"
+list <- c("Myself alone","Me in consultation with spouse/other family members",
+          "My spouse/other family members", "Do not know")
+pond <- sum(g4count$n)
+#Now we create the table with the corresponding function
+PiePlot(g4count,title,list)
+
+}
+
+##3.10 - Fairness
+{
+
+# # #3.10.a. b22. Did you sell any certified crop/vegetables/fruit/livestock
 #related product in the past year/12 months?
 #First, we select the useful data
 #We convert it to the proper format
@@ -1157,7 +1678,24 @@ related product in the past year/12 months?"
 #Now we create the table with the corresponding function
 PiePlotYN(b22count,title,list)
 
-# # #3.11.b. c8. Did you sign a contract whereby the buyer commits to buy 
+# # #3.10.b. b22_1. If yes, which one(s)? 
+#First, we select the useful data
+b22_1dat <- HouseholdVietnam_2C[,c(1,23,245:259)]
+#We modify long label names
+var_label(b22_1dat$b22_113) <- "Dried meat (pork,\n beef, etc.)"
+#We prepare the parameters for the function
+s <- summary(as.factor(HouseholdVietnam_2C$b22))
+pond <- s[2]
+pond2 <- nrow(HouseholdVietnam_2C)
+title <- "b22_1. If yes, which one(s)?"
+xT <- "Certified crops"
+ylimn <- -20
+ylimx <- 110
+dig = 0
+#Function Call
+PracticePlot(b22_1dat,title,pond,pond2,xT,ylimn,ylimx,dig)
+
+# # #3.10.c. c8. Did you sign a contract whereby the buyer commits to buy 
 #from you following some at specific conditions (price, volume, quality, time...)?
 #First, we select the useful data
 #We convert it to the proper format
@@ -1173,32 +1711,85 @@ ylimn <- -20
 #Now we create the table with the corresponding function
 ListBPlotNO(c8count,title,list,pond,xT,ylimn)
 
-##3.12 - Connectivity
-
-# # #3.12.a. c13. Do you collaborate with other people for any task ?
+# # #3.10.d. b14_1. Does “buyer” provide any of the following
 #First, we select the useful data
-c13dat <- HouseholdVietnam_2C[,c(1,23,647:653,655)]
+b14_1dat <- HouseholdVietnam_2C[,c(1,23,717:725)]
+#We prepare the parameters for the function
+pond <- sum(!is.na(HouseholdVietnam_2C$b12_1))
+pond2 <- nrow(HouseholdVietnam_2C)
+title <- "b14_1. Does “buyer” provide any of the following ?"
+xT <- "Answer"
+ylimn <- -20
+ylimx <- 100
+dig = 0
+#Function Call
+PracticePlot(b14_1dat,title,pond,pond2,xT,ylimn,ylimx,dig)
+
+# # #3.10.e. b14_2. Does “buyer” provide any of the following
+#First, we select the useful data
+b14_2dat <- HouseholdVietnam_2C[,c(1,23,742:750)]
+#We prepare the parameters for the function
+pond <- sum(!is.na(HouseholdVietnam_2C$b12_2))
+pond2 <- nrow(HouseholdVietnam_2C)
+title <- "b14_2. Does “buyer” provide any of the following ?"
+xT <- "Answer"
+ylimn <- -20
+ylimx <- 100
+dig = 0
+#Function Call
+PracticePlot(b14_2dat,title,pond,pond2,xT,ylimn,ylimx,dig)
+
+# # #3.10.f. l7. In general, does your household have difficulties paying
+#back your loans?
+#We create a counting table and a title
+l7count <- count(HouseholdVietnam_2C, l7)
+title <- "l7. In general, does your household have difficulties paying
+back your loans ?"
+l7count <- l7count[c("2","1","3"),]
+list <- c("yes","no","NA")
+#Now we create the table with the corresponding function
+PiePlotYN(l7count,title,list)
+
+# # #3.10.g. h1. Would you like your children to be farmers too?
+#We create a counting table and a title
+h1count <- count(HouseholdVietnam_2C, h1)
+title <- "h1. Did you sign a contract whereby the buyer commits to buy 
+from you following some at specific conditions (price, volume, quality, time...)?"
+list <- c("1. Yes, strongly","2. Yes, maybe","3. They should emigrate\n if they had the chance",
+          "4. No, agriculture is\n not a good job","5. Do not know")
+pond <- nrow(HouseholdVietnam_2C)
+xT = "Answer"
+ylimn <- -20
+#Now we create the table with the corresponding function
+ListBPlotNO(h1count,title,list,pond,xT,ylimn)
+}
+
+##3.11 - Connectivity
+{
+
+# # #3.11.a. b22_1. Do you collaborate with other people for any task ?
+#First, we select the useful data
+b22_1dat <- HouseholdVietnam_2C[,c(1,23,647:653,655)]
 #We modify long label names
-var_label(c13dat$c131) <- "Share labor (mutual\n help, working together\n on each other farm)"
-var_label(c13dat$c132) <- "Manage water/\nirrigation systems"
-var_label(c13dat$c134) <- "Buy agricultural\n inputs"
-var_label(c13dat$c135) <- "Selling products\n to the markets for\n other farmers"
-var_label(c13dat$c136) <- "Experiment new\n farming practices"
-var_label(c13dat$c130) <-"No collaboration\n with other people\n on these issues"
+var_label(b22_1dat$b22_11) <- "Share labor (mutual\n help, working together\n on each other farm)"
+var_label(b22_1dat$b22_12) <- "Manage water/\nirrigation systems"
+var_label(b22_1dat$b22_14) <- "Buy agricultural\n inputs"
+var_label(b22_1dat$b22_15) <- "Selling products\n to the markets for\n other farmers"
+var_label(b22_1dat$b22_16) <- "Experiment new\n farming practices"
+var_label(b22_1dat$b22_10) <-"No collaboration\n with other people\n on these issues"
 #We prepare the parameters for the function
 s <- summary(as.factor(HouseholdVietnam_2C$b9))
 pond <- s[2]
 pond2 <- sum(d17count$n)
-title <- "c13. Do you collaborate with other people for any task ?"
+title <- "b22_1. Do you collaborate with other people for any task ?"
 xT <- "Months"
 ylimn <- -20
 ylimx <- 100
 dig = 0
 #Function Call
-PracticePlot(c13dat,title,pond,pond2,xT,ylimn,ylimx,dig)
+PracticePlot(b22_1dat,title,pond,pond2,xT,ylimn,ylimx,dig)
 
-
-# # #3.12.b c15. Are you involved in some form of advocacy work (aiming 
+# # #3.11.b c15. Are you involved in some form of advocacy work (aiming 
 #to influence decision-making within political institutions)?
 #First, we select the useful data
 #We convert it to the proper format
@@ -1212,9 +1803,67 @@ list <- c("yes","no")
 #Now we create the table with the corresponding function
 PiePlotYN(c15count,title,list)
 
-##3.13 - Land and natural resource governance
+# # #3.11.c f3.Do you have enough time for your family and your social relationships?
+#We create a counting table and a title
+f3count <- count(HouseholdVietnam_2C, f3)
+title <- "f3.Do you have enough time for your family and your social relationships?"
+list <- c("1. No time","2. Very little time","3. Moderate amount of time",
+          "4. Almost enough time","5. Sufficient amount of time")
+pond <- nrow(HouseholdVietnam_2C)
+xT = "Answer"
+ylimn <- -20
+#Now we create the table with the corresponding function
+ListBPlotNO(f3count,title,list,pond,xT,ylimn)
 
-# # #3.13.a. l1. In the past year/12 months, did your household benefit from government
+# # #3.11.d b10. If you sell crops/vegetables/fruits or processed products,
+#do you know what is their main final destination?
+#First we select useful data
+data <- HouseholdVietnam_2C[,c(1,23,230)]
+#And we change columns names for label names
+colnames(data) <- var_label(data)
+#We can now create a counting table
+dcount <- data %>%
+  count(`province name (english)`,`b10. if you sell crops/vegetables/fruits or processed products, do you know what`)
+colnames(dcount)[2] <- "Answer" 
+title <- "b10. If you sell crops/vegetables/fruits or processed products,
+#do you know what is their main final destination?
+- /Province"
+dcount$Answer <- c("1.The local market",
+                   "2.The provincial/national market","3.Export","4.Other",
+                   "6.Do not know","7.NA","5.No","1.The local market",
+                   "2.The provincial/national market","3.Export","4.Other",
+                   "6.Do not know","7.NA")
+pond <- nrow(HouseholdVietnam_2C)
+ylimn <- 0
+ListBPlotProv(dcount,title,pond,ylimn)
+
+# # #3.11.d b16. If you sell livestock or livestock derived products, 
+#do you know what is their main final destination?
+#First we select useful data
+data <- HouseholdVietnam_2C[,c(1,23,240)]
+#And we change columns names for label names
+colnames(data) <- var_label(data)
+#We can now create a counting table
+dcount <- data %>%
+  count(`province name (english)`,`b16. if you sell livestock or livestock derived products, do you know what is th`)
+colnames(dcount)[2] <- "Answer" 
+title <- "b16. If you sell livestock or livestock derived products, 
+#do you know what is their main final destination?
+- /Province"
+dcount$Answer <- c("1.The local market",
+                   "2.The provincial/national market","4.Other",
+                   "6.Do not know","7.NA","5.No","1.The local market",
+                   "2.The provincial/national market","4.Other",
+                   "6.Do not know","7.NA")
+pond <- nrow(HouseholdVietnam_2C)
+ylimn <- 0
+ListBPlotProv(dcount,title,pond,ylimn)
+}
+
+##3.12 - Land and natural resource governance
+{
+
+# # #3.12.a. l1. In the past year/12 months, did your household benefit from government
 #subsidies to support investment in production or commercialization activities?
 #We create a counting table and a title
 l1count <- count(HouseholdVietnam_2C, l1)
@@ -1226,8 +1875,7 @@ list <- c("yes","no")
 #Now we create the table with the corresponding function
 PiePlotYN(l1count,title,list)
 
-
-# # #3.13.b. l2. How much of your total household income in 2022 did these 
+# # #3.12.b. l2. How much of your total household income in 2022 did these 
 #government subsidies represent?
 #First, we select the useful data
 #We convert it to the proper format
@@ -1244,7 +1892,7 @@ ylimn <- -20
 #Now we create the table with the corresponding function
 ListBPlotNO(l2count,title,list,pond,xT,ylimn)
 
-# # #3.13.c. d9-10-11. Land ownership
+# # #3.12.c. d9-10-11. Land ownership
 #First, we select the useful data
 d9_1dat <- HouseholdVietnam_2C[,c(1,23,847,849,851)]
 #We modify long label names
@@ -1263,10 +1911,23 @@ dig = 1
 #Function call
 PracticePlot(d9_1dat,title,pond,pond2,xT,ylimn,ylimx,dig)
 
+# # #3.12.c. e12. Does your household have private land to feed the animals?
+HouseholdVietnam_2C$OwnPast <- ifelse(HouseholdVietnam_2C$e12_1 == '1' |
+                                        HouseholdVietnam_2C$e12_3 == '1' |
+                                        HouseholdVietnam_2C$e12_5 == '1', '1', '0')
+#We create a counting table and a title
+e12count <- count(HouseholdVietnam_2C, OwnPast)
+title <- "e12. Does your household have private land to feed the animals?"
+e12count <- e12count[c("2","1","3"),]
+list <- c("yes","no","NA")
+#Now we create the table with the corresponding function
+PiePlotYN(e12count,title,list)
+}
 
-##3.14 - Participation
+##3.13 - Participation
+{
 
-# # #3.14.a. c2. Are you a member of one or more farmer organization (e.g. crops/fruits/
+# # #3.13.a. c2. Are you a member of one or more farmer organization (e.g. crops/fruits/
 #livestock/honey/ water/Forest etc)?
 #First, we select the useful data
 #We convert it to the proper format
@@ -1282,7 +1943,7 @@ ylimn <- -20
 #Now we create the table with the corresponding function
 ListBPlotNO(c2count,title,list,pond,xT,ylimn)
 
-# # #3.14.b. c1. Are you or anyone in your household active in one or several
+# # #3.13.b. c1. Are you or anyone in your household active in one or several
 #Unions? YN
 #We create a counting table and a title
 c1_0count <- count(HouseholdVietnam_2C, c1_0)
@@ -1293,7 +1954,7 @@ list <- c("yes","no")
 #Now we create the table with the corresponding function
 PiePlotYN(c1_0count,title,list)
 
-# # #3.14.c. c1. Are you or anyone in your household active in one or several
+# # #3.13.c. c1. Are you or anyone in your household active in one or several
 #of the following?
 #First, we select the useful data
 c1dat <- HouseholdVietnam_2C[,c(1,23,581:589)]
@@ -1316,7 +1977,7 @@ ylimx <- 85
 dig = 0
 #Function Call
 PracticePlot(c1dat,title,pond,pond2,xT,ylimn,ylimx,dig)
-
+}
 
 
   

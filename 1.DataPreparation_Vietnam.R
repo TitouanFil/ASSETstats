@@ -5748,7 +5748,6 @@ HouseholdVietnam_2C$k2_15 <- ifelse(HouseholdVietnam_2C$k2_15 > 10, NA,Household
 HouseholdVietnam_2C$k2_19 <- ifelse(HouseholdVietnam_2C$k2_19 > 10, NA,HouseholdVietnam_2C$k2_19)
 
 
-
 # # #c. Corresponding fields
 #-	There were 13 households who did no selling agri-products (at b1) but they still selected 3
 #main sources of income from crop production and livestock raising (b3). Please review list below
@@ -5790,7 +5789,6 @@ HouseholdVietnam_2C$d83_1a <- as.character(HouseholdVietnam_2C$d83_1a)
 HouseholdVietnam_2C$d83_1a <- ifelse(is.na(HouseholdVietnam_2C$d83) & !is.na(HouseholdVietnam_2C$d83_1a), NA, HouseholdVietnam_2C$d83_1a)
 HouseholdVietnam_2C$d83_1a  <- as.factor(HouseholdVietnam_2C$d83_1a)
 
-
 #We have 578 hhs with lowland or upland but d12 on water conservation practice have 581
 #MANUAL, NEED TO MODIFY IT
 HouseholdVietnam_2C$d12 <- ifelse(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2), NA, HouseholdVietnam_2C$d12)
@@ -5821,7 +5819,6 @@ sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & 
 #Check for d138_1 & d138_2, Crops for which you use this practice and main motivation
 sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d138_1 != '')
 sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d138_2))
-
 
 #We have 578 hhs with lowland or upland but d14 on soil conservation practice have 575
 #MANUAL, NEED TO MODIFY IT
@@ -5915,7 +5912,6 @@ sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & 
 sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d18_111_a != '')
 sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d18_112))
 
-
 #For d19, one hh answered while he mentionned to have implemented this practice
 HouseholdVietnam_2C$d19 <- as.character(HouseholdVietnam_2C$d19)
 HouseholdVietnam_2C$d19 <- ifelse(HouseholdVietnam_2C$d17 == '2' & !is.na(HouseholdVietnam_2C$d19), NA, HouseholdVietnam_2C$d19)
@@ -5930,7 +5926,6 @@ HouseholdVietnam_2C$d20 <- ifelse(HouseholdVietnam_2C$no_crop1 == '' & Household
 x <- paste(HouseholdVietnam_2C$no_crop1,HouseholdVietnam_2C$no_crop2)
 HouseholdVietnam_2C$d20 <- ifelse( x != " " & is.na(HouseholdVietnam_2C$d20), '0', HouseholdVietnam_2C$d20)
 HouseholdVietnam_2C$d20 <- as.factor(HouseholdVietnam_2C$d20)
-
 
 #Check for d21_12 & d21_13, Crops for which you use this practice and main motivation
 sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d21_12 != '')
@@ -5974,7 +5969,6 @@ sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & 
 #Check for d21_992 & d21_993, Crops for which you use this practice and main motivation
 sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d21_992 != '')
 sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d21_993))
-
 
 #For d22, one hh answered while he mentionned to have implemented this practice
 HouseholdVietnam_2C$d22 <- as.character(HouseholdVietnam_2C$d22)
@@ -6100,16 +6094,6 @@ for (i in 2165:2178){
 HouseholdVietnam_2C[,i] <- ifelse(HouseholdVietnam_2C$e2_1 == '0' & HouseholdVietnam_2C$e2_2 == '0',
                                              NA,HouseholdVietnam_2C[,i])
 }
-
-Check <- cbind(HouseholdVietnam_2C$e2_1,HouseholdVietnam_2C$e2_2,
-               HouseholdVietnam_2C$e58)
-
-Check2 <- cbind(var_label(HouseholdVietnam_2C)[1982:2041],var_label(HouseholdVietnam_2C)[2044:2102])
-
-Check3 <- cbind(HouseholdVietnam_2C$o9,HouseholdVietnam_2C$e2_1,HouseholdVietnam_2C$e2_2,
-                HouseholdVietnam_2C$e16,HouseholdVietnam_2C[,c(2044:2102)])
-
-
 
 ## 4.2C Data cleaning for "HouMemberVietnam_2"
 
