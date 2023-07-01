@@ -100,7 +100,7 @@ count_if("TRUE",duplicated(HouseholdLaos[,17]))
 var_label(HouseholdLaos$header_name_preload) <- "header's name (lao)"
 #C32 = NUMERIC, Age instead of solar year, change label names (see if necessary to change also column name)
 var_label(HouseholdLaos$year_birth_preload) <- "header's age (years)"
-#C33 = ASK KY TO GET THE REAL VALUES, NOT POSSIBLE TO GET THEM UNDER THIS FORMAT
+#C33 = CHAR
 #C34 = FACT, (Should replace "20")
 #C35 = FACT, (Same than "23")
 #C36 = FACT, (Same than "26")
@@ -117,20 +117,20 @@ var_label(HouseholdLaos$year_birth_preload) <- "header's age (years)"
 #C46 = FACT, (1 =	Less than 1 year, 2 =	1-5 year, 3 =	5-10 years, 4 = More than 10 years)
 #C47 = FACT, (1 =	Other commune within district, 2 = Another district within province, 3 = Another province)
 #C48 = FACT (the answer is still in Lao, Ky will maybe solve it)
-#C49 = OK
-#C50 = OK
+#C49 = CHAR
+#C50 = CHAR
 #C51 = FACT, (We don't have the correspondence for this question in the questionaire...)
 #C52 = REMOVE (Text from the questionnaire)
 
 # # #a.
 #C53 = OK
-#C54 = NI
-#C55 = NI
-#C56 = NI
-#C57 = NI
-#C58 = NI
-#C59 = NI
-#C60 = NI
+#C54 = CHAR, NI
+#C55 = CHAR, NI
+#C56 = CHAR, NI
+#C57 = CHAR, NI
+#C58 = CHAR, NI
+#C59 = CHAR, NI
+#C60 = CHAR, NI
 #C61 = NUMERIC
 #C62 = FACT, (table of correspondence), (see answers below)
 #Death or health problem of one household member 
@@ -1322,7 +1322,7 @@ var_label(HouseholdLaos$b13_0211) <- "Upland crop n6"
 #Over 75%
 #Do not know
 #C698 = CHAR, (Useless answer-MultipleCombined, use the following columns), replace label: "does b12_1 provide any of the following"
-var_label(HouseholdLaos$b14_2) <- "does b12_1 provide any of the following"
+var_label(HouseholdLaos$b14_2) <- "does b12_2 provide any of the following"
 #C699 = FACT, empty, replace label: "Inputs (sold)"
 var_label(HouseholdLaos$b14_20) <- "Inputs (sold)"
 #C700 = FACT, empty, replace label: "Inputs on credit"
@@ -4625,10 +4625,10 @@ var_label(HouseholdLaos$l688) <- "Do not know"
 #Household moved to a new location
 #C2302 = OK, (the answer is still in Lao, Ky will maybe solve it)
 #C2303 = REMOVE, (duplicate)
-#C2304 = OK
-#C2305 = OK
-#C2306 = OK
-#C2307 = OK
+#C2304 = FACT
+#C2305 = FACT
+#C2306 = FACT
+#C2307 = FACT
 #C2308 = REMOVE, (text from questionnaire)
 #C2309 = OK, (???)
 #C2310 = CHAR, kind of id?
@@ -4678,6 +4678,7 @@ var_label(HouMemberLaos$a3) <- "a3. what is the sex of a1 ?"
 #C9 = FACT, (table of correspondence), (see answers below), replace label: "a4. what is a1's solar year of birth ?"
 var_label(HouMemberLaos$a4) <- "a4. what is a1's solar year of birth ?"
 #C10 = NUM, replace label: "Age (years)"
+HouMemberLaos$a4_1 <- 2022 - HouMemberLaos$a4
 var_label(HouMemberLaos$a4_1) <- "Age (years)"
 #C11 = FACT, (table of correspondence), (see answers below), replace label: "a5. what is the highest diploma a1 has obtained ?"
 var_label(HouMemberLaos$a5) <- "a5. what is the highest diploma a1 has obtained ?"
@@ -4857,7 +4858,7 @@ var_label(ClowlandLaos$d2_12) <- "d2_12. select crop crop1_now with keyword sear
 var_label(ClowlandLaos$d2_13v) <- "d2_13v. Crop name (Lao)"
 #C8 = OK, (crop name in English) replace label: "d2_13e. Crop name (English)"
 var_label(ClowlandLaos$d2_13e) <- "d2_13e. Crop name (English)"
-#C9 = ???
+#C9 = FACT, ???
 #C10 = NUM, replace label: "d2_132. what is the total area of all plots where you grow crop_1 (m2) ?"
 var_label(ClowlandLaos$d2_132) <- "d2_132. what is the total area of all plots where you grow crop_1 (m2) ?"
 #C11 = FACT, (table of correspondence), (see option below), replace label: "d2_133. which unit of d2_13v ?"
@@ -4871,7 +4872,7 @@ var_label(ClowlandLaos$d2_134) <- "d2_134. number of seed units of d2_13v that h
 var_label(ClowlandLaos$d2_135) <- "d2_135. number of kg produced of d2_13v ?"
 #C14 = OK, replace label: "d2_136.number of kg sold of d2_13v"
 var_label(ClowlandLaos$d2_136) <- "d2_136.number of kg sold of d2_13v"
-#C15 = OK, replace label: "d2_137.number of kg sold of d2_13v"
+#C15 = OK, replace label: "d2_137. selling price/ kg of d2_13v"
 var_label(ClowlandLaos$d2_137) <- "d2_137. selling price/ kg of d2_13v"
 #C16 = OK, replace label: "d2_138. how many species or varieties of d2_13v ?"
 var_label(ClowlandLaos$d2_138) <- "d2_138. how many species or varieties of d2_13v ?"
@@ -4905,7 +4906,7 @@ var_label(CuplandLaos$d2_22) <- "d2_22. select crop crop1_now with keyword searc
 var_label(CuplandLaos$d2_23v) <- "d2_23v. Crop name (Lao)"
 #C7 = OK, (crop name in English) replace label: "d2_23e. Crop name (English)"
 var_label(CuplandLaos$d2_23e) <- "d2_23e. Crop name (English)"
-#C8 = ???
+#C8 = FACT, ???
 #C9 = NUM, replace label: "d2_232. what is the total area of all plots where you grow crop_1 (m2) ?"
 var_label(CuplandLaos$d2_232) <- "d2_232. what is the total area of all plots where you grow crop_1 (m2) ?"
 #C10 = FACT, (table of correspondence), (see option below), replace label: "d2_233. which unit of d2_23v ?"
@@ -4919,7 +4920,7 @@ var_label(CuplandLaos$d2_234) <- "d2_234. number of seed units of d2_23v that ho
 var_label(CuplandLaos$d2_235) <- "d2_235. number of kg produced of d2_23v ?"
 #C13 = OK, replace label: "d2_236.number of kg sold of d2_23v"
 var_label(CuplandLaos$d2_236) <- "d2_236.number of kg sold of d2_23v"
-#C14 = OK, replace label: "d2_237.number of kg sold of d2_23v"
+#C14 = OK, replace label: "d2_237. selling price/ kg of d2_23v"
 var_label(CuplandLaos$d2_237) <- "d2_237. selling price/ kg of d2_23v"
 #C15 = OK, replace label: "d2_238. how many species or varieties of d2_23v ?"
 var_label(CuplandLaos$d2_238) <- "d2_238. how many species or varieties of d2_23v ?"
@@ -4952,7 +4953,7 @@ ClowlandLaos_2 <- as.data.frame(ClowlandLaos)
 CuplandLaos_2 <- as.data.frame(CuplandLaos)
 #a. FACTOR CONVERSION
 #Convert columns to FACTOR - "HouseholdLaos"
-for (i in c(1:3,7:9,11,13:30,34:37,42:48,51,62:68,70:76,78:82,85:104,107,109,111,
+for (i in c(1:3,7:9,11,13:30,33:37,42:48,51,62:68,70:76,78:82,85:104,107,109,111,
            119,121:140,143,145:157,159:170,172:182,185:193,196:206,208:222,224,
            226,229:242,244,246,249:262,264,266,269:282,284,286,289:302,304,306,
            309:322,324,326,329:342,344,346,349:362,364,366,369:382,384,386,389:402,
@@ -4979,7 +4980,7 @@ for (i in c(1:3,7:9,11,13:30,34:37,42:48,51,62:68,70:76,78:82,85:104,107,109,111
            2107:2112,2114:2117,2119,2121:2122,2124:2127,2129,2133:2144,2147:2160,2162:2163,
            2165:2170,2173:2176,2178:2183,2185,2189:2190,2192:2203,2205:2212,2214:2215,2217,
            2219,2221:2223,2225,2228:2247,2268:2271,2273:2286,2289:2297,
-           2299:2301)){
+           2299:2301,2304:2307)){
   HouseholdLaos_2[,i] <- as.factor(HouseholdLaos_2[,i])
 }
 #Convert columns to FACTOR - "HouMemberLaos"
@@ -4987,11 +4988,11 @@ for (i in c(2:3,5:6,8:9,11:12,14,16:26,28,30,32,34:45,47:52,59,61:65)){
   HouMemberLaos_2[,i] <- as.factor(HouMemberLaos_2[,i])
 }
 #Convert columns to FACTOR - "ClowlandLaos"
-for (i in c(2,4,11,17,19:23)){
+for (i in c(2,4,9,11,17,19:23)){
   ClowlandLaos_2[,i] <- as.factor(ClowlandLaos_2[,i])
 }
 #Convert columns to FACTOR - "CuplandLaos"
-for (i in c(2,4,10,16,18:22)){
+for (i in c(2,4,8,10,16,18:22)){
   CuplandLaos_2[,i] <- as.factor(CuplandLaos_2[,i])
 }
 #b. NUMERIC CONVERSION
@@ -5007,7 +5008,7 @@ for (i in  c(32,61,114,116,118)){
   CuplandLaos_2[,9] <- as.numeric(CuplandLaos_2[,9])
 #c. CHARACTER CONVERSION
 #Convert columns to CHARACTER - "HouseholdLaos"
-  for (i in  c(84,141,144,158,171,184,195,207,228,248,268,288,308,328,348,368,388,
+  for (i in  c(33,49:50,54:60,84,141,144,158,171,184,195,207,228,248,268,288,308,328,348,368,388,
                408,428,448,468,488,508,528,542,553,568,585,604,616,642,673,698,718,
                810,818,830,844,858,872,886,900,914,928,942,953,967,981,995,1009,1023,
                1037,1051,1081,1095,1109,1123,1137,1151,1165,1179,1193,1207,1221,1235,
@@ -5021,7 +5022,7 @@ for (i in  c(32,61,114,116,118)){
   }
 #Convert columns to CHARACTER - "HouMemberLaos"
   for (i in c(1,33)){
-    HouMemberLaos_2[,i] <- as.factor(HouMemberLaos_2[,i])
+    HouMemberLaos_2[,i] <- as.character(HouMemberLaos_2[,i])
   }
 #Convert columns to CHARACTER - "ClowlandLaos"
   ClowlandLaos_2[,1] <- as.character(ClowlandLaos_2[,1])
@@ -5032,6 +5033,13 @@ for (i in  c(32,61,114,116,118)){
 #Remove unwanted columns for each datasets
 #HouseholdLaos_2C <- HouseholdLaos_2[,-c(5,6,38:41,52,625,633,641,803,1882,1910,
                                         #1929,2164,2172,2188,2267,2303,2308)]
+  
+  
+#Add the proper labels to each columns
+HouseholdLaos_2C <- copy_labels(HouseholdLaos_2, HouseholdLaos)
+HouMemberLaos_2C <- copy_labels(HouMemberLaos_2, HouMemberLaos)
+ClowlandLaos_2C <- copy_labels(ClowlandLaos_2, ClowlandLaos)
+CuplandLaos_2 <- copy_labels(CuplandLaos_2, CuplandLaos)
 
   
 ### 4. Data Cleaning 1 (Based on observations and Ky comments)
@@ -5039,55 +5047,1060 @@ for (i in  c(32,61,114,116,118)){
 ## 4.1 Data cleaning for "HouseholdLaos_2"
 
 # # #a.Check for household duplicates
-  count_if("TRUE",duplicated(HouseholdLaos_2$o9))
-  Dum <- HouseholdLaos_2[duplicated(HouseholdLaos_2$o9),]
-#3 households are duplicates but it seems to be two members of the same family 
+  count_if("TRUE",duplicated(HouseholdLaos_2C$o9))
+  Dum <- HouseholdLaos_2C[duplicated(HouseholdLaos_2C$o9),]
+#3 households are duplicates but it seems to be two members of the same family
+  #1st we move the household ID column at 1st column
+  HouseholdLaos_2C <- HouseholdLaos_2C %>% relocate(o9 , .before = start_time)
+  #Check the number and id of duplicates
+  count_if("TRUE",duplicated(HouseholdLaos_2C$o9))
+  # Household 3024 = Unknown, Household 3114 = Unknown, 3261 = Unknow
+  #, we remove both and will signal it to enumerators for checking
+  for (i in c(3024,3114,3261)){ 
+  HouseholdLaos_2C <- HouseholdLaos_2C[HouseholdLaos_2C$o9 != i,]
+  }
+  #Check again the duplicates: 
+  count_if("TRUE",duplicated(HouseholdLaos_2C$o9))
   
-# # #b.NA as gender for some households
+  
+  
+# # #b. Outlier part 1
+#For sex of respondents, 4 households missed data (3036, 3037, 3041, 3463), NA as gender for some households
 #We'll replace it by "both in the same time"
-HouseholdLaos_2$o11 <- as.character(HouseholdLaos_2$o11)
-HouseholdLaos_2$o11 <- ifelse(HouseholdLaos_2$o11 == '', "Both man and woman", HouseholdLaos2$o11)
-HouseholdLaos_2$o11 <- as.factor(HouseholdLaos_2$o11)
-HouseholdLaos_2$o11 <- as.factor(HouseholdLaos_2$o11)
+HouseholdLaos_2C$o11 <- as.character(HouseholdLaos_2C$o11)
+HouseholdLaos_2C$o11 <- ifelse(HouseholdLaos_2C$o11 == '', "Both man and woman", HouseholdLaos2$o11)
+HouseholdLaos_2C$o11 <- as.factor(HouseholdLaos_2C$o11)
+HouseholdLaos_2C$o11 <- as.factor(HouseholdLaos_2C$o11)
 
-# # #c.  Inconsistencies between d18 and d17
+#Four households have extreme surprised number of plots rented-in (at d9_2), we check
+x <- HouseholdLaos_2C[HouseholdLaos_2C$d9_2 >= 100,]
+HouseholdLaos_2C$d9_2 <- ifelse(HouseholdLaos_2C$d9_2 > 100, NA,HouseholdLaos_2C$d9_2)
+
+x <- ClowlandLaos_2C[,c(2,8,10:12)]
+
+#For 3rd most important animal, I found selling price/kg (e7_41) of pig, goat, chicken 
+#below surprise higher than that at other households. Please check and validate,
+#I assume that enumerator asked selling price for a pig or for a flock of chickens
+# - - -> Solved through outlier report
+
+#There are some outliers at area of private land for growing forage (e12_1) one household had 
+#area around 4 m2 (hhid: 3458) and 2 hhs had area equal 500 000 m2 (hhid: 3509, 3610)
+# - - -> Solved through outlier report
+
+#Similarly, we have 6 households with nature pasture area from 0 to 5 m2 (hhid: 3178, 3262,
+#3458, 3542, 3546, 3560). Please check and confirm
+# - - -> Solved through outlier report
+
+
+# # #c. Corresponding fields
+
+#There were 27 households who did no selling agri-products (at b1)
+#but they still selected 3 main sources of income from crop production and
+#livestock raising (b3). Please review list below to know and check record for
+#validating data
+#We correct it manually as no many Households concerned
+HouseholdLaos_2C[,70] <- as.character(HouseholdLaos_2C[,70])
+for (i in c(3044,3054,3303,3551)){
+  HouseholdLaos_2C[HouseholdLaos_2C$o9 == i,70] <- "Selling own crops/fruits/ vegetable"
+}
+HouseholdLaos_2C[,70] <- as.factor(HouseholdLaos_2C[,70])
+
+#Do the same for c7_check, c8 check, I also found 71 missing cases at c7 and xx 
+#at c8 as followed tables
+# Not possible to know the answer so no change is made
+x <- HouseholdLaos_2C[,c(562,582,583)]
+
+#One household (ID: 3372) missed all data at module D, so please check and validate if the
+#household have info. In the case, the household did not have any kind of lands,
+#so please consider it as a missing value case.
+#Nothing was corrected by enumerators so we remove this individual for now
+HouseholdLaos_2C <- HouseholdLaos_2C[HouseholdLaos_2C$o9 != 3372,]
+
+#Big problem that we missed data for b13_01 (Which crop/vegetables/fruit did you sell to 1st buyer/
+#outlet in the last 12 months) and b13_02 (Which crop/vegetables/fruit did you sell to 2nd buyer/
+#outlet in the last 12 months)
+# b13_01 & b13_02 are empty => ASK ENUM
+
+#Inconsistencies between d18 and d17
 #First we pass it under character format to be modified then
-HouseholdLaos_2$d17 <- as.character(HouseholdLaos_2$d17)
+HouseholdLaos_2C$d17 <- as.character(HouseholdLaos_2C$d17)
 #Then we change unexpected answers by "yes" when they use AE practices
-HouseholdLaos_2$d17 <- ifelse(HouseholdLaos_2$d18 != '', "Yes", HouseholdLaos_2$d17)
+HouseholdLaos_2C$d17 <- ifelse(HouseholdLaos_2C$d18 != '', "Yes", HouseholdLaos_2C$d17)
 #And finally we change "yes" answers with no AE practice mentionned
-HouseholdLaos_2$d17 <- ifelse(HouseholdLaos_2$d18 == '' & HouseholdLaos_2$d17 == 'Yes', "No", HouseholdLaos_2$d17)
+HouseholdLaos_2C$d17 <- ifelse(HouseholdLaos_2C$d18 == '' & HouseholdLaos_2C$d17 == 'Yes', "No", HouseholdLaos_2C$d17)
 #Then we convert it as a  factor again
-HouseholdLaos_2$d17 <- as.factor(HouseholdLaos_2$d17)
+HouseholdLaos_2C$d17 <- as.factor(HouseholdLaos_2C$d17)
 
 # # #d.For answer c8, there are answers “yes” and “Yes” which must be grouped
 #First we pass it under character format to be modified then
-HouseholdLaos_2$c8 <- as.character(HouseholdLaos_2$c8)
+HouseholdLaos_2C$c8 <- as.character(HouseholdLaos_2C$c8)
 #Then we change "unexpected answers"Yes" by "yes" to avoid double counting of positive answer
-HouseholdLaos_2$c8 <- ifelse(HouseholdLaos_2$c8 == 'Yes', "yes", HouseholdLaos_2$c8)
+HouseholdLaos_2C$c8 <- ifelse(HouseholdLaos_2C$c8 == 'Yes', "yes", HouseholdLaos_2C$c8)
 #Then we convert it as a  factor again
-HouseholdLaos_2$c8 <- as.factor(HouseholdLaos_2$c8)
+HouseholdLaos_2C$c8 <- as.factor(HouseholdLaos_2C$c8)
 
-## 4.2 Data cleaning for "ClowlandLaos_2"
+#For all following fields, we just check that answers are corresponding
+#a14:a15
+sum(HouseholdLaos_2C$a14 >0)-sum(HouseholdLaos_2C$a15 != '')
+#b2:b2_1:b2_2
+#OK
+#b3: b31-b388
+#OK
+#b4_1: b5_1
+sum(HouseholdLaos_2C$b4_1 !='')-sum(!is.na(HouseholdLaos_2C$b5_1))
+#b4_2: b5_2
+sum(HouseholdLaos_2C$b4_2 !='')-sum(!is.na(HouseholdLaos_2C$b5_2))
+#b4_3: b5_3
+sum(HouseholdLaos_2C$b4_3 !='')-sum(!is.na(HouseholdLaos_2C$b5_3))
+#b9:b9_1-etc:b9_2-etc
+#OK
+#b1:b10:b11
+x <- HouseholdLaos_2C[,c(1,70,193,202)]
+#5 households declared that they sold crops products but did not anwered to b10 & b11
+#HHID: 3044,3054,3303,3551,3222
+#As we cannot know their answer, we cannot solve this issue
+#b10:b10_1
+#OK
+#b1:b16:b17
+x <- HouseholdLaos_2C[,c(1,70,203,205)]
+#1 household is fulfilled with the wronf information (HHID: 3027)
+HouseholdLaos_2C[,70] <- as.character(HouseholdLaos_2C[,70])
+HouseholdLaos_2C[HouseholdLaos_2C$o9 == 3027, 70] <- "Selling both own crops/fruits/vegetables and livestock products"
+HouseholdLaos_2C[,70] <- as.factor(HouseholdLaos_2C[,70])
+#Moreover, 2 households declared that they sold crops products but did not anwered to b16 & b17
+#HHID: 3222,3231
+#As we cannot know their answer, we cannot solve this issue
+#b16:b16a
+x <- HouseholdLaos_2C[,c(1,203,204)]
+#b1:b22
+#OK
+#b22:b22_1:b22_11-b22_199:b25:b26
+x <- HouseholdLaos_2C[,c(1,206,525,526)]
+#OK
+#(b23_1a-b24_1b)
+#b27:b27_1:b27_11-b27:188
+#OK
+#b28:b28_1
+#OK
+#c2:c3:c3a:c4:c5:c9:c6:c7:c8:c10:c11
+x <- HouseholdLaos_2C[,c(1,562,581:585)]
+#For c6, c7 and c8, many unanswered cells, we'll replace it by "no", 
+#and also replace "Yes" by "yes" and "No" by "no" to homogenize the answers
+for (i in c(581:585)){
+  HouseholdLaos_2C[,i] <- as.character(HouseholdLaos_2C[,i])
+  HouseholdLaos_2C[,i] <- ifelse(HouseholdLaos_2C$c3a != '' & HouseholdLaos_2C[,i] == '', 'no',HouseholdLaos_2C[,i])
+  HouseholdLaos_2C[,i] <- ifelse(HouseholdLaos_2C[,i] == 'Yes', 'yes',HouseholdLaos_2C[,i])
+  HouseholdLaos_2C[,i] <- ifelse(HouseholdLaos_2C[,i] == 'No', 'no',HouseholdLaos_2C[,i])
+  HouseholdLaos_2C[,i] <- as.factor(HouseholdLaos_2C[,i])
+}
+#d1:d1_1-d1_7
+#OK
+#d2_sum:d2_sum1-d2_sum11
+#OK
+#b1:b12_1:b12_2
+x <- HouseholdLaos_2C[,c(1,70,654,657)]
+#Many households delcared at b1 that they sold agri products but did not answered ar b12_1 and b12_2
+#As we cannot know their answer, we cannot solve this issue
+#b12_1:b13_1:b13_01-b13_0111:b14_1-b14_188:b15_1
+x <- HouseholdLaos_2C[,c(1,654,672:682)]
+#For b13_1 and related answers => OK
+#For b14_1 and related answers => OK
+x <- HouseholdLaos_2C[,c(1,654,684)]
+#For b15_1 => OK
+#b12_2:b13_02-b13_0211:b13_2:b14_2-b14_288:b15_2
+x <- HouseholdLaos_2C[,c(1,657,697:707)]
+#For b13_2 and related answers => Many answers are missing but we don't have this
+#information so we cannot solve it
+#For b14_2 and related answers => Many answers are missing but we don't have this
+#information so we cannot solve it
+x <- HouseholdLaos_2C[,c(1,657,697,698,709)]
+#For b15_2 and related answers => Many answers are missing but we don't have this
+#information so we cannot solve it
+#d1:d3_2:d3_3
+x <- HouseholdLaos_2C[,c(1,616,710,711)]
+#OK
+#d1:d4_2:d4_3
+x <- HouseholdLaos_2C[,c(1,616,712,713)]
+#OK
+#d1:d5_2:d5_3
+x <- HouseholdLaos_2C[,c(1,616,714,715)]
+#OK
+#d1:d6_2:d6_3
+x <- HouseholdLaos_2C[,c(1,616,716,717)]
+#OK
+#d7-d799
+x <- HouseholdLaos_2C[,c(1,718:735)]
+#OK
+#d71:d7_11:d7_12:d7:13
+x <- HouseholdLaos_2C[,c(1,720,737:739)]
+#OK
+#d72:d7_21:d7_22:d7:23
+x <- HouseholdLaos_2C[,c(1,721,740:742)]
+#OK
+#d73:d7_31:d7_32:d7:33
+x <- HouseholdLaos_2C[,c(1,722,743:745)]
+#OK
+#d74:d7_41:d7_42:d7:43
+x <- HouseholdLaos_2C[,c(1,723,746:748)]
+#OK
+#d75:d7_51:d7_52:d7:53
+x <- HouseholdLaos_2C[,c(1,724,749:751)]
+#OK
+#d76:d7_61:d7_62:d7:63
+x <- HouseholdLaos_2C[,c(1,725,752:754)]
+#OK
+#d77:d7_71:d7_72:d7:73
+x <- HouseholdLaos_2C[,c(1,726,755:757)]
+#OK
+#d78:d7_81:d7_82:d7:83
+x <- HouseholdLaos_2C[,c(1,727,758:760)]
+#OK
+#d79:d7_91:d7_92:d7:93
+x <- HouseholdLaos_2C[,c(1,728,761:763)]
+#OK
+#d710:d7_101:d7_102:d7:103
+x <- HouseholdLaos_2C[,c(1,729,764:766)]
+#OK
+#d711:d7_111:d7_112:d7:113
+x <- HouseholdLaos_2C[,c(1,730,767:769)]
+#OK
+#d712:d7_121:d7_122:d7:123
+x <- HouseholdLaos_2C[,c(1,731,770:772)]
+#OK
+#d713:d7_131:d7_132:d7:133
+x <- HouseholdLaos_2C[,c(1,732,773:775)]
+#OK
+#d714:d7_141:d7_142:d7:143
+x <- HouseholdLaos_2C[,c(1,733,776:778)]
+#OK
+#d715:d7_151:d7_152:d7:153
+x <- HouseholdLaos_2C[,c(1,734,779:781)]
+#OK
+#d799:d7_991:d7_992:d7:993
+x <- HouseholdLaos_2C[,c(1,735,782:784)]
+#OK
+#d2a_1:d2b_1 :d81:d81_1a:d81_1b
+x <- HouseholdLaos_2C[,c(1,624,632,785,791,793)]
+#OK
+#d2a_1:d2b_1 :d82:d82_1a:d82_1b
+x <- HouseholdLaos_2C[,c(1,624,632,786,795,797)]
+#HHID: 3574, 2 upland crops declared and confirmed but no information for the 2nd crops
+#Nothing more to do as we don't have additionnal information
+#HHID: 3584, 1 crop declared while information for 2nd most important crop
+#we'll add this information
+HouseholdLaos_2C[,632] <- as.character(HouseholdLaos_2C[,632])
+HouseholdLaos_2C[HouseholdLaos_2C$o9 == '3584',632] <- 1
+#d2a_1:d2b_1 :d83:d83_1a:d83_1b
+x <- HouseholdLaos_2C[,c(1,624,632,787,799,801)]
+#HHID: 3005,3022,3367,3610,3621,3206,3608, at least 3 crops declared and confirmed but no
+#information for the 3rd crops, Nothing more to do as we don't have additionnal information
+#HHID: 3276,3043,3563,3203, 2 crop declared while information for 3rd most important crop
+#we'll add this information
+for (i in c(3276,3043)){
+  HouseholdLaos_2C[HouseholdLaos_2C$o9 == i,624] <- 3
+}
+HouseholdLaos_2C[HouseholdLaos_2C$o9 == '3203',632] <- 2
+HouseholdLaos_2C[HouseholdLaos_2C$o9 == '3563',632] <- 3
+HouseholdLaos_2C[,632] <- as.factor(HouseholdLaos_2C[,632])
+#HHID: 3594, 2 crops declared while there are information for the 3rd crop, so we remove it
+for (i in c(787,799,801)){
+  HouseholdLaos_2C[,i] <- as.character(HouseholdLaos_2C[,i])
+  HouseholdLaos_2C[HouseholdLaos_2C$o9 == '3594',i] <- ''
+  HouseholdLaos_2C[,i] <- as.factor(HouseholdLaos_2C[,i])
+}
+#d9_1:d9_2
+x <- HouseholdLaos_2C[,c(1,804,805)]
+#HHID: 3084,3433,3438,3447,3568 declared plots rented out but no information of number of plots
+#As we cannot know their answer, we cannot solve this issue
+#d10_1:d10_2
+x <- HouseholdLaos_2C[,c(1,806,807)]
+#OK
+#d11_1:d11_2:d11_4-d11_499
+#OK
+#d2a_1:d2b_1 :d12-d120
+x <- HouseholdLaos_2C[,c(1,624,632,818:828)]
+#OK
+#d121:d131_1:d131_11-d131_111:d131_2
+sum(HouseholdLaos_2C$d121 == 1, na.rm = T)-sum(HouseholdLaos_2C$d131_1 != '')
+for (i in c(831:841)){
+  print(sum(HouseholdLaos_2C$d121 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d121 == 1, na.rm = T)-sum(HouseholdLaos_2C$d131_2 != '')
+#d122:d132_1:d132_11-d132_111:d132_2
+sum(HouseholdLaos_2C$d122 == 1, na.rm = T)-sum(HouseholdLaos_2C$d132_1 != '')
+for (i in c(845:855)){
+  print(sum(HouseholdLaos_2C$d122 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d122 == 1, na.rm = T)-sum(HouseholdLaos_2C$d132_2 != '')
+#d123:d133_1:d133_11-d133_111:d133_2
+sum(HouseholdLaos_2C$d123 == 1, na.rm = T)-sum(HouseholdLaos_2C$d133_1 != '')
+for (i in c(859:869)){
+  print(sum(HouseholdLaos_2C$d123 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d123 == 1, na.rm = T)-sum(HouseholdLaos_2C$d133_2 != '')
+#d124:d134_1:d134_11-d134_111:d134_2
+sum(HouseholdLaos_2C$d124 == 1, na.rm = T)-sum(HouseholdLaos_2C$d134_1 != '')
+for (i in c(873:883)){
+  print(sum(HouseholdLaos_2C$d124 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d124 == 1, na.rm = T)-sum(HouseholdLaos_2C$d134_2 != '')
+#d125:d135_1:d135_11-d135_111:d135_2
+sum(HouseholdLaos_2C$d125 == 1, na.rm = T)-sum(HouseholdLaos_2C$d135_1 != '')
+for (i in c(887:897)){
+  print(sum(HouseholdLaos_2C$d125 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d125 == 1, na.rm = T)-sum(HouseholdLaos_2C$d135_2 != '')
+#d126:d136_1:d136_11-d136_111:d136_2
+sum(HouseholdLaos_2C$d126 == 1, na.rm = T)-sum(HouseholdLaos_2C$d136_1 != '')
+for (i in c(901:911)){
+  print(sum(HouseholdLaos_2C$d126 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d126 == 1, na.rm = T)-sum(HouseholdLaos_2C$d136_2 != '')
+#d127:d137_1:d137_11-d137_111:d137_2
+sum(HouseholdLaos_2C$d127 == 1, na.rm = T)-sum(HouseholdLaos_2C$d137_1 != '')
+for (i in c(915:925)){
+  print(sum(HouseholdLaos_2C$d127 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d127 == 1, na.rm = T)-sum(HouseholdLaos_2C$d137_2 != '')
+#d1299:d138_1:d138_11-d138_111:d138_2
+sum(HouseholdLaos_2C$d1299 == 1, na.rm = T)-sum(HouseholdLaos_2C$d138_1 != '')
+for (i in c(929:939)){
+  print(sum(HouseholdLaos_2C$d1299 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d1299 == 1, na.rm = T)-sum(HouseholdLaos_2C$d138_2 != '')
+#d2a_1:d2b_1 :d14-d1499
+x <- HouseholdLaos_2C[,c(1,624,632,942:951)]
+#OK
+#d141:d151_1:d151_11-d151_111:d151_2
+sum(HouseholdLaos_2C$d141 == 1, na.rm = T)-sum(HouseholdLaos_2C$d151_1 != '')
+for (i in c(954:964)){
+  print(sum(HouseholdLaos_2C$d141 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d141 == 1, na.rm = T)-sum(HouseholdLaos_2C$d151_2 != '')
+#d142:d152_1:d152_11-d152_111:d152_2
+sum(HouseholdLaos_2C$d142 == 1, na.rm = T)-sum(HouseholdLaos_2C$d152_1 != '')
+for (i in c(968:978)){
+  print(sum(HouseholdLaos_2C$d142 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d142 == 1, na.rm = T)-sum(HouseholdLaos_2C$d152_2 != '')
+#d143:d153_1:d153_11-d153_111:d153_2
+sum(HouseholdLaos_2C$d143 == 1, na.rm = T)-sum(HouseholdLaos_2C$d153_1 != '')
+for (i in c(982:992)){
+  print(sum(HouseholdLaos_2C$d143 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d143 == 1, na.rm = T)-sum(HouseholdLaos_2C$d153_2 != '')
+#d144:d154_1:d154_11-d154_111:d154_2
+sum(HouseholdLaos_2C$d144 == 1, na.rm = T)-sum(HouseholdLaos_2C$d154_1 != '')
+for (i in c(996:1006)){
+  print(sum(HouseholdLaos_2C$d144 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d144 == 1, na.rm = T)-sum(HouseholdLaos_2C$d154_2 != '')
+#d145:d155_1:d155_11-d155_111:d155_2
+sum(HouseholdLaos_2C$d145 == 1, na.rm = T)-sum(HouseholdLaos_2C$d155_1 != '')
+for (i in c(1010:1020)){
+  print(sum(HouseholdLaos_2C$d145 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d145 == 1, na.rm = T)-sum(HouseholdLaos_2C$d155_2 != '')
+#d146:d156_1:d156_11-d156_111:d156_2
+sum(HouseholdLaos_2C$d146 == 1, na.rm = T)-sum(HouseholdLaos_2C$d156_1 != '')
+for (i in c(1024:1034)){
+  print(sum(HouseholdLaos_2C$d146 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d146 == 1, na.rm = T)-sum(HouseholdLaos_2C$d156_2 != '')
+#d147:d157_1:d157_11-d157_111:d157_2
+sum(HouseholdLaos_2C$d147 == 1, na.rm = T)-sum(HouseholdLaos_2C$d157_1 != '')
+for (i in c(1038:1048)){
+  print(sum(HouseholdLaos_2C$d147 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d147 == 1, na.rm = T)-sum(HouseholdLaos_2C$d157_2 != '')
+#d1499:d158_1:d158_11-d158_111:d158_2
+sum(HouseholdLaos_2C$d1499 == 1, na.rm = T)-sum(HouseholdLaos_2C$d158_1 != '')
+for (i in c(1052:1062)){
+  print(sum(HouseholdLaos_2C$d1499 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d1499 == 1, na.rm = T)-sum(HouseholdLaos_2C$d158_2 != '')
+#d2a_1:d2b_1 :d120:d16
+x <- HouseholdLaos_2C[,c(1,624,632,943,1065)]
+#OK
+#d2a_1:d2b_1 :d17:d18:d181-d1899
+x <- HouseholdLaos_2C[,c(17,624,632,1066,1067,1068:1079)]
+#For d17, many households answered yes or no while the answer at d18 is not corresponding
+#We'll solve this issue
+HouseholdLaos_2C$d17 <- as.character(HouseholdLaos_2C$d17)
+HouseholdLaos_2C$d17 <- ifelse(!is.na(HouseholdLaos_2C$d181), 'Yes', HouseholdLaos_2C$d17)
+HouseholdLaos_2C$d17 <- ifelse(is.na(HouseholdLaos_2C$d181) & HouseholdLaos_2C$d17 == "Yes" , 'No', HouseholdLaos_2C$d17)
+HouseholdLaos_2C$d17 <- as.factor(HouseholdLaos_2C$d17)
+#d181:d18_11:d18_111-d18_1111:d18_12
+sum(HouseholdLaos_2C$d181 == 1, na.rm = T)-sum(HouseholdLaos_2C$d18_11 != '')
+for (i in c(1082:1092)){
+  print(sum(HouseholdLaos_2C$d181 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d181 == 1, na.rm = T)-sum(HouseholdLaos_2C$d18_12 != '')
+#d182:d18_21:d18_211- d18_2111:d18_22
+sum(HouseholdLaos_2C$d182 == 1, na.rm = T)-sum(HouseholdLaos_2C$d18_21 != '')
+for (i in c(1096:1106)){
+  print(sum(HouseholdLaos_2C$d182 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d182 == 1, na.rm = T)-sum(HouseholdLaos_2C$d18_22 != '')
+#d183:d18_31:d18_311- d18_3111:d18_32
+sum(HouseholdLaos_2C$d183 == 1, na.rm = T)-sum(HouseholdLaos_2C$d18_31 != '')
+for (i in c(1110:1120)){
+  print(sum(HouseholdLaos_2C$d183 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d183 == 1, na.rm = T)-sum(HouseholdLaos_2C$d18_32 != '')
+#d184:d18_41:d18_411- d18_4111:d18_42
+sum(HouseholdLaos_2C$d184 == 1, na.rm = T)-sum(HouseholdLaos_2C$d18_41 != '')
+for (i in c(1124:1134)){
+  print(sum(HouseholdLaos_2C$d184 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d184 == 1, na.rm = T)-sum(HouseholdLaos_2C$d18_42 != '')
+#d185:d18_51:d18_511- d18_5111:d18_52
+sum(HouseholdLaos_2C$d185 == 1, na.rm = T)-sum(HouseholdLaos_2C$d18_51 != '')
+for (i in c(1138:1148)){
+  print(sum(HouseholdLaos_2C$d185 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d185 == 1, na.rm = T)-sum(HouseholdLaos_2C$d18_52 != '')
+#d186:d18_61:d18_611- d18_6111:d18_62
+sum(HouseholdLaos_2C$d186 == 1, na.rm = T)-sum(HouseholdLaos_2C$d18_61 != '')
+for (i in c(1152:1162)){
+  print(sum(HouseholdLaos_2C$d186 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d186 == 1, na.rm = T)-sum(HouseholdLaos_2C$d18_62 != '')
+#d187:d18_71:d18_711- d18_7111:d18_72
+sum(HouseholdLaos_2C$d187 == 1, na.rm = T)-sum(HouseholdLaos_2C$d18_71 != '')
+for (i in c(1166:1176)){
+  print(sum(HouseholdLaos_2C$d187 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d187 == 1, na.rm = T)-sum(HouseholdLaos_2C$d18_72 != '')
+#d188:d18_81:d18_811- d18_8111:d18_82
+sum(HouseholdLaos_2C$d188 == 1, na.rm = T)-sum(HouseholdLaos_2C$d18_81 != '')
+for (i in c(1180:1190)){
+  print(sum(HouseholdLaos_2C$d188 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d188 == 1, na.rm = T)-sum(HouseholdLaos_2C$d18_82 != '')
+#d189:d18_91:d18_911- d18_9111:d18_92
+sum(HouseholdLaos_2C$d189 == 1, na.rm = T)-sum(HouseholdLaos_2C$d18_91 != '')
+for (i in c(1194:1204)){
+  print(sum(HouseholdLaos_2C$d189 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d189 == 1, na.rm = T)-sum(HouseholdLaos_2C$d18_92 != '')
+#d1810:d18_101:d18_1011- d18_10111:d18_102
+sum(HouseholdLaos_2C$d1810 == 1, na.rm = T)-sum(HouseholdLaos_2C$d18_101 != '')
+for (i in c(1208:1218)){
+  print(sum(HouseholdLaos_2C$d1810 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d1810 == 1, na.rm = T)-sum(HouseholdLaos_2C$d18_102 != '')
+#d1811:d18_111:d18_1111- d18_11111:d18_112_a
+sum(HouseholdLaos_2C$d1811 == 1, na.rm = T)-sum(HouseholdLaos_2C$d18_111_a != '')
+for (i in c(1222:1232)){
+  print(sum(HouseholdLaos_2C$d1811 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d1811 == 1, na.rm = T)-sum(HouseholdLaos_2C$d18_112_a != '')
+#d1899:d18_991:d18_9911- d18_99111:d18_992
+sum(HouseholdLaos_2C$d1899 == 1, na.rm = T)-sum(HouseholdLaos_2C$d18_991 != '')
+for (i in c(1236:1246)){
+  print(sum(HouseholdLaos_2C$d1899 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d1899 == 1, na.rm = T)-sum(HouseholdLaos_2C$d18_992 != '')
+#d2a_1:d2b_1 :d20:d21:d211-d2199
+x <- HouseholdLaos_2C[,c(17,624,632,1250,1251,1252:1266)]
+#For d120, one household did not answered while he have crops
+#We'll solve this issue
+HouseholdLaos_2C$d20 <- as.character(HouseholdLaos_2C$d20)
+HouseholdLaos_2C[HouseholdLaos_2C$o9 == '3371',1250] <- "No"
+HouseholdLaos_2C$d20 <- as.factor(HouseholdLaos_2C$d20)
+#d211:d21_12:d21_121-d21_1211:d21_13
+sum(HouseholdLaos_2C$d211 == 1, na.rm = T)-sum(HouseholdLaos_2C$d21_12 != '')
+for (i in c(1269:1279)){
+  print(sum(HouseholdLaos_2C$d211 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d211 == 1, na.rm = T)-sum(HouseholdLaos_2C$d21_13 != '')
+#d212:d21_22:d21_221- d21_2211:d21_23
+sum(HouseholdLaos_2C$d212 == 1, na.rm = T)-sum(HouseholdLaos_2C$d21_22 != '')
+for (i in c(1283:1293)){
+  print(sum(HouseholdLaos_2C$d212 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d212 == 1, na.rm = T)-sum(HouseholdLaos_2C$d21_23 != '')
+#d213:d21_32:d21_321- d21_3211:d21_33
+sum(HouseholdLaos_2C$d213 == 1, na.rm = T)-sum(HouseholdLaos_2C$d21_32 != '')
+for (i in c(1297:1307)){
+  print(sum(HouseholdLaos_2C$d213 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d213 == 1, na.rm = T)-sum(HouseholdLaos_2C$d21_33 != '')
+#d214:d21_42:d21_421- d21_4211:d21_43
+sum(HouseholdLaos_2C$d214 == 1, na.rm = T)-sum(HouseholdLaos_2C$d21_42 != '')
+for (i in c(1311:1321)){
+  print(sum(HouseholdLaos_2C$d214 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d214 == 1, na.rm = T)-sum(HouseholdLaos_2C$d21_43 != '')
+#d215:d21_52:d21_521- d21_5211:d21_53
+sum(HouseholdLaos_2C$d215 == 1, na.rm = T)-sum(HouseholdLaos_2C$d21_52 != '')
+for (i in c(1325:1335)){
+  print(sum(HouseholdLaos_2C$d215 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d215 == 1, na.rm = T)-sum(HouseholdLaos_2C$d21_53 != '')
+#d216:d21_62:d21_621- d21_6211:d21_63
+sum(HouseholdLaos_2C$d216 == 1, na.rm = T)-sum(HouseholdLaos_2C$d21_62 != '')
+for (i in c(1339:1349)){
+  print(sum(HouseholdLaos_2C$d216 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d216 == 1, na.rm = T)-sum(HouseholdLaos_2C$d21_63 != '')
+#d217:d21_72:d21_721- d21_7211:d21_73
+sum(HouseholdLaos_2C$d217 == 1, na.rm = T)-sum(HouseholdLaos_2C$d21_72 != '')
+for (i in c(1353:1363)){
+  print(sum(HouseholdLaos_2C$d217 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d217 == 1, na.rm = T)-sum(HouseholdLaos_2C$d21_73 != '')
+#d218:d21_82:d21_821- d21_8211:d21_83
+sum(HouseholdLaos_2C$d218 == 1, na.rm = T)-sum(HouseholdLaos_2C$d21_82 != '')
+for (i in c(1367:1377)){
+  print(sum(HouseholdLaos_2C$d218 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d218 == 1, na.rm = T)-sum(HouseholdLaos_2C$d21_83 != '')
+#d219:d21_92:d21_921- d21_9211:d21_93
+sum(HouseholdLaos_2C$d219 == 1, na.rm = T)-sum(HouseholdLaos_2C$d21_92 != '')
+for (i in c(1381:1391)){
+  print(sum(HouseholdLaos_2C$d219 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d219 == 1, na.rm = T)-sum(HouseholdLaos_2C$d21_93 != '')
+#d2110:d21_102:d21_1021- d21_10211:d21_103
+sum(HouseholdLaos_2C$d2110 == 1, na.rm = T)-sum(HouseholdLaos_2C$d21_102 != '')
+for (i in c(1395:1405)){
+  print(sum(HouseholdLaos_2C$d2110 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d2110 == 1, na.rm = T)-sum(HouseholdLaos_2C$d21_103 != '')
+#d2111:d21_112:d21_1121- d21_11211:d21_113
+sum(HouseholdLaos_2C$d2111 == 1, na.rm = T)-sum(HouseholdLaos_2C$d21_112 != '')
+for (i in c(1409:1419)){
+  print(sum(HouseholdLaos_2C$d2111 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d2111 == 1, na.rm = T)-sum(HouseholdLaos_2C$d21_113 != '')
+#d2112:d21_122:d21_1221- d21_12211:d21_123
+sum(HouseholdLaos_2C$d2112 == 1, na.rm = T)-sum(HouseholdLaos_2C$d21_122_a != '')
+for (i in c(1423:1433)){
+  print(sum(HouseholdLaos_2C$d2112 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d2112 == 1, na.rm = T)-sum(HouseholdLaos_2C$d21_123_a != '')
+#d2113:d21_132:d21_1321- d21_13211:d21_133
+sum(HouseholdLaos_2C$d2113 == 1, na.rm = T)-sum(HouseholdLaos_2C$d21_132 != '')
+for (i in c(1437:1447)){
+  print(sum(HouseholdLaos_2C$d2113 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d2113 == 1, na.rm = T)-sum(HouseholdLaos_2C$d21_133 != '')
+#d2114:d21_142:d21_1421- d21_14211:d21_143
+sum(HouseholdLaos_2C$d2114 == 1, na.rm = T)-sum(HouseholdLaos_2C$d21_142 != '')
+for (i in c(1451:1461)){
+  print(sum(HouseholdLaos_2C$d2114 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d2114 == 1, na.rm = T)-sum(HouseholdLaos_2C$d21_143 != '')
+#d2199:d21_992:d21_9921- d21_99211:d21_993
+sum(HouseholdLaos_2C$d2199 == 1, na.rm = T)-sum(HouseholdLaos_2C$d21_992 != '')
+for (i in c(1465:1475)){
+  print(sum(HouseholdLaos_2C$d2199 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d2199 == 1, na.rm = T)-sum(HouseholdLaos_2C$d21_993 != '')
+#d2a_1:d2b_1 :d24:d25
+x <- HouseholdLaos_2C[,c(17,624,632,1480,1481)]
+#OK
+#d2a_1:d2b_1 :d26:d27:d271-d2799
+x <- HouseholdLaos_2C[,c(17,624,632,1482:1498)]
+#OK
+#d271:d27_11:d27_111-d27_1111:d27_12
+sum(HouseholdLaos_2C$d271 == 1, na.rm = T)-sum(HouseholdLaos_2C$d27_11 != '')
+for (i in c(1501:1511)){
+  print(sum(HouseholdLaos_2C$d271 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d271 == 1, na.rm = T)-sum(HouseholdLaos_2C$d27_12 != '')
+#d272:d27_21:d27_211- d27_2111:d27_22
+sum(HouseholdLaos_2C$d272 == 1, na.rm = T)-sum(HouseholdLaos_2C$d27_21 != '')
+for (i in c(1515:1525)){
+  print(sum(HouseholdLaos_2C$d272 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d272 == 1, na.rm = T)-sum(HouseholdLaos_2C$d27_22 != '')
+#d273:d27_31:d27_311- d27_3111:d27_32
+sum(HouseholdLaos_2C$d273 == 1, na.rm = T)-sum(HouseholdLaos_2C$d27_31 != '')
+for (i in c(1529:1539)){
+  print(sum(HouseholdLaos_2C$d272 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d273 == 1, na.rm = T)-sum(HouseholdLaos_2C$d27_32 != '')
+#d274:d27_41:d27_411- d27_4111:d27_42
+sum(HouseholdLaos_2C$d274 == 1, na.rm = T)-sum(HouseholdLaos_2C$d27_41 != '')
+for (i in c(1543:1553)){
+  print(sum(HouseholdLaos_2C$d274 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d274 == 1, na.rm = T)-sum(HouseholdLaos_2C$d27_42 != '')
+#d275:d27_51:d27_511- d27_5111:d27_52
+sum(HouseholdLaos_2C$d275 == 1, na.rm = T)-sum(HouseholdLaos_2C$d27_51 != '')
+for (i in c(1557:1567)){
+  print(sum(HouseholdLaos_2C$d275 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d275 == 1, na.rm = T)-sum(HouseholdLaos_2C$d27_52 != '')
+#d276:d27_61:d27_611- d27_6111:d27_62
+sum(HouseholdLaos_2C$d276 == 1, na.rm = T)-sum(HouseholdLaos_2C$d27_61 != '')
+for (i in c(1570:1580)){
+  print(sum(HouseholdLaos_2C$d276 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d276 == 1, na.rm = T)-sum(HouseholdLaos_2C$d27_62 != '')
+#d277:d27_71:d27_711- d27_7111:d27_72
+sum(HouseholdLaos_2C$d277 == 1, na.rm = T)-sum(HouseholdLaos_2C$d27_71 != '')
+for (i in c(1585:1595)){
+  print(sum(HouseholdLaos_2C$d277 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d277 == 1, na.rm = T)-sum(HouseholdLaos_2C$d27_72 != '')
+#d278:d27_81:d27_811- d27_8111:d27_82
+sum(HouseholdLaos_2C$d278 == 1, na.rm = T)-sum(HouseholdLaos_2C$d27_81 != '')
+for (i in c(1599:1609)){
+  print(sum(HouseholdLaos_2C$d278 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d278 == 1, na.rm = T)-sum(HouseholdLaos_2C$d27_82 != '')
+#d279:d27_91:d27_911- d27_9111:d27_92
+sum(HouseholdLaos_2C$d279 == 1, na.rm = T)-sum(HouseholdLaos_2C$d27_91 != '')
+for (i in c(1613:1623)){
+  print(sum(HouseholdLaos_2C$d279 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d279 == 1, na.rm = T)-sum(HouseholdLaos_2C$d27_92 != '')
+#d2710:d27_101:d27_1011- d27_10111:d27_102
+sum(HouseholdLaos_2C$d2710 == 1, na.rm = T)-sum(HouseholdLaos_2C$d27_101 != '')
+for (i in c(1627:1637)){
+  print(sum(HouseholdLaos_2C$d2710 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d2710 == 1, na.rm = T)-sum(HouseholdLaos_2C$d27_102 != '')
+#d2711:d27_111:d27_1111- d27_11111:d27_112
+sum(HouseholdLaos_2C$d2711 == 1, na.rm = T)-sum(HouseholdLaos_2C$d27_111_a != '')
+for (i in c(1641:1651)){
+  print(sum(HouseholdLaos_2C$d2711 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d2711 == 1, na.rm = T)-sum(HouseholdLaos_2C$d27_112_a != '')
+#d2712:d27_121:d27_1211- d27_12111:d27_122
+sum(HouseholdLaos_2C$d2712 == 1, na.rm = T)-sum(HouseholdLaos_2C$d27_121 != '')
+for (i in c(1655:1665)){
+  print(sum(HouseholdLaos_2C$d2712 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d2712 == 1, na.rm = T)-sum(HouseholdLaos_2C$d27_122 != '')
+#d2713:d27_131:d27_1311- d27_13111:d27_132
+sum(HouseholdLaos_2C$d2713 == 1, na.rm = T)-sum(HouseholdLaos_2C$d27_131 != '')
+for (i in c(1669:1679)){
+  print(sum(HouseholdLaos_2C$d2713 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d2713 == 1, na.rm = T)-sum(HouseholdLaos_2C$d27_132 != '')
+#d2714:d27_141:d27_1411- d27_14111:d27_142
+sum(HouseholdLaos_2C$d2714 == 1, na.rm = T)-sum(HouseholdLaos_2C$d27_141 != '')
+for (i in c(1683:1693)){
+  print(sum(HouseholdLaos_2C$d2714 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d2714 == 1, na.rm = T)-sum(HouseholdLaos_2C$d27_142 != '')
+#d2799:d27_991:d27_9911- d27_99111:d27_992
+sum(HouseholdLaos_2C$d2799 == 1, na.rm = T)-sum(HouseholdLaos_2C$d27_991 != '')
+for (i in c(1697:1707)){
+  print(sum(HouseholdLaos_2C$d2799 == 1, na.rm = T)-sum(!is.na(HouseholdLaos_2C[,i])))
+}
+sum(HouseholdLaos_2C$d2799 == 1, na.rm = T)-sum(HouseholdLaos_2C$d27_992 != '')
+#d2a_1:d2b_1 :d30_1:d30_2:d30_21-d30_211
+x <- HouseholdLaos_2C[,c(1,624,632,1712,1713,1714:1724)]
+#OK
+#d2a_1:d2b_1 :d30_3:d30_4:d30_41-d30_411
+x <- HouseholdLaos_2C[,c(1,624,632,1725:1737)]
+#OK
+#d2a_1:d2b_1 :d30_5:d30_6:d30_61-d30_611
+x <- HouseholdLaos_2C[,c(1,624,632,1738:1750)]
+#OK
+#d2a_1:d2b_1 :d32:d32_1:d32_11-d32_111
+x <- HouseholdLaos_2C[,c(1,624,632,1751:1763)]
+#OK
+#d2a_1:d2b_1:d32:d32_2
+x <- HouseholdLaos_2C[,c(1,1751,1764)]
+#OK
+#d2a_1:d2b_1:d33_1 :d33_10-d33_13
+x <- HouseholdLaos_2C[,c(1,624,632,1766:1770)]
+#OK
+#d2a_1:d2b_1:d33_2 :d33_20:d33_23
+x <- HouseholdLaos_2C[,c(1,624,632,1771:1775)]
+#OK
+#d2a_1:d2b_1:d33_3 :d33_30:d33_33
+x <- HouseholdLaos_2C[,c(1,624,632,1776:1780)]
+#OK
+#d2a_1:d2b_1:d33_4 :d33_40:d33_43
+x <- HouseholdLaos_2C[,c(1,624,632,1781:1785)]
+#OK
+#d2a_1:d2b_1:d33_5 :d33_50:d33_53
+x <- HouseholdLaos_2C[,c(1,624,632,1786:1790)]
+#OK
+#d2a_1:d2b_1:d33_6 :d33_60:d33_63
+x <- HouseholdLaos_2C[,c(1,624,632,1791:1795)]
+#OK
+#d2a_1:d2b_1:d33_7 :d33_70:d33_73
+x <- HouseholdLaos_2C[,c(1,624,632,1796:1800)]
+#OK
+#d2a_1:d2b_1:d33_8 :d33_80:d33_83
+x <- HouseholdLaos_2C[,c(1,624,632,1801:1805)]
+#OK
+#d2a_1:d2b_1:d33_9 :d33_90:d33_93
+x <- HouseholdLaos_2C[,c(1,624,632,1806:1810)]
+#OK
+#d2a_1:d2b_1:d33_10 :d33_100:d33_103
+x <- HouseholdLaos_2C[,c(1,624,632,1811:1815)]
+#OK
+#d2a_1:d2b_1:d33_11 :d33_110:d33_113
+x <- HouseholdLaos_2C[,c(1,624,632,1816:1820)]
+#OK
+#d2a_1:d2b_1:d34 :d35
+x <- HouseholdLaos_2C[,c(1,624,632,1821,1822)]
+#OK
+#d2a_1:d2b_1:d36 :d361-d3699
+x <- HouseholdLaos_2C[,c(1,624,632,1823:1835)]
+#OK
+#e1 :e2 :e2_1 :e2_99
+#OK
+#e1 :e2_1 :e3_1:e3_2
+x <- HouseholdLaos_2C[,c(1,1837,1839,1854,1855)]
+#OK
+#e1 :e2_2 :e3_3:e3_4
+x <- HouseholdLaos_2C[,c(1,1837,1840,1856,1857)]
+#OK
+#e1 :e2_3 :e3_5:e3_6
+x <- HouseholdLaos_2C[,c(1,1837,1841,1858,1859)]
+#OK
+#e1 :e2_4 :e3_7:e3_8
+x <- HouseholdLaos_2C[,c(1,1837,1842,1860,1861)]
+#OK
+#e1 :e2_5 :e3_9:e3_10
+x <- HouseholdLaos_2C[,c(1,1837,1843,1862,1863)]
+#OK
+#e1 :e2_6 :e3_11
+x <- HouseholdLaos_2C[,c(1,1837,1844,1864)]
+#OK
+#e1 :e2_7 :e3_12
+x <- HouseholdLaos_2C[,c(1,1837,1845,1865)]
+#OK
+#e1 :e2_8 :e3_13
+x <- HouseholdLaos_2C[,c(17,1837,1846,1866)]
+#OK
+#e1 :e2_9 :e3_14
+x <- HouseholdLaos_2C[,c(1,1837,1847,1867)]
+#OK
+#e1 :e2_10 :e3_15
+x <- HouseholdLaos_2C[,c(1,1837,1848,1868)]
+#OK
+#e1 :e2_11 :e3_16
+x <- HouseholdLaos_2C[,c(1,1837,1849,1869)]
+#OK
+#e1 :e2_98 :e3_98
+x <- HouseholdLaos_2C[,c(1,1837,1850,1870)]
+#OK
+#e1 :e2_99 :e3_99
+x <- HouseholdLaos_2C[,c(1,1837,1851,1871)]
+#OK
+#e1:e4_1:e5_a:e5_b:e5_2:e5_1-e5_4:e5_5:b18_1:b19_1:b20_1:b20_10:b20_188:b21_1
+x <- HouseholdLaos_2C[,c(1,1837,1872,1878:1881,1883:1886,1888,1890,1893,1894:1903,1905)]
+#OK
+#e5_4:e5_41
+x <- HouseholdLaos_2C[,c(1,1886,1887)]
+#OK
+#e5_5:e5_51
+x <- HouseholdLaos_2C[,c(1,1888,1889)]
+#HHID: 3048, 3045, 3035 the selling price is missing, REPLACE
+#As we cannot know their answer, we cannot solve this issue
+#e1:e4_2:e6_a:e6_b:e6_1-e6_5:b18_2:b19_2:b20_2:b20_20:b20_288:b21_2
+x <- HouseholdLaos_2C[,c(1,1837,1874,1906:1909,1911:1914,1916,1918,1921,1922,1924)]
+#OK
+#e6_4:e6_41
+x <- HouseholdLaos_2C[,c(1,1914,1915)]
+#OK
+#e6_5:e6_51
+x <- HouseholdLaos_2C[,c(1,1916,1917)]
+#OK
+#e1:e4_3:e7_a:e7_b:e7_2:e7_1-e7_4:e7_5
+x <- HouseholdLaos_2C[,c(1,1837,1876,1925:1928,1930:1933,1935)]
+#OK
+#e7_4:e7_41
+x <- HouseholdLaos_2C[,c(1,1933,1934)]
+#OK
+#e7_5:e7_51
+x <- HouseholdLaos_2C[,c(1,1935,1936)]
+#HHID: 3162,3147,3316 the selling price is missing, REPLACE
+#As we cannot know their answer, we cannot solve this issue
+#e8:e9:e10
+x <- HouseholdLaos_2C[,c(1,1937:1939)]
+#OK
+#e12_1:e12_2
+x <- HouseholdLaos_2C[,c(1,1940:1941)]
+#OK
+#e12_3:e12_4
+x <- HouseholdLaos_2C[,c(1,1942:1943)]
+#Some households declared 0,1 or 2 m2 of pasture, we remove it
+HouseholdLaos_2C$e12_4 <- ifelse(HouseholdLaos_2C$e12_4 < 3, NA, HouseholdLaos_2C$e12_4)
+HouseholdLaos_2C$e12_3 <- as.character(HouseholdLaos_2C$e12_3)
+HouseholdLaos_2C$e12_3 <- ifelse(HouseholdLaos_2C$e12_3 == 'Yes' & is.na(HouseholdLaos_2C$e12_4), 'No', HouseholdLaos_2C$e12_3)
+HouseholdLaos_2C$e12_3 <- as.factor(HouseholdLaos_2C$e12_3)
+#e12_5:e12_6
+x <- HouseholdLaos_2C[,c(1,1944:1945)]
+#OK
+#e13:e13_1
+x <- HouseholdLaos_2C[,c(1,1946:1947)]
+#OK
+#e2_1 :e2_2:e16:e17:e18:e19:e191-e1999
+x <- HouseholdLaos_2C[,c(1,1839:1840,1950:1964)]
+#OK
+#e2_1 :e2_2:e21:e22:e23:e24:e241-e2499
+x <- HouseholdLaos_2C[,c(1,1839:1840,1966:1980)]
+#OK
+#e2_1 :e2_2:e25:e26
+x <- HouseholdLaos_2C[,c(1,1839:1840,1982,1988)]
+#OK
+#e25:e25_1:e25_11-e25_199
+x <- HouseholdLaos_2C[,c(1,1839:1840,1982:1987)]
+#OK
+#e26:e26_1:e26_11-e26_199
+x <- HouseholdLaos_2C[,c(1,1839:1840,1988:1994)]
+#OK
+#e26:e27:e270-e272:e27a_1
+x <- HouseholdLaos_2C[,c(1,1839:1840,1988,1995:1999)]
+#OK
+#e2_1 :e2_2:e28
+x <- HouseholdLaos_2C[,c(1,1839:1840,2003)]
+#OK
+#e2_1 :e2_2:e29:e29_1:e21_11:e29_10
+x <- HouseholdLaos_2C[,c(1,1839:1840,2003:2009)]
+#OK
+#e2_3:e30:e31:e32:e33:e34:e341-e3499
+x <- HouseholdLaos_2C[,c(17,1841,1858,1859,2013,2015:2029)]
+#For many households who raise pigs, no information about pig raising systems 
+#(Probably households with only adult pigs)
+#As we cannot know their answer, we cannot solve this issue
+#e30:e35:e36:e37:e38:e381-38499
+x <- HouseholdLaos_2C[,c(17,2013,2030:2044)]
+#OK
+#e30 :e39
+x <- HouseholdLaos_2C[,c(17,2013,2046)]
+#OK
+#e39:e39_1:e39_11-e39_199
+x <- HouseholdLaos_2C[,c(2046:2051)]
+#OK
+#e30 :e40
+x <- HouseholdLaos_2C[,c(17,2013,2052)]
+#OK
+#e40 :e40_1:e41:e410:e412
+x <- HouseholdLaos_2C[,c(17,2052:2057)]
+#OK
+#30 :e42
+x <- HouseholdLaos_2C[,c(17,2013,2062)]
+#OK
+#e42 :e43
+x <- HouseholdLaos_2C[,c(17,2062,2063)]
+#OK
+#e43:e43_1:e43_11-e43_10
+x <- HouseholdLaos_2C[,c(17,2063:2068)]
+#OK
+#e2_8 :e44:e45:e46:e47:e48:e481-e4899
+x <- HouseholdLaos_2C[,c(17,1846,2072,2074:2088)]
+#For some households we have no information about their raising systems
+#As we cannot know their answer, we cannot solve this issue
+#For other households, there are information but they are no raising chickens, we remove these informations
+for (i in c(2072,2074:2088)){
+  HouseholdLaos_2C[,i] <- as.character(HouseholdLaos_2C[,i])
+  HouseholdLaos_2C[,i] <- ifelse(HouseholdLaos_2C$e2_8 == 0, '', HouseholdLaos_2C[,i])
+  HouseholdLaos_2C[,i] <- as.factor(HouseholdLaos_2C[,i])
+}
+#e44:e49:e50:e51:e52:e521-e5299:e53:e54:e56
+x <- HouseholdLaos_2C[,c(17,2072,2089:2103,2105,2111,2113)]
+#For some households we have no information about their raising systems
+#As we cannot know their answer, we cannot solve this issue
+#For other households, there are information but they are no raising pigs, we remove these informations
+for (i in c(2089:2103,2105,2111,2113)){
+  HouseholdLaos_2C[,i] <- as.character(HouseholdLaos_2C[,i])
+  HouseholdLaos_2C[,i] <- ifelse(HouseholdLaos_2C$e2_8 == 0, '', HouseholdLaos_2C[,i])
+  HouseholdLaos_2C[,i] <- as.factor(HouseholdLaos_2C[,i])
+}
+#e53:e53_1:e53_11-e53_199
+x <- HouseholdLaos_2C[,c(2105:2110)]
+#OK
+#e54:e54_1:e55:e550-e552
+x <- HouseholdLaos_2C[,c(2111:2116)]
+#OK
+#e56:e57
+x <- HouseholdLaos_2C[,c(2121:2122)]
+#OK
+#e57:e57_1:e57_11-e57_10
+x <- HouseholdLaos_2C[,c(2122:2127)]
+#OK
+#e2_1,e2_2,e58
+x <- HouseholdLaos_2C[,c(1839,1840,2131)]
+#OK
+#e58:e58_1:e58_11-e58_112
+x <- HouseholdLaos_2C[,c(2131:2144)]
+#OK
+#e1,e59
+x <- HouseholdLaos_2C[,c(1837,2145)]
+#OK
+#e59:e59_1:e59_11:e59_112
+x <- HouseholdLaos_2C[,c(2145:2158)]
+#OK
+#e1:e60
+x <- HouseholdLaos_2C[,c(1837,2159)]
+#OK
+#h4_1:h4_11-h4_188
+x <- HouseholdLaos_2C[,c(2176:2183)]
+#OK
 
-# # #a. Some words have been written with two different ortographs for lowland crops, let's correct it
-ClowlandLaos_2$d2_13e <- str_replace(ClowlandLaos_2$d2_13e, "cabbage", "Cabbages")
-ClowlandLaos_2$d2_13e <- str_replace(ClowlandLaos_2$d2_13e, "chineselattuce", "Chinese lettuce")
-ClowlandLaos_2$d2_13e <- str_replace(ClowlandLaos_2$d2_13e, "cucumber", "Cucumber")
-ClowlandLaos_2$d2_13e <- ifelse(ClowlandLaos_2$d2_13e == "Chillies and peppers, dry (Capsicum spp., Pimenta spp.), raw", "Chilli", ClowlandLaos_2$d2_13e)
-ClowlandLaos_2$d2_13e <- str_replace(ClowlandLaos_2$d2_13e, "chili", "Chilli")
-ClowlandLaos_2$d2_13e <- str_replace(ClowlandLaos_2$d2_13e, "garlic", "Garlic")
-ClowlandLaos_2$d2_13e <- str_replace(ClowlandLaos_2$d2_13e, "onion", "Onions")
 
-## 4.3 Data cleaning for "CuplandLaos_2"
+## 4.2 Data cleaning for "HouseholdMember_2"
 
-# # #a. Some words have been written with two different ortographs for upland crops, let's correct it
+# # #a. Duplicates
+#Check the number and id of duplicates
+count_if("TRUE",duplicated(HouMemberLaos_2C$pid))
+#Check and remove the real duplicates through automated method
+Dum <- HouMemberLaos_2C[duplicated(HouMemberLaos_2C$pid),]
+idDup <- unique(Dum$hhid_re1)
+DumReal <- HouMemberLaos_2C[HouMemberLaos_2C$hhid_re1 %in% idDup,]
+DumReal$check <- paste(DumReal$p_no, DumReal$hhid_re1, DumReal$a1)
+DumReal <- DumReal %>% relocate(check , .after = pid)
+Dupli <- DumReal[duplicated(DumReal$check),]
+Duplic <- rownames(Dupli)
+HouMemberLaos_2C <- HouMemberLaos_2C[!rownames(HouMemberLaos_2C) %in% Duplic,]
+#For some duplicates, we have to do it manually:
+#Re-attribute household members numbers when the household id is duplicated for different household members
+Dum <- HouMemberLaos_2C[duplicated(HouMemberLaos_2C$pid),]
+idDup <- unique(Dum$hhid_re1)
+idDup
+for (i in idDup){
+  HouMemberLaos_2C$p_no[HouMemberLaos_2C$hhid_re1 == i] <- 1:sum(HouMemberLaos_2C$hhid_re1 == i)
+}
+HouMemberLaos_2C$pid <- paste(HouMemberLaos_2C$hhid_re1,HouMemberLaos_2C$p_no)
+#Check again the duplicates: 
+count_if("TRUE",duplicated(HouMemberLaos_2C$pid))
+
+# # #Corresponding field
+#Everything is ok in the table, we'll just check if number of household members
+#is corresponding with the other table
+x <- count(HouMemberLaos_2C, hhid_re1)
+y <- HouseholdLaos_2C[,c(1,53)]
+G <- merge(x, y, by.x = "hhid_re1", by.y = "o9", all.x = T, all.y= T, sort = TRUE)
+#Some households did not answered to a0 while we have the correct number of members
+#We will correct it)
+HouseholdLaos_2C[HouseholdLaos_2C$o9 == 3024, 53] <-  10
+HouseholdLaos_2C[HouseholdLaos_2C$o9 == 3114, 53] <-  14
+HouseholdLaos_2C[HouseholdLaos_2C$o9 == 3261, 53] <-  10
+HouseholdLaos_2C[HouseholdLaos_2C$o9 == 3372, 53] <-  3
+# For following households, we know the number of households members but no details on them
+#HHID: 3028,3303,3340,3368,3401,3429,3436,3447,3451,3472,3537,3538,3550,3551
+#3558,3564,3565,3611
+
+## 4.3 Data cleaning for "ClowlandLaos_2"
+
+# # #a.Check for crops duplicates
+ClowlandLaos_2C$pid <- paste(ClowlandLaos_2C$hhid_re2,ClowlandLaos_2C$crop1_now)
+ClowlandLaos_2C <- ClowlandLaos_2C %>% relocate(pid , .after = hhid_re2)
+#Check the number and id of duplicates
+count_if("TRUE",duplicated(ClowlandLaos_2C$pid))
+#Check and remove the real duplicates through automated method
+Dum <- ClowlandLaos_2C[duplicated(ClowlandLaos_2C$pid),]
+idDup <- unique(Dum$hhid_re2)
+DumReal <- ClowlandLaos_2C[ClowlandLaos_2C$hhid_re2 %in% idDup,]
+DumReal$check <- paste(DumReal$pid, DumReal$d2_13e, DumReal$d2_132)
+DumReal <- DumReal %>% relocate(check , .after = pid)
+Dupli <- DumReal[duplicated(DumReal$check),]
+Duplic <- rownames(Dupli)
+ClowlandLaos_2C <- ClowlandLaos_2C[!rownames(ClowlandLaos_2C) %in% Duplic,]
+#For some duplicates, we have to do it manually:
+#Re-attribute household members numbers when the household id is duplicated for different household members
+Dum <- ClowlandLaos_2C[duplicated(ClowlandLaos_2C$pid),]
+idDup <- unique(Dum$hhid_re2)
+idDup
+for (i in idDup){
+  ClowlandLaos_2C$crop1_now[ClowlandLaos_2C$hhid_re2 == i] <- 1:sum(ClowlandLaos_2C$hhid_re2 == i)
+}
+ClowlandLaos_2C$pid <- paste(ClowlandLaos_2C$hhid_re2,ClowlandLaos_2C$crop1_now)
+#Check again the duplicates: 
+count_if("TRUE",duplicated(ClowlandLaos_2C$pid))
+
+# # #b. Wrong writings
+#Some words have been written with two different ortographs for lowland crops, let's correct it
+ClowlandLaos_2C$d2_13e <- str_replace(ClowlandLaos_2C$d2_13e, "cabbage", "Cabbages")
+ClowlandLaos_2C$d2_13e <- str_replace(ClowlandLaos_2C$d2_13e, "chineselattuce", "Chinese lettuce")
+ClowlandLaos_2C$d2_13e <- str_replace(ClowlandLaos_2C$d2_13e, "cucumber", "Cucumber")
+ClowlandLaos_2C$d2_13e <- ifelse(ClowlandLaos_2C$d2_13e == "Chillies and peppers, dry (Capsicum spp., Pimenta spp.), raw", "Chilli", ClowlandLaos_2C$d2_13e)
+ClowlandLaos_2C$d2_13e <- str_replace(ClowlandLaos_2C$d2_13e, "chili", "Chilli")
+ClowlandLaos_2C$d2_13e <- str_replace(ClowlandLaos_2C$d2_13e, "garlic", "Garlic")
+ClowlandLaos_2C$d2_13e <- str_replace(ClowlandLaos_2C$d2_13e, "onion", "Onions")
+
+# # #b. Check for outliers
+
+# d2_132 lowland - hhid 3320 had unbelievable total land areas (700090 m2).
+ClowlandLaos_2C$d2_132 <- str_replace(ClowlandLaos_2C$d2_132, '700090', '70000')
+ClowlandLaos_2C$d2_132 <- as.numeric(ClowlandLaos_2C$d2_132)
+
+#Please cross-check price of Summer-autumn season rice, some cases are at 10000000 kip/kg but 
+#others are 1000 at d2_137.
+ClowlandLaos_2C$d2_137 <- ifelse(ClowlandLaos_2C$d2_137 > 1000000, NA,ClowlandLaos_2C$d2_137)
+
+# # #c. Corresponding fields
+#Everything is ok in the table, we'll just check if number of crops
+#is corresponding with the other table
+x <- count(ClowlandLaos_2C, hhid_re2)
+y <- HouseholdLaos_2C[,c(1,625)]
+G <- merge(x, y, by.x = "hhid_re2", by.y = "o9", all.x = T, all.y= T, sort = TRUE)
+#Some households did not answered to a0 while we have the correct number of members
+#We will correct it)
+HouseholdLaos_2C[HouseholdLaos_2C$o9 == 3024, 625] <- 7
+HouseholdLaos_2C[HouseholdLaos_2C$o9 == 3114, 625] <-  11
+HouseholdLaos_2C[HouseholdLaos_2C$o9 == 3261, 625] <-  4
+HouseholdLaos_2C[HouseholdLaos_2C$o9 == 3552, 625] <-  1
+# For following households, we know the number of households members but no details on them
+#HHID: 3019, 3303, 3340, 3368, 3550, 3558, 3565
+
+
+## 4.4 Data cleaning for "CuplandLaos_2"
+
+# # #a.Check for crops duplicates
+CuplandLaos_2$pid <- paste(CuplandLaos_2$hhid_re3,CuplandLaos_2$crop2_now)
+CuplandLaos_2 <- CuplandLaos_2 %>% relocate(pid , .after = hhid_re3)
+#Check the number and id of duplicates
+count_if("TRUE",duplicated(CuplandLaos_2$pid))
+#Check and remove the real duplicates through automated method
+Dum <- CuplandLaos_2[duplicated(CuplandLaos_2$pid),]
+idDup <- unique(Dum$hhid_re3)
+DumReal <- CuplandLaos_2[CuplandLaos_2$hhid_re3 %in% idDup,]
+DumReal$check <- paste(DumReal$pid, DumReal$d2_23e, DumReal$d2_232)
+DumReal <- DumReal %>% relocate(check , .after = pid)
+Dupli <- DumReal[duplicated(DumReal$check),]
+Duplic <- rownames(Dupli)
+CuplandLaos_2 <- CuplandLaos_2[!rownames(CuplandLaos_2) %in% Duplic,]
+#For some duplicates, we have to do it manually:
+#Re-attribute household members numbers when the household id is duplicated for different household members
+Dum <- CuplandLaos_2[duplicated(CuplandLaos_2$pid),]
+idDup <- unique(Dum$hhid_re3)
+idDup
+for (i in idDup){
+  CuplandLaos_2$crop2_now[CuplandLaos_2$hhid_re3 == i] <- 1:sum(CuplandLaos_2$hhid_re3 == i)
+}
+CuplandLaos_2$pid <- paste(CuplandLaos_2$hhid_re3,CuplandLaos_2$crop2_now)
+#Check again the duplicates: 
+count_if("TRUE",duplicated(CuplandLaos_2$pid))
+
+# # #b. Some words have been written with two different ortographs for upland crops, let's correct it
 CuplandLaos_2$d2_23e <- str_replace(CuplandLaos_2$d2_23e, "garlic", "Garlic")
 CuplandLaos_2$d2_23e <- str_replace(CuplandLaos_2$d2_23e, "chineselattuce", "Chinese lettuce")
 CuplandLaos_2$d2_23e <- str_replace(CuplandLaos_2$d2_23e, "cucumber", "Cucumber")
 CuplandLaos_2$d2_23e <- str_replace(CuplandLaos_2$d2_23e, "ginger", "Ginger, rhizome")
 CuplandLaos_2$d2_23e <- str_replace(CuplandLaos_2$d2_23e, "Other orchards crop", "Other fruit crop")
 summary(as.factor(CuplandLaos_2$d2_23e))
+
+# # #c. Corresponding fields
+#Everything is ok in the table, we'll just check if number of crops
+#is corresponding with the other table
+x <- count(CuplandLaos_2, hhid_re3)
+y <- HouseholdLaos_2C[,c(1,633)]
+G <- merge(x, y, by.x = "hhid_re3", by.y = "o9", all.x = T, all.y= T, sort = TRUE)
+#Some households did not answered to a0 while we have the correct number of members
+#We will correct it)
+HouseholdLaos_2C[HouseholdLaos_2C$o9 == 3471, 633] <- 4
+HouseholdLaos_2C[HouseholdLaos_2C$o9 == 3292, 633] <-  3
+HouseholdLaos_2C[HouseholdLaos_2C$o9 == 3542, 633] <-  2
+HouseholdLaos_2C[HouseholdLaos_2C$o9 == 3444, 633] <-  1
+# For following households, we know the number of households members but no details on them
+#HHID: 3447, 3451, 3551, 3564, 3565
+
+
 
 #HouMemberLaos_2C <- HouMemberLaos_2[,-6]
 #Add the proper labels to each columns

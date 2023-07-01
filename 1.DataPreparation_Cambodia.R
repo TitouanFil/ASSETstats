@@ -26,8 +26,8 @@ HomegardenCambodia <- read_dta("d2_3_homegarden_cambodia.dta")
 #C2 = FACT
 #C3 = FACT
 #C4 = ? (Probably Kobo ID, maybe necessary to replace it later)
-#C5 = REMOVE (Text from the questionnaire)
-#C6 = REMOVE (Text from the questionnaire)
+#C5 = CHAR, REMOVE (Text from the questionnaire)
+#C6 = CHAR, REMOVE (Text from the questionnaire)
 #C7 = FACT, Change the label: "Consent: 1 = yes, 2 = no"
 var_label(HouseholdCambodia$consent) <- "Consent: 1 = yes, 2 = no"
 #C8 = FACT 
@@ -1050,12 +1050,12 @@ var_label(HouseholdCambodia$c910) <- "Contribute to conservation purpose e.g. fo
 HouseholdCambodia <- HouseholdCambodia %>% relocate(c910 , .after = c99)
 #C529 = FACT, replace label: "Other"
 var_label(HouseholdCambodia$c999) <- "Other"
-#C530 = OK, (the answer is still in Khmer, Ky will maybe solve it), replace label: "Specify other"
+#C530 = FACT, replace label: "Do not know"
+var_label(HouseholdCambodia$c988) <- "Do not know"
+#C531 = OK, (the answer is still in Khmer, Ky will maybe solve it), replace label: "Specify other"
 var_label(HouseholdCambodia$c9_oth) <- "Specify other"
 #Move this column at this place:
-HouseholdCambodia <- HouseholdCambodia %>% relocate(c9_oth , .after = c999)
-#C531 = FACT, replace label: "Do not know"
-var_label(HouseholdCambodia$c988) <- "Do not know"
+HouseholdCambodia <- HouseholdCambodia %>% relocate(c9_oth , .after = c988)
 #C532 = FACT, (bin), replace label: "Did c3a give you loan/credit in the past 3 years"
 var_label(HouseholdCambodia$c6) <- "Did c3a give you loan/credit in the past 3 years"
 #C533 = FACT, (bin), replace label: "Did c3a give you technical advice or training in the past 3 years?"
@@ -2992,6 +2992,7 @@ var_label(HouseholdCambodia$d21_13214) <- "Homegarden crop n3"
 #C1561 = FACT, (table of correspondence)
 #C1562 = OK, (empty)
 #C1563 = CHAR, (correspond to crops numbers), (Useless answer-MultipleCombined, use the following columns)#C1564 = FACT, replace label: "Lowland crop n1"
+#C1564 = FACT, replace label: "Lowland crop n1"
 var_label(HouseholdCambodia$d21_1421) <- "Lowland crop n1"
 #C1565 = FACT, replace label: "Lowland crop n2"
 var_label(HouseholdCambodia$d21_1422) <- "Lowland crop n2"
@@ -4742,7 +4743,7 @@ var_label(HouseholdCambodia$e570) <- "I don’t use antibiotics at all"
 #Already include in the feed
 #Others
 #C2348 = OK, (the answer is still in Khmer, Ky will maybe solve it)
-#C2349 = OK, (bin)
+#C2349 = FACT, (bin)
 #C2350 = CHAR, (Useless answer-MultipleCombined, use the following columns), (see table below)
 #C2351 = FACT, (bin), replace label: "Jan"
 var_label(HouseholdCambodia$e58_11) <- "Jan"
@@ -4768,7 +4769,7 @@ var_label(HouseholdCambodia$e58_110) <- "Oct"
 var_label(HouseholdCambodia$e58_111) <- "Nov"
 #C2362 = FACT, (bin), replace label: "Dec"
 var_label(HouseholdCambodia$e58_112) <- "Dec"
-#C2363 = OK, (bin)
+#C2363 = FACT, (bin)
 #C2364 = CHAR, (Useless answer-MultipleCombined, use the following columns), (see table below)
 #C2365 = FACT, (bin), replace label: "Jan"
 var_label(HouseholdCambodia$e59_11) <- "Jan"
@@ -5160,12 +5161,12 @@ var_label(HouseholdCambodia$l688) <- "Do not know"
 #C2520 = REMOVE, (duplicate)
 #C2521 = OK
 #C2522 = OK
-#C2523 = OK
-#C2524 = OK
+#C2523 = FACT
+#C2524 = FACT
 
 ## For each column we determine if necessary to change the name, label or remove it
-#C2525 = REMOVE, (text from questionnaire)
-#C2526 = REMOVE, (empty, correspond to nothing in the questionnaire)
+#C2525 = FACT, REMOVE, (text from questionnaire)
+#C2526 = FACT, REMOVE, (empty, correspond to nothing in the questionnaire)
 #C2527 = REMOVE, (empty, correspond to nothing in the questionnaire)
 #C2528 = REMOVE, (empty, correspond to nothing in the questionnaire)
 #C2529 = REMOVE, (empty, correspond to nothing in the questionnaire)
@@ -5189,31 +5190,31 @@ var_label(HouseholdCambodia$l688) <- "Do not know"
 #C2547 = REMOVE, (empty, correspond to nothing in the questionnaire)
 #C2548 = REMOVE, (empty, correspond to nothing in the questionnaire)
 #C2549 = REMOVE, (empty, correspond to nothing in the questionnaire)
-#C2550 = REMOVE, (empty, correspond to nothing in the questionnaire)
+#C2550 = FACT, REMOVE, (empty, correspond to nothing in the questionnaire)
 #C2551 = REMOVE, (empty, correspond to nothing in the questionnaire)
-#C2552 = REMOVE, (empty, correspond to nothing in the questionnaire)
+#C2552 = FACT, REMOVE, (empty, correspond to nothing in the questionnaire)
 #C2553 = REMOVE, (empty, correspond to nothing in the questionnaire)
 #C2554 = REMOVE, (empty, correspond to nothing in the questionnaire)
 #C2555 = REMOVE, (empty, correspond to nothing in the questionnaire)
 #C2556 = REMOVE, (empty, correspond to nothing in the questionnaire)
 #C2557 = REMOVE, (empty, correspond to nothing in the questionnaire)
 #C2558 = REMOVE, (empty, correspond to nothing in the questionnaire)
-#C2559 = REMOVE, (empty, correspond to nothing in the questionnaire)
+#C2559 = FACT, REMOVE, (empty, correspond to nothing in the questionnaire)
 #C2560 = REMOVE, (empty, correspond to nothing in the questionnaire)
-#C2561 = REMOVE, (empty, correspond to nothing in the questionnaire)
-#C2562 = REMOVE, (empty, correspond to nothing in the questionnaire)
-#C2563 = REMOVE, (empty, correspond to nothing in the questionnaire)
-#C2564 = REMOVE, (empty, correspond to nothing in the questionnaire)
-#C2565 = REMOVE, (empty, correspond to nothing in the questionnaire)
-#C2566 = REMOVE, (empty, correspond to nothing in the questionnaire)
-#C2567 = REMOVE, (empty, correspond to nothing in the questionnaire)
-#C2568 = REMOVE, (empty, correspond to nothing in the questionnaire)
-#C2569 = REMOVE, (empty, correspond to nothing in the questionnaire)
-#C2570 = REMOVE, (empty, correspond to nothing in the questionnaire)
-#C2571 = REMOVE, (empty, correspond to nothing in the questionnaire)
-#C2572 = REMOVE, (empty, correspond to nothing in the questionnaire)
-#C2573 = REMOVE, (empty, correspond to nothing in the questionnaire)
-#C2574 = REMOVE, (empty, correspond to nothing in the questionnaire)
+#C2561 = FACT, REMOVE, (empty, correspond to nothing in the questionnaire)
+#C2562 = FACT, REMOVE, (empty, correspond to nothing in the questionnaire)
+#C2563 = FACT, REMOVE, (empty, correspond to nothing in the questionnaire)
+#C2564 = FACT, REMOVE, (empty, correspond to nothing in the questionnaire)
+#C2565 = FACT, REMOVE, (empty, correspond to nothing in the questionnaire)
+#C2566 = FACT, REMOVE, (empty, correspond to nothing in the questionnaire)
+#C2567 = FACT, REMOVE, (empty, correspond to nothing in the questionnaire)
+#C2568 = FACT, REMOVE, (empty, correspond to nothing in the questionnaire)
+#C2569 = FACT, REMOVE, (empty, correspond to nothing in the questionnaire)
+#C2570 = FACT, REMOVE, (empty, correspond to nothing in the questionnaire)
+#C2571 = FACT, REMOVE, (empty, correspond to nothing in the questionnaire)
+#C2572 = FACT, REMOVE, (empty, correspond to nothing in the questionnaire)
+#C2573 = FACT, REMOVE, (empty, correspond to nothing in the questionnaire)
+#C2574 = FACT, REMOVE, (empty, correspond to nothing in the questionnaire)
 
 
 
@@ -5456,46 +5457,50 @@ var_label(ClowlandCambodia$d2_12) <- "d2_12. select crop crop1_now with keyword 
 var_label(ClowlandCambodia$d2_13v) <- "d2_13v. Crop name (Khmer)"
 #C10 = OK, (crop name in English) replace label: "d2_13e. Crop name (English)"
 var_label(ClowlandCambodia$d2_13e) <- "d2_13e. Crop name (English)"
-#C11 = NUM, replace label: "d2_132. what is the total area of all plots where you grow crop_1 (m2) ?"
+#C11 = FACT, ???
+#C12 = NUM, replace label: "d2_132. what is the total area of all plots where you grow crop_1 (m2) ?"
 var_label(ClowlandCambodia$d2_132) <- "d2_132. what is the total area of all plots where you grow crop_1 (m2) ?"
-#C12 = FACT, (table of correspondence), (see option below), replace label: "d2_133. which unit of d2_13v ?"
+#C13 = FACT, (table of correspondence), (see option below), replace label: "d2_133. which unit of d2_13v ?"
 var_label(ClowlandCambodia$d2_133) <- "d2_133. which unit of d2_13v ?"
 #Kg of seed
 #Gr of seed
 #Number of seedlings
-#C13 = OK, replace label: "d2_134. number of seed units of d2_13v that household used?"
+#C14 = OK, replace label: "d2_134. number of seed units of d2_13v that household used?"
 var_label(ClowlandCambodia$d2_134) <- "d2_134. number of seed units of d2_13v that household used?"
-#C14 = FACT, (table of correspondence), (see option below), replace label: "d2_135a. which unit of d2_13v ?"
+#C15 = FACT, (table of correspondence), (see option below), replace label: "d2_135a. which unit of d2_13v ?"
 var_label(ClowlandCambodia$d2_135a) <- "d2_135a. which unit of d2_13v ?"
-#C15 = FACT, (table of correspondence), (see option below), replace label: "d2_135b. Specify unit for d2_13v ?"
+#C16 = FACT, (table of correspondence), (see option below), replace label: "d2_135b. Specify unit for d2_13v ?"
 var_label(ClowlandCambodia$d2_135b) <- "d2_135b. Specify unit for d2_13v ?"
-#C16 = OK, replace label: "d2_135c. number of unit produced of d2_13v ?"
-var_label(ClowlandCambodia$d2_135c) <- "d2_135. number of unit produced of d2_13v ?"
-#C17 = FACT, (table of correspondence), (see option below), replace label: "d2_136a. which unit of d2_13v ?"
+#C17 = OK, replace label: "d2_135c. number of unit produced of d2_13v ?"
+var_label(ClowlandCambodia$d2_135c) <- "d2_135c. number of unit produced of d2_13v ?"
+#C18 = FACT, (table of correspondence), (see option below), replace label: "d2_136a. which unit of d2_13v ?"
 var_label(ClowlandCambodia$d2_136a) <- "d2_136a. which unit of d2_13v ?"
-#C18 = FACT, (table of correspondence), (see option below), replace label: "d2_136b. Specify unit for d2_13v ?"
+#C19 = FACT, (table of correspondence), (see option below), replace label: "d2_136b. Specify unit for d2_13v ?"
 var_label(ClowlandCambodia$d2_136b) <- "d2_136b. Specify unit for d2_13v ?"
-#C19 = OK, replace label: "d2_136c. number of unit produced of d2_13v ?"
-var_label(ClowlandCambodia$d2_136c) <- "d2_136c. number of unit produced of d2_13v ?"
-#C20 = OK, replace label: "d2_137.number of kg sold of d2_13v"
-var_label(ClowlandCambodia$d2_137) <- "d2_137. selling price/ kg of d2_13v"
-#C21 = ??
-#C22 = OK, replace label: "d2_138. how many species or varieties of d2_13v ?"
+#C20 = OK, replace label: "d2_136c. number of unit sold of d2_13v ?"
+var_label(ClowlandCambodia$d2_136c) <- "d2_136c. number of unit sold of d2_13v ?"
+#C21 = OK, replace label: "d2_137.number of kg sold of d2_13v"
+var_label(ClowlandCambodia$d2_137a) <- "d2_137. selling price/ kg of d2_13v"
+#C22 = FACT, see answers below, replace label: "d2_137b. What form of d2_13v sold?"
+var_label(ClowlandCambodia$d2_137b) <- "d2_137b. What form of d2_13v sold?"
+#Fresh
+#Dried
+#C23 = OK, replace label: "d2_138. how many species or varieties of d2_13v ?"
 var_label(ClowlandCambodia$d2_138) <- "d2_138. how many species or varieties of d2_13v ?"
 
 # FOR FOLLOWING COLUMNS, DECIDE TO REMOVE IT OR NOT
-#C23 = (empty)
 #C24 = (empty)
 #C25 = (empty)
-#C26 = FACT, (id)
+#C26 = (empty)
 #C27 = FACT, (id)
-#C28 = FACT, (time)
-#C29 = FACT, (empty)
-#C30 = OK, (empty)
-#C31 = OK, (empty)
-#C32 = OK, (useless?)
-#C33 = OK, (useless?)
-#C34 = OK, (empty)
+#C28 = FACT, (id)
+#C29 = FACT, (time)
+#C30 = FACT, (empty)
+#C31 = FACT, (empty)
+#C32 = FACT, (empty)
+#C33 = FACT, (useless?)
+#C34 = FACT, (useless?)
+#C35 = FACT, (empty)
 
 ##2.4. Work on the fourth database: "CuplandCambodia" (C = Column)
 ## For each column we determine if necessary to change the name, label or remove it
@@ -5510,7 +5515,7 @@ var_label(ClowlandCambodia$d2_138) <- "d2_138. how many species or varieties of 
 var_label(CuplandCambodia$d2_23v) <- "d2_23v. Crop name (Khmer)"
 #C8 = OK, (crop name in English) replace label: "d2_23e. Crop name (English)"
 var_label(CuplandCambodia$d2_23e) <- "d2_23e. Crop name (English)"
-#C9 = ???
+#C9 = FACT, ???
 #C10 = NUM, replace label: "d2_232. what is the total area of all plots where you grow crop_1 (m2) ?"
 var_label(CuplandCambodia$d2_232) <- "d2_232. what is the total area of all plots where you grow crop_1 (m2) ?"
 #C11 = FACT, (table of correspondence), (see option below), replace label: "d2_233. which unit of d2_23v ?"
@@ -5520,21 +5525,24 @@ var_label(CuplandCambodia$d2_233) <- "d2_233. which unit of d2_23v ?"
 #Number of seedlings
 #C12 = OK, replace label: "d2_234. number of seed units of d2_23v that household used?"
 var_label(CuplandCambodia$d2_234) <- "d2_234. number of seed units of d2_23v that household used?"
-#C13 = FACT, (table of correspondence), (see option below), replace label: "d2_135a. which unit of d2_13v ?"
-var_label(CuplandCambodia$d2_235a) <- "d2_235a. which unit of d2_13v ?"
-#C14 = FACT, (table of correspondence), (see option below), replace label: "d2_135b. Specify unit for d2_13v ?"
-var_label(CuplandCambodia$d2_235b) <- "d2_235b. Specify unit for d2_13v ?"
-#C15 = OK, replace label: "d2_235c. number of unit produced of d2_13v ?"
-var_label(CuplandCambodia$d2_235c) <- "d2_235c. number of unit produced of d2_13v ?"
-#C16 = FACT, (table of correspondence), (see option below), replace label: "d2_136a. which unit of d2_13v ?"
-var_label(CuplandCambodia$d2_236a) <- "d2_236a. which unit of d2_13v ?"
-#C17 = FACT, (table of correspondence), (see option below), replace label: "d2_136b. Specify unit for d2_13v ?"
-var_label(CuplandCambodia$d2_236b) <- "d2_236b. Specify unit for d2_13v ?"
-#C18 = OK, replace label: "d2_236c. number of unit produced of d2_13v ?"
-var_label(CuplandCambodia$d2_236c) <- "d2_236c. number of unit produced of d2_13v ?"
-#C19 = OK, replace label: "d2_237.d2_237. selling price/ kg of d2_23v"
+#C13 = FACT, (table of correspondence), (see option below), replace label: "d2_235a. which unit of d2_23v ?"
+var_label(CuplandCambodia$d2_235a) <- "d2_235a. which unit of d2_23v ?"
+#C14 = FACT, (table of correspondence), (see option below), replace label: "d2_235b. Specify unit for d2_23v ?"
+var_label(CuplandCambodia$d2_235b) <- "d2_235b. Specify unit for d2_23v ?"
+#C15 = OK, replace label: "d2_235c. number of unit produced of d2_23v ?"
+var_label(CuplandCambodia$d2_235c) <- "d2_235c. number of unit produced of d2_23v ?"
+#C16 = FACT, (table of correspondence), (see option below), replace label: "d2_236a. which unit of d2_23v ?"
+var_label(CuplandCambodia$d2_236a) <- "d2_236a. which unit of d2_23v ?"
+#C17 = FACT, (table of correspondence), (see option below), replace label: "d2_236b. Specify unit for d2_23v ?"
+var_label(CuplandCambodia$d2_236b) <- "d2_236b. Specify unit for d2_23v ?"
+#C18 = OK, replace label: "d2_236c. number of unit sold of d2_23v ?"
+var_label(CuplandCambodia$d2_236c) <- "d2_236c. number of unit sold of d2_23v ?"
+#C19 = OK, replace label: "d2_237a. selling price/ kg of d2_23v"
 var_label(CuplandCambodia$d2_237a) <- "d2_237a. selling price/ kg of d2_23v"
-#C20 = ??
+#C20 = FACT, see answers below, replace label: "d2_237b. What form of d2_23v sold?"
+var_label(CuplandCambodia$d2_237b) <- "d2_237b. What form of d2_23v sold?"
+#Fresh
+#Dried
 #C21 = OK, replace label: "d2_238. how many species or varieties of d2_23v ?"
 var_label(CuplandCambodia$d2_238) <- "d2_238. how many species or varieties of d2_23v ?"
 
@@ -5547,6 +5555,62 @@ var_label(CuplandCambodia$d2_238) <- "d2_238. how many species or varieties of d
 #C27 = FACT, (id)
 #C28 = FACT, (time)
 
+##2.5. Work on the fourth database: "HomegardenCambodia" (C = Column)
+## For each column we determine if necessary to change the name, label or remove it
+
+#C1 = FACT, NUMERIC ID
+#C2 = FACT, CROP ID
+#C3 = FACT, (id of household, to link with other dataframes)
+#C4 = CHAR, Crop id with letters
+#C5 = FACT, (number corresponding to crops), replace label: "d2_32. select crop crop1_now with keyword searchcrop1"
+var_label(HomegardenCambodia$d2_32) <- "d2_32. select crop crop1_now with keyword searchcrop1"
+#C6 = OK, (the answer is still in Khmer, Ky will maybe solve it)
+#C7 = OK, (crop name in Khmer) replace label: "d2_33v. Crop name (Khmer)"
+var_label(HomegardenCambodia$d2_33v) <- "d2_33v. Crop name (Khmer)"
+#C8 = OK, (crop name in English) replace label: "d2_33e. Crop name (English)"
+var_label(HomegardenCambodia$d2_33e) <- "d2_33e. Crop name (English)"
+#C9 = FACT, ???
+#C10 = NUM, replace label: "d2_332. what is the total area of all plots where you grow crop_1 (m2) ?"
+var_label(HomegardenCambodia$d2_332) <- "d2_332. what is the total area of all plots where you grow crop_1 (m2) ?"
+#C11 = FACT, (table of correspondence), (see option below), replace label: "d2_333. which unit of d2_33v ?"
+var_label(HomegardenCambodia$d2_333) <- "d2_333. which unit of d2_33v ?"
+#Kg of seed
+#Gr of seed
+#Number of seedlings
+#C12 = OK, replace label: "d2_334. number of seed units of d2_33v that household used?"
+var_label(HomegardenCambodia$d2_334) <- "d2_334. number of seed units of d2_33v that household used?"
+#C13 = FACT, (table of correspondence), (see option below), replace label: "d2_335a. which unit of d2_33v ?"
+var_label(HomegardenCambodia$d2_335a) <- "d2_335a. which unit of d2_33v ?"
+#C14 = FACT, (table of correspondence), (see option below), replace label: "d2_335b. Specify unit for d2_33v ?"
+var_label(HomegardenCambodia$d2_335b) <- "d2_335b. Specify unit for d2_33v ?"
+#C15 = OK, replace label: "d2_335c. number of unit produced of d2_33v ?"
+var_label(HomegardenCambodia$d2_335c) <- "d2_335c. number of unit produced of d2_33v ?"
+#C16 = FACT, (table of correspondence), (see option below), replace label: "d2_336a. which unit of d2_33v ?"
+var_label(HomegardenCambodia$d2_336a) <- "d2_336a. which unit of d2_33v ?"
+#C17 = FACT, (table of correspondence), (see option below), replace label: "d2_336b. Specify unit for d2_33v ?"
+var_label(HomegardenCambodia$d2_336b) <- "d2_336b. Specify unit for d2_33v ?"
+#C18 = OK, replace label: "d2_336c. number of unit sold of d2_33v ?"
+var_label(HomegardenCambodia$d2_336c) <- "d2_336c. number of unit sold of d2_33v ?"
+#C19 = OK, replace label: "d2_337a. selling price/ kg of d2_33v"
+var_label(HomegardenCambodia$d2_337a) <- "d2_337a. selling price/ kg of d2_33v"
+#C20 = FACT, see answers below, replace label: "d2_337b. What form of d2_33v sold?"
+var_label(HomegardenCambodia$d2_337b) <- "d2_337b. What form of d2_33v sold?"
+#Fresh
+#Dried
+#C21 = OK, replace label: "d2_338. how many species or varieties of d2_33v ?"
+var_label(HomegardenCambodia$d2_338) <- "d2_338. how many species or varieties of d2_33v ?"
+
+# FOR FOLLOWING COLUMNS, DECIDE TO REMOVE IT OR NOT
+#C22 = FACT, ??
+#C23 = FACT, (CROP id)
+#C24 = FACT, (useless??)
+#C25 = FACT, (parent index)
+#C26 = FACT, (id)
+#C27 = FACT, (id)
+#C28 = FACT, (time)
+#C22 = USELESS
+#C22 = USELESS
+#C22 = USELESS
 
 
 ### 3. Columns data type changing and removing
@@ -5558,6 +5622,8 @@ HouseholdCambodia_2 <- as.data.frame(HouseholdCambodia)
 HouMemberCambodia_2 <- as.data.frame(HouMemberCambodia)
 ClowlandCambodia_2 <- as.data.frame(ClowlandCambodia)
 CuplandCambodia_2 <- as.data.frame(CuplandCambodia)
+HomegardenCambodia_2 <- as.data.frame(HomegardenCambodia)
+
 #a. FACTOR CONVERSION
 #Convert columns to FACTOR - "HouseholdCambodia"
 for (i in c(1:3,7:9,11,13:34,36,38:42,48:54,57,68:78,80:86,88:91,93,96:117,120,122,124,131,133:154,
@@ -5566,7 +5632,7 @@ for (i in c(1:3,7:9,11,13:34,36,38:42,48:54,57,68:78,80:86,88:91,93,96:117,120,1
             462:463,465:473,475,477,479:480,482:496,498,500:510,512,514,516,519:530,532:535,537:566,
             569:576,578:580,582:589,620:634,639:653,655:663,665:666,671:685,687:695,697,709:724,727,
             730,733,736,739,742,745,748,751,757,760,766,769,771:773,777,779,781,783,785,787,790,793,796,
-            800,801:806,809:817,819,821:835,838:852,855:869,872:886,889:903,906:920,923:937,940:954,
+            800,801:806,809:819,821:835,838:852,855:869,872:886,889:903,906:920,923:937,940:954,
             957:965,968:982,985:999,1002:1016,1019:1033,1036:1050,1053:1067,1070:1084,1087:1101,1103,
             1104,1106:1117,1120:1134,1137:1151,1154:1168,1171:1185,1188:1202,1205:1219,1222:1236,1239:1253,
             1256:1270,1273:1287,1290:1304,1307:1321,1323:1324,1326:1340,1343:1357,1359:1374,1377:1391,
@@ -5589,13 +5655,18 @@ for (i in c(1:4,6:7,9:10,12:13,15,17:33,35,37,39,41:52,54:59)){
   HouMemberCambodia_2[,i] <- as.factor(HouMemberCambodia_2[,i])
 }
 #Convert columns to FACTOR - "ClowlandCambodia"
-for (i in c(2:4,6,12,14:15,17:18,26:29)){
+for (i in c(2:4,6,11:15,17:18,22,26:38)){
   ClowlandCambodia_2[,i] <- as.factor(ClowlandCambodia_2[,i])
 }
 #Convert columns to FACTOR - "CuplandCambodia"
-for (i in c(2:3,5,11,13:14,16:17,23,25:28)){
+for (i in c(2:3,5,9,11,13:14,16:17,20,22:24,25:28)){
   CuplandCambodia_2[,i] <- as.factor(CuplandCambodia_2[,i])
 }
+#Convert columns to FACTOR - "HomegardenCambodia"
+for (i in c(1:3,5,9,11,13:14,16:17,20,23,25:28)){
+  HomegardenCambodia_2[,i] <- as.factor(HomegardenCambodia_2[,i])
+}
+
 #b. NUMERIC CONVERSION
 #Convert columns to NUMERIC - "HouseholdCambodia"
 for (i in  c(67,127,129,590,598:600,609:611,617:618,702:703,726,729,731:732,734:735,737:738,740:741,
@@ -5603,11 +5674,16 @@ for (i in  c(67,127,129,590,598:600,609:611,617:618,702:703,726,729,731:732,734:
   HouseholdCambodia_2[,i] <- as.numeric(HouseholdCambodia_2[,i])
 }
 #Convert columns to NUMERIC - "HouMemberCambodia"
-  HouMemberCambodia_2[,10] <- as.numeric(HouMemberCambodia_2[,11])
+  HouMemberCambodia_2[,11] <- as.numeric(HouMemberCambodia_2[,11])
 #Convert columns to NUMERIC - "ClowlandCambodia"
-  ClowlandCambodia_2[,10] <- as.numeric(ClowlandCambodia_2[,11])
+  for (i in c(12,14,17)){
+    ClowlandCambodia_2[,i] <- as.numeric(ClowlandCambodia_2[,i])
+  }
 #Convert columns to NUMERIC - "CuplandCambodia"
-  CuplandCambodia_2[,9] <- as.numeric(CuplandCambodia_2[,10])
+  CuplandCambodia_2[,10] <- as.numeric(CuplandCambodia_2[,10])
+#Convert columns to NUMERIC - "Homegarden Cambodia"
+  HomegardenCambodia_2[,10] <- as.numeric(HomegardenCambodia_2[,10])
+  
 #c. CHARACTER CONVERSION
 #Convert columns to CHARACTER - "HouseholdCambodia"
   for (i in  c(1,95,132,155,158,172,185,202,227,247,259,273,294,315,335:336,357,379,401,422,443,481,
@@ -5622,12 +5698,14 @@ for (i in  c(67,127,129,590,598:600,609:611,617:618,702:703,726,729,731:732,734:
   }
 #Convert columns to CHARACTER - "HouMemberCambodia"
   for (i in  c(1,40)){
-  HouMemberCambodia_2[,i] <- as.factor(HouMemberCambodia_2[,i])
+  HouMemberCambodia_2[,i] <- as.character(HouMemberCambodia_2[,i])
   }
 #Convert columns to CHARACTER - "ClowlandCambodia"
-  ClowlandCambodia_2[,1] <- as.numeric(ClowlandCambodia_2[,1])
+  ClowlandCambodia_2[,1] <- as.character(ClowlandCambodia_2[,1])
 #Convert columns to CHARACTER - "CuplandCambodia"
-  CuplandCambodia_2[,1] <- as.numeric(CuplandCambodia_2[,1])
+  CuplandCambodia_2[,1] <- as.character(CuplandCambodia_2[,1])
+#Convert columns to CHARACTER - "HomegardenCambodia"
+  HomegardenCambodia_2[,1] <- as.character(HomegardenCambodia_2[,1])
 
 
 ##3.2 REMOVE Unwanted columns (1st Version)
@@ -5642,11 +5720,12 @@ HouseholdCambodia_2C <- copy_labels(HouseholdCambodia_2, HouseholdCambodia)
 HouMemberCambodia_2C <- copy_labels(HouMemberCambodia_2, HouMemberCambodia)
 ClowlandCambodia_2C <- copy_labels(ClowlandCambodia_2, ClowlandCambodia)
 CuplandCambodia_2 <- copy_labels(CuplandCambodia_2, CuplandCambodia)
+HomegardenCambodia_2 <- copy_labels(HomegardenCambodia_2, HomegardenCambodia)
 
 
 ### 4. Data Cleaning 1 (Based on Ky comments)
 
-## 4.1 Data cleaning for "HouseholdLaos_2"
+## 4.1 Data cleaning for "HouseholdCambodia_2"
 
 
 # # #a. Duplicates
@@ -5687,367 +5766,167 @@ count_if("TRUE",duplicated(HouseholdCambodia_2C$o9))
 
 
 # # #c. Corresponding fields
-#-	There were 13 households who did no selling agri-products (at b1) but they still selected 3
-#main sources of income from crop production and livestock raising (b3). Please review list below
-#to know and check record for validating data
-#MANUAL, NEED TO MODIFY IT
-HouseholdCambodia_2C$b1 <- as.character(HouseholdCambodia_2C$b1)
-HouseholdCambodia_2C[c(65,96,119,132,154,166,492),80] <- "1"
-HouseholdCambodia_2C[c(93,174),80] <- "2"
-HouseholdCambodia_2C[c(67,318),80] <- "3"
+#The following part is based on Laos script but we removed all parts for which
+#no issue was highligted for Laos, assuming no issue was permitted by Kobo for 
+#these fields
 
-#For selling livestock, we based on b1 & b2 to find 308 households selling fresh or processed
-#livestock product, but there were 318 ones answered at b17. So, we should delete 10 households
-#through check_b10inc_liv (0=no sell livestock products, 1=sold livestock products). Households
-#MANUAL, NEED TO MODIFY IT
-HouseholdCambodia_2C[424,80] <- "3"
-HouseholdCambodia_2C[177,80] <- "0"
-HouseholdCambodia_2C$b1 <- as.factor(HouseholdCambodia_2C$b1)
-HouseholdCambodia_2C$b1 <- as.character(HouseholdCambodia_2C$b17)
-HouseholdCambodia_2C[c(67,93,174,319),242] <- "88"
-HouseholdCambodia_2C$b1 <- as.factor(HouseholdCambodia_2C$b17)
 
-#Another problem that we missed data for 45 households at b13_01, we had 362 households sold
-#crop products for the 1st buyers (at b12_1), but only 317 households listed crop they sold at
-#b13_01. 
-#NOTHING TO DO HERE FOR NOW
+#b1:b10:b11
+x <- HouseholdLaos_2C[,c(1,80,211,221)]
 
-#Need validate unlogic between d81 (576 respondents) and d81_1a (578 respondents)
-HouseholdCambodia_2C$d81_1a <- as.character(HouseholdCambodia_2C$d81_1a)
-HouseholdCambodia_2C$d81_1a <- ifelse(is.na(HouseholdCambodia_2C$d81) & !is.na(HouseholdCambodia_2C$d81_1a), NA, HouseholdCambodia_2C$d81_1a)
-HouseholdCambodia_2C$d81_1a <- as.factor(HouseholdCambodia_2C$d81_1a)
+#5 households declared that they sold crops products but did not anwered to b10 & b11
+#HHID: 3044,3054,3303,3551,3222
+#As we cannot know their answer, we cannot solve this issue
 
-#Need validate unlogic between d82 (521 respondents) and d82_1a (533 respondents)
-HouseholdCambodia_2C$d82_1a <- as.character(HouseholdCambodia_2C$d82_1a)
-HouseholdCambodia_2C$d82_1a <- ifelse(is.na(HouseholdCambodia_2C$d82) & !is.na(HouseholdCambodia_2C$d82_1a), NA, HouseholdCambodia_2C$d82_1a)
-HouseholdCambodia_2C$d82_1a  <- as.factor(HouseholdCambodia_2C$d82_1a)
+#b1:b16:b17
+x <- HouseholdLaos_2C[,c(1,80,222,224)]
 
-#Need validate unlogic between d83 (397 respondents) and d83_1a (414 respondents)
-HouseholdCambodia_2C$d83_1a <- as.character(HouseholdCambodia_2C$d83_1a)
-HouseholdCambodia_2C$d83_1a <- ifelse(is.na(HouseholdCambodia_2C$d83) & !is.na(HouseholdCambodia_2C$d83_1a), NA, HouseholdCambodia_2C$d83_1a)
-HouseholdCambodia_2C$d83_1a  <- as.factor(HouseholdCambodia_2C$d83_1a)
+#1 household is fulfilled with the wrong information (HHID: 3027)
+HouseholdLaos_2C[,70] <- as.character(HouseholdLaos_2C[,70])
+HouseholdLaos_2C[HouseholdLaos_2C$o9 == 3027, 70] <- "Selling both own crops/fruits/vegetables and livestock products"
+HouseholdLaos_2C[,70] <- as.factor(HouseholdLaos_2C[,70])
+#Moreover, 2 households declared that they sold crops products but did not anwered to b16 & b17
+#HHID: 3222,3231
+#As we cannot know their answer, we cannot solve this issue
 
-#We have 578 hhs with lowland or upland but d12 on water conservation practice have 581
-#MANUAL, NEED TO MODIFY IT
-HouseholdCambodia_2C$d12 <- ifelse(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2), NA, HouseholdCambodia_2C$d12)
-for (i in c(865:874)){
-  HouseholdCambodia_2C[,i] <- as.character(HouseholdCambodia_2C[,i])
-  HouseholdCambodia_2C[,i] <- ifelse(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2), NA, HouseholdCambodia_2C[,i])
-  HouseholdCambodia_2C[,i] <- as.factor(HouseholdCambodia_2C[,i])
+#c2:c3:c3a:c4:c5:c9:c6:c7:c8:c10:c11
+x <- HouseholdLaos_2C[,c(1,498,499,512,514,516,518,532:536)]
+
+#For c6, c7 and c8, many unanswered cells, we'll replace it by "no", 
+#and also replace "Yes" by "yes" and "No" by "no" to homogenize the answers
+for (i in c(581:585)){
+  HouseholdLaos_2C[,i] <- as.character(HouseholdLaos_2C[,i])
+  HouseholdLaos_2C[,i] <- ifelse(HouseholdLaos_2C$c3a != '' & HouseholdLaos_2C[,i] == '', 'no',HouseholdLaos_2C[,i])
+  HouseholdLaos_2C[,i] <- ifelse(HouseholdLaos_2C[,i] == 'Yes', 'yes',HouseholdLaos_2C[,i])
+  HouseholdLaos_2C[,i] <- ifelse(HouseholdLaos_2C[,i] == 'No', 'no',HouseholdLaos_2C[,i])
+  HouseholdLaos_2C[,i] <- as.factor(HouseholdLaos_2C[,i])
 }
 
-#Check for d131_1 & d131_2, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d131_1 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d131_2))
-#Check for d133_1 & d133_2, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d133_1 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d133_2))
-#Check for d134_1 & d134_2, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d134_1 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d134_2))
-#Check for d135_1 & d135_2, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d135_1 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d135_2))
-#Check for d136_1 & d136_2, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d136_1 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d136_2))
-#Check for d137_1 & d137_2, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d137_1 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d137_2))
-#Check for d138_1 & d138_2, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d138_1 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d138_2))
+#b1:b12_1:b12_2
+x <- HouseholdLaos_2C[,c(1,80,634,666)]
 
-#We have 578 hhs with lowland or upland but d14 on soil conservation practice have 575
-#MANUAL, NEED TO MODIFY IT
-#1st, there are 2 '0' values for households with no crops, we replace it by ''
-HouseholdCambodia_2C$d14 <- ifelse(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2), NA, HouseholdCambodia_2C$d14)
-for (i in c(989:997)){
-  HouseholdCambodia_2C[,i] <- as.character(HouseholdCambodia_2C[,i])
-  HouseholdCambodia_2C[,i] <- ifelse(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2), NA, HouseholdCambodia_2C[,i])
-  HouseholdCambodia_2C[,i] <- as.factor(HouseholdCambodia_2C[,i])
+#Many households delcared at b1 that they sold agri products but did not answered ar b12_1 and b12_2
+#As we cannot know their answer, we cannot solve this issue
+
+#b12_2:b13_02-b13_0211:b13_2:b14_2-b14_288:b15_2
+x <- HouseholdLaos_2C[,c(1,666,670:695,697)]
+
+#For b13_2 and related answers => Many answers are missing but we don't have this
+#information so we cannot solve it
+#For b14_2 and related answers => Many answers are missing but we don't have this
+#information so we cannot solve it
+#For b15_2 and related answers => Many answers are missing but we don't have this
+#information so we cannot solve it
+
+#d2a_1:d2b_1:d2c_1:d82:d82_1a:d82_1b
+x <- HouseholdLaos_2C[,c(1,590,600,611,772,781,783)]
+
+#HHID: 3574, 2 upland crops declared and confirmed but no information for the 2nd crops
+#Nothing more to do as we don't have additionnal information
+#HHID: 3584, 1 crop declared while information for 2nd most important crop
+#we'll add this information
+HouseholdLaos_2C[,632] <- as.character(HouseholdLaos_2C[,632])
+HouseholdLaos_2C[HouseholdLaos_2C$o9 == '3584',632] <- 1
+
+#d2a_1:d2b_1:d2c_1:d83:d83_1a:d83_1b
+x <- HouseholdLaos_2C[,c(1,590,600,611,773,785,787)]
+
+#HHID: 3005,3022,3367,3610,3621,3206,3608, at least 3 crops declared and confirmed but no
+#information for the 3rd crops, Nothing more to do as we don't have additionnal information
+#HHID: 3276,3043,3563,3203, 2 crop declared while information for 3rd most important crop
+#we'll add this information
+for (i in c(3276,3043)){
+  HouseholdLaos_2C[HouseholdLaos_2C$o9 == i,624] <- 3
+}
+HouseholdLaos_2C[HouseholdLaos_2C$o9 == '3203',632] <- 2
+HouseholdLaos_2C[HouseholdLaos_2C$o9 == '3563',632] <- 3
+HouseholdLaos_2C[,632] <- as.factor(HouseholdLaos_2C[,632])
+#HHID: 3594, 2 crops declared while there are information for the 3rd crop, so we remove it
+for (i in c(787,799,801)){
+  HouseholdLaos_2C[,i] <- as.character(HouseholdLaos_2C[,i])
+  HouseholdLaos_2C[HouseholdLaos_2C$o9 == '3594',i] <- ''
+  HouseholdLaos_2C[,i] <- as.factor(HouseholdLaos_2C[,i])
 }
 
-#Then, there are 7 values with answers to column corresponding to each practices,
-#but not on column 13, we replace '' by '0':
-HouseholdCambodia_2C$d14 <- ifelse(HouseholdCambodia_2C$d14 == '' & HouseholdCambodia_2C$d140 == 2, '0', HouseholdCambodia_2C$d14)
+#d9_1:d9_2:d9_3
+x <- HouseholdLaos_2C[,c(1,790:792)]
 
-#Check for d151_1 & d151_2, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d151_1 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d151_2))
-#Check for d152_1 & d152_2, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d152_1 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d152_2))
-#Check for d153_1 & d153_2, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d153_1 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d153_2))
-#Check for d154_1 & d154_2, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d154_1 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d154_2))
-#Check for d155_1 & d155_2, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d155_1 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d155_2))
-#Check for d156_1 & d156_2, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d156_1 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d156_2))
-#Check for d157_1 & d157_2, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d157_1 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d157_2))
-#Check for d158_1 & d158_2, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d158_1 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d158_2))
+#HHID: 3084,3433,3438,3447,3568 declared plots rented out but no information of number of plots
+#As we cannot know their answer, we cannot solve this issue
+#d2a_1:d2b_1 :d17:d18:d181-d1899
+x <- HouseholdLaos_2C[,c(17,624,632,1066,1067,1068:1079)]
+#For d17, many households answered yes or no while the answer at d18 is not corresponding
+#We'll solve this issue
+HouseholdLaos_2C$d17 <- as.character(HouseholdLaos_2C$d17)
+HouseholdLaos_2C$d17 <- ifelse(!is.na(HouseholdLaos_2C$d181), 'Yes', HouseholdLaos_2C$d17)
+HouseholdLaos_2C$d17 <- ifelse(is.na(HouseholdLaos_2C$d181) & HouseholdLaos_2C$d17 == "Yes" , 'No', HouseholdLaos_2C$d17)
+HouseholdLaos_2C$d17 <- as.factor(HouseholdLaos_2C$d17)
 
-#We have 3 answers for d16 for hhs without lowland or upland
-#MANUAL, NEED TO MODIFY IT
-HouseholdCambodia_2C$d16 <- as.character(HouseholdCambodia_2C$d16)
-HouseholdCambodia_2C$d16 <- ifelse(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2), NA, HouseholdCambodia_2C$d16)
-HouseholdCambodia_2C$d16 <- as.factor(HouseholdCambodia_2C$d16)
+#d2a_1:d2b_1:d2c_1:d20:d21:d211-d2199
+x <- HouseholdLaos_2C[,c(17,590,600,611,1324,1325:1340)]
+#For d120, one household did not answered while he have crops
+#We'll solve this issue
+HouseholdLaos_2C$d20 <- as.character(HouseholdLaos_2C$d20)
+HouseholdLaos_2C[HouseholdLaos_2C$o9 == '3371',1250] <- "No"
+HouseholdLaos_2C$d20 <- as.factor(HouseholdLaos_2C$d20)
 
-#For d18, there are different issues solved below
-#MANUAL, NEED TO MODIFY IT
-HouseholdCambodia_2C$d18 <- ifelse(HouseholdCambodia_2C$d181 == '1' & HouseholdCambodia_2C$d18 == '', '1', HouseholdCambodia_2C$d18)
-HouseholdCambodia_2C$d18 <- ifelse(HouseholdCambodia_2C$d1899 == '1' & HouseholdCambodia_2C$d18 == '', as.character('99'), HouseholdCambodia_2C$d18)
-#For d17, there are 3 '0' values for households with no crops, we replace it by ''
-HouseholdCambodia_2C$d17 <- as.character(HouseholdCambodia_2C$d17)
-HouseholdCambodia_2C$d17 <- ifelse(HouseholdCambodia_2C$d17 != '2' & !is.na(HouseholdCambodia_2C$d18), '2', HouseholdCambodia_2C$d17)
-HouseholdCambodia_2C$d17 <- ifelse(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2), NA, HouseholdCambodia_2C$d17)
-HouseholdCambodia_2C$d17 <- as.factor(HouseholdCambodia_2C$d17)
+#e5_5:e5_51
+x <- HouseholdLaos_2C[,c(1,2082,2083)]
 
-## 3 NA remains for households with crops, see later if necesary to change it
-#for "no practice"
+#HHID: 3048, 3045, 3035 the selling price is missing, REPLACE
+#As we cannot know their answer, we cannot solve this issue
 
-#Check for d18_11 & d18_12, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d18_11 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d18_12))
-#Check for d18_21 & d18_22, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d18_21 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d18_22))
-#Check for d18_31 & d18_32, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d18_31 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d18_32))
-#Check for d18_41 & d18_42, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d18_41 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d18_42))
-#Check for d18_51 & d18_52, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d18_51 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d18_52))
-#Check for d18_61 & d18_62, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d18_61 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d18_62))
-#Check for d18_71 & d18_72, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d18_71 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d18_72))
-#Check for d18_81 & d18_82, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d18_81 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d18_82))
-#Check for d18_91 & d18_92, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d18_91 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d18_92))
-#Check for d18_101 & d18_102, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d18_101 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d18_102))
-#Check for d18_111_a & d18_112, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d18_111_a != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d18_112))
+#e7_5:e7_51
+x <- HouseholdLaos_2C[,c(1,2132,2133)]
 
-#For d19, one hh answered while he mentionned to have implemented this practice
-HouseholdCambodia_2C$d19 <- as.character(HouseholdCambodia_2C$d19)
-HouseholdCambodia_2C$d19 <- ifelse(HouseholdCambodia_2C$d17 == '2' & !is.na(HouseholdCambodia_2C$d19), NA, HouseholdCambodia_2C$d19)
-HouseholdCambodia_2C$d19 <- as.factor(HouseholdCambodia_2C$d19)
+#HHID: 3162,3147,3316 the selling price is missing, REPLACE
+#As we cannot know their answer, we cannot solve this issue
 
-#For d20 & d21, there are different issues solved below
-#MANUAL, NEED TO MODIFY IT
-HouseholdCambodia_2C$d21 <- ifelse(HouseholdCambodia_2C$d2110 == '1' & HouseholdCambodia_2C$d21 == '', '10', HouseholdCambodia_2C$d21)
-#For d20, different issues solved below
-HouseholdCambodia_2C$d20 <- as.character(HouseholdCambodia_2C$d20)
-HouseholdCambodia_2C$d20 <- ifelse(HouseholdCambodia_2C$no_crop1 == '' & HouseholdCambodia_2C$no_crop2 == '' , NA, HouseholdCambodia_2C$d20)
-x <- paste(HouseholdCambodia_2C$no_crop1,HouseholdCambodia_2C$no_crop2)
-HouseholdCambodia_2C$d20 <- ifelse( x != " " & is.na(HouseholdCambodia_2C$d20), '0', HouseholdCambodia_2C$d20)
-HouseholdCambodia_2C$d20 <- as.factor(HouseholdCambodia_2C$d20)
+#e12_3:e12_4
+x <- HouseholdLaos_2C[,c(1,2140:2141)]
 
-#Check for d21_12 & d21_13, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d21_12 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d21_13))
-#Check for d21_22 & d21_23, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d21_22 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d21_23))
-#Check for d21_32 & d21_33, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d21_32 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d21_33))
-#Check for d21_42 & d21_43, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d21_42 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d21_43))
-#Check for d21_52 & d21_53, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d21_52 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d21_53))
-#Check for d21_62 & d21_63, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d21_62 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d21_63))
-#Check for d21_72 & d21_73, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d21_72 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d21_73))
-#Check for d21_82 & d21_83, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d21_82 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d21_83))
-#Check for d21_92 & d21_93, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d21_92 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d21_93))
-#Check for d21_102 & d21_103, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d21_102 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d21_103))
-#Check for d21_112 & d21_113, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d21_112 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d21_113))
-#Check for d21_122 & d21_123, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d21_122 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d21_123))
-#Check for d21_132 & d21_133, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d21_132 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d21_133))
-#Check for d21_992 & d21_993, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d21_992 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d21_993))
+#Some households declared 0,1 or 2 m2 of pasture, we remove it
+HouseholdLaos_2C$e12_4 <- ifelse(HouseholdLaos_2C$e12_4 < 3, NA, HouseholdLaos_2C$e12_4)
+HouseholdLaos_2C$e12_3 <- as.character(HouseholdLaos_2C$e12_3)
+HouseholdLaos_2C$e12_3 <- ifelse(HouseholdLaos_2C$e12_3 == 'Yes' & is.na(HouseholdLaos_2C$e12_4), 'No', HouseholdLaos_2C$e12_3)
+HouseholdLaos_2C$e12_3 <- as.factor(HouseholdLaos_2C$e12_3)
 
-#For d22, one hh answered while he mentionned to have implemented this practice
-HouseholdCambodia_2C$d22 <- as.character(HouseholdCambodia_2C$d22)
-HouseholdCambodia_2C$d22 <- ifelse(HouseholdCambodia_2C$d20 == '2' & !is.na(HouseholdCambodia_2C$d22), NA, HouseholdCambodia_2C$d22)
-HouseholdCambodia_2C$d22 <- as.factor(HouseholdCambodia_2C$d22)
+#e2_3:e30:e31:e32:e33:e34:e341-e3499
+x <- HouseholdLaos_2C[,c(1,2034,2214,2216:2234)]
 
-#One household didn't answered to d22 but we don't fulfil it as we don't know his answer
+#For many households who raise pigs, no information about pig raising systems 
+#(Probably households with only adult pigs)
+#As we cannot know their answer, we cannot solve this issue
 
-#For d24, different issues solved below
-HouseholdCambodia_2C$d24 <- as.character(HouseholdCambodia_2C$d24)
-HouseholdCambodia_2C$d24 <- ifelse(HouseholdCambodia_2C$no_crop1 == '' & HouseholdCambodia_2C$no_crop2 == '' , NA, HouseholdCambodia_2C$d24)
-HouseholdCambodia_2C$d24 <- as.factor(HouseholdCambodia_2C$d24)
+#e2_8 :e44:e45:e46:e47:e48:e481-e4899
+x <- HouseholdLaos_2C[,c(1,2039,2281,2283:2301)]
 
-#For d26, different issues solved below
-HouseholdCambodia_2C$d26 <- as.character(HouseholdCambodia_2C$d26)
-HouseholdCambodia_2C$d26 <- ifelse(HouseholdCambodia_2C$no_crop1 == '' & HouseholdCambodia_2C$no_crop2 == '' , NA, HouseholdCambodia_2C$d26)
-HouseholdCambodia_2C$d26 <- as.factor(HouseholdCambodia_2C$d26)
-
-#Check for d27_11 & d27_12, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d27_11 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d27_12))
-#Check for d27_21 & d27_22, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d27_21 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d27_22))
-#Check for d27_31 & d27_32, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d27_31 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d27_32))
-#Check for d27_41 & d27_42, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d27_41 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d27_42))
-#Check for d27_51 & d27_52, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d27_51 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d27_52))
-#Check for d27_61 & d27_62, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d27_61 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d27_62))
-#Check for d27_71 & d27_72, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d27_71 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d27_72))
-#Check for d27_81 & d27_82, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d27_81 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d27_82))
-#Check for d27_91 & d27_92, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d27_91 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d27_92))
-#Check for d27_101 & d27_102, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d27_101 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d27_102))
-#Check for d27_111_a & d27_112_a, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d27_111_a != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d27_112_a))
-#Check for d27_121 & d27_122, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d27_121 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d27_122))
-#Check for d27_131 & d27_132, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d27_131 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d27_132))
-#Check for d27_141 & d27_142, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d27_141 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d27_142))
-#Check for d27_991 & d27_992, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & HouseholdCambodia_2C$d27_991 != '')
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d27_992))
-
-#For d28, different issues solved below
-HouseholdCambodia_2C$d28 <- as.character(HouseholdCambodia_2C$d28)
-HouseholdCambodia_2C$d28 <- ifelse(is.na(HouseholdCambodia_2C$d26) & !is.na(HouseholdCambodia_2C$d28), NA, HouseholdCambodia_2C$d28)
-HouseholdCambodia_2C$d28 <- as.factor(HouseholdCambodia_2C$d28)
-
-#For d30_1, different issues solved below
-HouseholdCambodia_2C$d30_1 <- as.character(HouseholdCambodia_2C$d30_1)
-HouseholdCambodia_2C$d30_1 <- ifelse(HouseholdCambodia_2C$d30_2 == '' & HouseholdCambodia_2C$d30_1 == '1' , '0', HouseholdCambodia_2C$d30_1)
-HouseholdCambodia_2C$d30_1 <- ifelse(HouseholdCambodia_2C$no_crop1 == '' & HouseholdCambodia_2C$no_crop2 == '' , NA, HouseholdCambodia_2C$d30_1)
-HouseholdCambodia_2C$d30_1 <- as.factor(HouseholdCambodia_2C$d30_1)
-
-#Check for d30_3 & d30_4, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d30_3))
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d30_4))
-#Check for d30_5 & d30_6, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d30_5))
-sum(is.na(HouseholdCambodia_2C$no_crop1) & is.na(HouseholdCambodia_2C$no_crop2) & !is.na(HouseholdCambodia_2C$d30_6))
-
-#For d32 & d32_2, different issues solved below
-HouseholdCambodia_2C$d32 <- as.character(HouseholdCambodia_2C$d32)
-HouseholdCambodia_2C$d32 <- ifelse(HouseholdCambodia_2C$no_crop1 == '' & HouseholdCambodia_2C$no_crop2 == '' , NA, HouseholdCambodia_2C$d32)
-HouseholdCambodia_2C$d32 <- ifelse(HouseholdCambodia_2C$d32_1 == '' & HouseholdCambodia_2C$d32 == '2' , '1', HouseholdCambodia_2C$d32)
-HouseholdCambodia_2C$d32 <- as.factor(HouseholdCambodia_2C$d32)
-HouseholdCambodia_2C$d32_2 <- as.character(HouseholdCambodia_2C$d32_2)
-HouseholdCambodia_2C$d32_2 <- ifelse(HouseholdCambodia_2C$no_crop1 == '' & HouseholdCambodia_2C$no_crop2 == '' , NA, HouseholdCambodia_2C$d32_2)
-HouseholdCambodia_2C$d32_2 <- as.factor(HouseholdCambodia_2C$d32_2)
-
-#For module E3. Cattle and buffalo system, households having other kind of cattle 
-#didn't fulfil this part
-
-#One household is raising cattle/buffalo and didn't fulfil E3 = Nothing more to do...
-
-#There were 317 households raised buffalo and cattle as important animals. However, I found 328 
-#households participated in the module E3. In fact, these households raise pig and the data
-#In module E3 is probably the data supposed to be in module E4, so we'll transfer these data at the right place
-#First we set columns in the same order
-HouseholdCambodia_2C <- HouseholdCambodia_2C %>% relocate(e3899 , .after = e3888)
-#Then we extract household id of concerned households
-x <- HouseholdCambodia_2C[HouseholdCambodia_2C$e2_1 == '0' & HouseholdCambodia_2C$e2_2 == '0' & !is.na(HouseholdCambodia_2C$e16),]
-hid <- x$o9
-#And finally we create a loop to replace the values in E4 and remove them from E3
-for (i in hid){
-  HouseholdCambodia_2C[HouseholdCambodia_2C$o9 == i,c(2044:2102)] <- HouseholdCambodia_2C[HouseholdCambodia_2C$o9 == i,c(1982:1996,1998:2041)]
-  HouseholdCambodia_2C[HouseholdCambodia_2C$o9 == i,c(1982:1996,1998:2041)] <- 'NA'
+#For some households we have no information about their raising systems
+#As we cannot know their answer, we cannot solve this issue
+#For other households, there are information but they are no raising chickens, we remove these informations
+for (i in c(2072,2074:2088)){
+  HouseholdLaos_2C[,i] <- as.character(HouseholdLaos_2C[,i])
+  HouseholdLaos_2C[,i] <- ifelse(HouseholdLaos_2C$e2_8 == 0, '', HouseholdLaos_2C[,i])
+  HouseholdLaos_2C[,i] <- as.factor(HouseholdLaos_2C[,i])
 }
 
-#For module E4, There are 11 households raising pigs without information at E4,
-#nothing more to do here
+#e44:e49:e50:e51:e52:e521-e5299:e53:e54:e56
+x <- HouseholdLaos_2C[,c(1,2039,2302:2320,2322,2328,2330)]
 
-#For module E5, A lot of households are raising poultry (mainly chicken), but didn't fulfiled E5
-#Nothing more to do here for now
-#There were 391 households raised poultries as important animals, but 378 households participated
-#in the module E5. So please check and impute missing data for 13 households (in fact more than 13)
-
-#Only households raised buffalo and cattle as important animals (317) will be asked e58,
-#but we have 338 ones replied the question in reality. So please check and redundant data
-#We create a loop to solve this issue
-for (i in 2165:2178){
-HouseholdCambodia_2C[,i] <- ifelse(HouseholdCambodia_2C$e2_1 == '0' & HouseholdCambodia_2C$e2_2 == '0',
-                                             NA,HouseholdCambodia_2C[,i])
+#For some households we have no information about their raising systems
+#As we cannot know their answer, we cannot solve this issue
+#For other households, there are information but they are no raising pigs, we remove these informations
+for (i in c(2089:2103,2105,2111,2113)){
+  HouseholdLaos_2C[,i] <- as.character(HouseholdLaos_2C[,i])
+  HouseholdLaos_2C[,i] <- ifelse(HouseholdLaos_2C$e2_8 == 0, '', HouseholdLaos_2C[,i])
+  HouseholdLaos_2C[,i] <- as.factor(HouseholdLaos_2C[,i])
 }
+
+
 
 ## 4.2C Data cleaning for "HouMemberCambodia_2"
 
 # # #a. Duplicates
-#Check the number and id of duplicates
-count_if("TRUE",duplicated(HouMemberCambodia_2C$pid))
-d <- count(HouMemberCambodia_2C, pid)
-#Check and remove the real duplicates through automated method
-Dum <- HouMemberCambodia_2C[duplicated(HouMemberCambodia_2C$pid),]
-idDup <- unique(Dum$hhid_re1)
-DumReal <- HouMemberCambodia_2C[HouMemberCambodia_2C$hhid_re1 %in% idDup,]
-DumReal$check <- paste(DumReal$p_no, DumReal$hhid_re1, DumReal$a2, DumReal$a4_1)
-DumReal <- DumReal %>% relocate(check , .after = pid)
-Dupli <- DumReal[duplicated(DumReal$check),]
-Duplic <- rownames(Dupli)
-HouMemberCambodia_2C <- HouMemberCambodia_2C[!rownames(HouMemberCambodia_2C) %in% Duplic,]
 #For some duplicates, we have to do it manually:
 #TO ADAPT TO EACH DATABASE
 HouMemberCambodia_2C <- HouMemberCambodia_2C[-c(21,2443),]
@@ -6077,38 +5956,62 @@ Duplic <- rownames(Dupli)
 Dupli$pid
 ClowlandCambodia_2C <- ClowlandCambodia_2C[!rownames(ClowlandCambodia_2C) %in% Duplic,]
 #Check again the duplicates:
-
 count_if("TRUE",duplicated(ClowlandCambodia_2C$pid))
+#For some duplicates, we have to do it manually:
+#TO ADAPT TO EACH DATABASE
+#Re-attribute household members numbers when the household id is duplicated for different household members
+Dum <- ClowlandCambodia_2C[duplicated(ClowlandCambodia_2C$pid),]
+idDup <- as.character(unique(Dum$hhid_re2))
+for (i in idDup){
+  ClowlandCambodia_2C$crop1_now[ClowlandCambodia_2C$hhid_re2 == i] <- 1:sum(ClowlandCambodia_2C$hhid_re2 == i)
+}
+ClowlandCambodia_2C$pid <- paste(ClowlandCambodia_2C$hhid_re2,ClowlandCambodia_2C$crop1_now)
+#Check again the duplicates: 
+count_if("TRUE",duplicated(ClowlandCambodia_2C$pid))
+
 
 # # #b Outliers part 1
 #Check amount of seeds according to Ky excel file
 
+
 ## 4.4 Data cleaning for "CuplandCambodia_2"
 
 # # #a. Duplicates
+#We create a pid column
+CuplandCambodia_2$pid <- paste(CuplandCambodia_2$hhid_re3," ",CuplandCambodia_2$crop2_now)
+CuplandCambodia_2 <- CuplandCambodia_2 %>% relocate(pid , .after = hhid_re3)
 #Check the number and id of duplicates
 count_if("TRUE",duplicated(CuplandCambodia_2$pid))
-#Check and remove the real duplicates through automated method
+#Re-attribute household members numbers when the household id is duplicated for different household members
 Dum <- CuplandCambodia_2[duplicated(CuplandCambodia_2$pid),]
 idDup <- unique(Dum$hhid_re3)
-DumReal <- CuplandCambodia_2[CuplandCambodia_2$hhid_re3 %in% idDup,]
-DumReal$check <- paste(DumReal$pid, DumReal$d2_13v, DumReal$d2_132)
-DumReal <- DumReal %>% relocate(check , .after = pid)
-Dupli <- DumReal[duplicated(DumReal$check),]
-Duplic <- rownames(Dupli)
-CuplandCambodia_2 <- CuplandCambodia_2[!rownames(CuplandCambodia_2) %in% Duplic,]
+for (i in idDup){
+  CuplandCambodia_2$crop2_now[CuplandCambodia_2$hhid_re3 == i] <- 1:sum(CuplandCambodia_2$hhid_re3 == i)
+}
+CuplandCambodia_2$pid <- paste(CuplandCambodia_2$hhid_re3,CuplandCambodia_2$crop2_now)
 #Check again the duplicates: 
 count_if("TRUE",duplicated(CuplandCambodia_2$pid))
 
-# Virer les NA
-# Inclure les données des cultures/ménages ou trouver un moyen de faire le lien
-# Corriger les cases contradictoires selon le rapport de Ky
+
+## 4.5 Data cleaning for "HomegardenCambodia_2"
+
+# # #a. Duplicates
+#We remove rows with NA values
+HomegardenCambodia_2 <- HomegardenCambodia_2[!is.na(HomegardenCambodia_2$crop3_now),]
+#We create a pid column
+HomegardenCambodia_2$pid <- paste(HomegardenCambodia_2$hhid_re4," ",HomegardenCambodia_2$crop3_now)
+HomegardenCambodia_2 <- HomegardenCambodia_2 %>% relocate(pid , .after = hhid_re4)
+#Check the number and id of duplicates
+count_if("TRUE",duplicated(HomegardenCambodia_2$pid))
+
+# # # Adding data labels
+
 
 HouseholdCambodia_2C <- copy_labels(HouseholdCambodia_2C, HouseholdCambodia)
 HouMemberCambodia_2C <- copy_labels(HouMemberCambodia_2C, HouMemberCambodia)
 ClowlandCambodia_2C <- copy_labels(ClowlandCambodia_2C, ClowlandCambodia)
 CuplandCambodia_2 <- copy_labels(CuplandCambodia_2, CuplandCambodia)
-
+HomegardenCambodia_2 <- copy_labels(HomegardenCambodia_2, HomegardenCambodia)
 
 ###5. Data export
 
@@ -6118,6 +6021,7 @@ saveRDS(HouseholdCambodia_2C, "HouseholdCambodia_2C.rds")
 saveRDS(HouMemberCambodia_2C, "HouMemberCambodia_2C.rds")
 saveRDS(ClowlandCambodia_2C, "ClowlandCambodia_2C.rds")
 saveRDS(CuplandCambodia_2, "CuplandCambodia_2.rds")
+saveRDS(HomegardenCambodia_2, "HomegardenCambodia_2.rds")
 
 
 #rstudioapi::writeRStudioPreference("data_viewer_max_columns", 30L)

@@ -907,6 +907,24 @@ related product in the past year/12 months?"
 #Now we create the table with the corresponding function
 PiePlotYN(b22count,title,list)
 
+# # #3.11.b. b22_1. If yes, which one(s)? 
+#First, we select the useful data
+b22_1dat <- HouseholdLaos_2C[,c(1,22,208:222)]
+#We modify long label names
+var_label(b22_1dat$b22_113) <- "Dried meat (pork,\n beef, etc.)"
+#We prepare the parameters for the function
+s <- summary(as.factor(HouseholdLaos_2C$b22))
+pond <- s[2]
+pond2 <- nrow(HouseholdLaos_2C)
+title <- "b22_1. If yes, which one(s)?"
+xT <- "Certified crops"
+ylimn <- -20
+ylimx <- 110
+dig = 0
+#Function Call
+var_label(b22_1dat[2]) <- "o6. select appropriate district/ city"
+PracticePlot(b22_1dat,title,pond,pond2,xT,ylimn,ylimx,dig)
+
 # # #3.11.b. c8. Did you sign a contract whereby the buyer commits to buy 
 #from you following some at specific conditions (price, volume, quality, time...)?
 #First, we select the useful data

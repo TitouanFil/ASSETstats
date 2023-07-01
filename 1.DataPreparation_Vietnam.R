@@ -5488,7 +5488,7 @@ var_label(ClowlandVietnam$d2_12) <- "d2_12. select crop crop1_now with keyword s
 var_label(ClowlandVietnam$d2_13v) <- "d2_13v. Crop name (Vietnamese)"
 #C9 = OK, (crop name in English) replace label: "d2_13e. Crop name (English)"
 var_label(ClowlandVietnam$d2_13e) <- "d2_13e. Crop name (English)"
-#C10 = ???
+#C10 = FACT, ???
 #C11 = NUM, replace label: "d2_132. what is the total area of all plots where you grow crop_1 (m2) ?"
 var_label(ClowlandVietnam$d2_132) <- "d2_132. what is the total area of all plots where you grow crop_1 (m2) ?"
 #C12 = FACT, (table of correspondence), (see option below), replace label: "d2_133. which unit of d2_13v ?"
@@ -5502,7 +5502,7 @@ var_label(ClowlandVietnam$d2_134) <- "d2_134. number of seed units of d2_13v tha
 var_label(ClowlandVietnam$d2_135) <- "d2_135. number of kg produced of d2_13v ?"
 #C15 = OK, replace label: "d2_136.number of kg sold of d2_13v"
 var_label(ClowlandVietnam$d2_136) <- "d2_136.number of kg sold of d2_13v"
-#C16 = OK, replace label: "d2_137.number of kg sold of d2_13v"
+#C16 = OK, replace label: "d2_137. selling price/ kg of d2_13v"
 var_label(ClowlandVietnam$d2_137) <- "d2_137. selling price/ kg of d2_13v"
 #C17 = OK, replace label: "d2_138. how many species or varieties of d2_13v ?"
 var_label(ClowlandVietnam$d2_138) <- "d2_138. how many species or varieties of d2_13v ?"
@@ -5545,7 +5545,7 @@ var_label(CuplandVietnam$d2_22) <- "d2_22. select crop crop1_now with keyword se
 var_label(CuplandVietnam$d2_23v) <- "d2_23v. Crop name (Vietnamese)"
 #C8 = OK, (crop name in English) replace label: "d2_23e. Crop name (English)"
 var_label(CuplandVietnam$d2_23e) <- "d2_23e. Crop name (English)"
-#C9 = ???
+#C9 = FACT, ???
 #C10 = NUM, replace label: "d2_232. what is the total area of all plots where you grow crop_1 (m2) ?"
 var_label(CuplandVietnam$d2_232) <- "d2_232. what is the total area of all plots where you grow crop_1 (m2) ?"
 #C11 = FACT, (table of correspondence), (see option below), replace label: "d2_233. which unit of d2_23v ?"
@@ -5559,7 +5559,7 @@ var_label(CuplandVietnam$d2_234) <- "d2_234. number of seed units of d2_23v that
 var_label(CuplandVietnam$d2_235) <- "d2_235. number of kg produced of d2_23v ?"
 #C14 = OK, replace label: "d2_236.number of kg sold of d2_23v"
 var_label(CuplandVietnam$d2_236) <- "d2_236.number of kg sold of d2_23v"
-#C15 = OK, replace label: "d2_237.number of kg sold of d2_23v"
+#C15 = OK, replace label: "d2_237. selling price/ kg of d2_23v"
 var_label(CuplandVietnam$d2_237) <- "d2_237. selling price/ kg of d2_23v"
 #C16 = OK, replace label: "d2_238. how many species or varieties of d2_23v ?"
 var_label(CuplandVietnam$d2_238) <- "d2_238. how many species or varieties of d2_23v ?"
@@ -5595,16 +5595,15 @@ ClowlandVietnam_2 <- as.data.frame(ClowlandVietnam)
 CuplandVietnam_2 <- as.data.frame(CuplandVietnam)
 #a. FACTOR CONVERSION
 #Convert columns to FACTOR - "HouseholdVietnam"
-for (i in c(1:3,7:9,11,13:34,36,38:42,48:54,57,68:72,77:78,80:85,98,101:104,113,
-            121:134,136:141,144,146,148,155,157:170,172:177,180,182:194,196:207,
+for (i in c(1:3,7:9,11,13:34,36,38:42,48:54,57,68:76,77:78,80:99,101:104,113,
+            121:141,144,146,148,155,157:177,180,182:194,196:207,
             209:219,222:230,232:259,261,263,266:279,281,283,286:299,301,303,306:319,
             321,323,326:339,341,343,346:359,361,363,366:379,381,383,386:399,401,403,
             406:419,421,423,426:439,441,443,446:459,461,463,466:479,481,483,486:499,
-            501,503,506:519,521,523,526:539,541,543,546:559,562:572,574,576,578:579,
-            581:588,591,593:599,603,605,607,610:620,622:625,627:632,634:644,647:653,
-            655,658:659,661:667,686:697,700,704:715,717:725,727,729:740,742:750,752,
+            501,503,506:519,521,523,526:539,541,543,546:559,562:574,576,578:579,
+            581:589,591,593:601,603,605,607,610:625,627:644,647:656,658:659,661:667,686:697,700,704:715,717:725,727,729:740,742:750,752,
             762:778,781,784,787,790,793,796,799,802,805,808,811,814,817,820,823,826,
-            828:830,834,836,838,840,842,844,847,849,851,854:857,861:862,865:874,
+            828:830,834,836,838,840,842,844,847,849,851,854:858,860:862,865:874,
             877:888,891:902,905:916,919:930,933:944,947:958,961:972,975:986,989:997,
             1000:1011,1014:1025,1028:1039,1042:1053,1056:1067,1070:1081,1084:1095,
             1098:1109,1111:1112,1114:1125,1128:1139,1142:1153,1156:1167,1170:1181,
@@ -5621,8 +5620,8 @@ for (i in c(1:3,7:9,11,13:34,36,38:42,48:54,57,68:72,77:78,80:85,98,101:104,113,
             1972,1974,1976,1978:1984,1986:1996,1998:2000,2002:2012,2014,2016:2017,
             2019:2022,2024:2027,2029,2031,2033:2036,2038,2040,2042,2044,2045,2046,
             2048:2061,2063:2073,2075,2077:2078,2080:2088,2090,2092,2094:2097,2099,
-            2101,2103,2105:2107,2109:2122,2124:2134,2136,2138:2139,2141:2144,2146:2150,
-            2152,2154,2156:2159,2161,2163,2167:2178,2181:2194,2196:2197,2199:2204,
+            2101,2103,2105:2107,2109:2122,2124:2134,2136,2138:2144,2146:2150,
+            2152,2154,2156:2161,2163,2165,2167:2179,2181:2194,2196:2197,2199:2204,
             2206:2209,2211:2216,2218,2222:2223,2225:2236,2238:2245,2247:2248,2250,
             2252,2254:2256,2258,2261:2280,2301:2304,2307:2320,2323:2329,2335:2336,
             2338:2340)){
@@ -5633,11 +5632,11 @@ for (i in c(1:3,5:6,8:9,11:12,14,16:26,28,30,32,34:45,47:52,84,86:90)){
   HouMemberVietnam_2[,i] <- as.factor(HouMemberVietnam_2[,i])
 }
 #Convert columns to FACTOR - "ClowlandVietnam"
-for (i in c(1:2,4,11,17,19:23)){
+for (i in c(1:2,4,10:12,17,19:23)){
   ClowlandVietnam_2[,i] <- as.factor(ClowlandVietnam_2[,i])
 }
 #Convert columns to FACTOR - "CuplandVietnam"
-for (i in c(2:3,4,10,17,19:23)){
+for (i in c(1:5,9:11,17,19:23)){
   CuplandVietnam_2[,i] <- as.factor(CuplandVietnam_2[,i])
 }
 #b. NUMERIC CONVERSION
@@ -5687,10 +5686,9 @@ ClowlandVietnam_2C <- copy_labels(ClowlandVietnam_2, ClowlandVietnam)
 CuplandVietnam_2 <- copy_labels(CuplandVietnam_2, CuplandVietnam)
 
 
-
 ### 4. Data Cleaning 1 (Based on Ky comments)
 
-## 4.1 Data cleaning for "HouseholdLaos_2"
+## 4.1 Data cleaning for "HouseholdVietnam_2"
 
 
 # # #a. Duplicates
@@ -5748,7 +5746,7 @@ HouseholdVietnam_2C$k2_15 <- ifelse(HouseholdVietnam_2C$k2_15 > 10, NA,Household
 HouseholdVietnam_2C$k2_19 <- ifelse(HouseholdVietnam_2C$k2_19 > 10, NA,HouseholdVietnam_2C$k2_19)
 
 
-# # #c. Corresponding fields
+# # #c. Corresponding fields - Ky remarks
 #-	There were 13 households who did no selling agri-products (at b1) but they still selected 3
 #main sources of income from crop production and livestock raising (b3). Please review list below
 #to know and check record for validating data
@@ -6091,9 +6089,113 @@ for (i in hid){
 #but we have 338 ones replied the question in reality. So please check and redundant data
 #We create a loop to solve this issue
 for (i in 2165:2178){
+HouseholdVietnam_2C[,i] <- as.character(HouseholdVietnam_2C[,i])
 HouseholdVietnam_2C[,i] <- ifelse(HouseholdVietnam_2C$e2_1 == '0' & HouseholdVietnam_2C$e2_2 == '0',
                                              NA,HouseholdVietnam_2C[,i])
+HouseholdVietnam_2C[,i] <- as.factor(HouseholdVietnam_2C[,i])
 }
+
+# # #d. Corresponding fields - Additionnal checks
+#The following part is based on Laos script but we removed all parts for which
+#no issue was highligted for Laos, assuming no issue was permitted by Kobo for 
+#these fields
+
+#b1:b10:b11
+x <- HouseholdLaos_2C[,c(1,80,230,239)]
+
+#5 households declared that they sold crops products but did not anwered to b10 & b11
+#HHID: 3044,3054,3303,3551,3222
+#As we cannot know their answer, we cannot solve this issue
+
+#c2:c3:c3a:c4:c5:c9:c6:c7:c8:c10:c11
+x <- HouseholdLaos_2C[,c(1,591,592,603,605,607,609,622:626)]
+
+#For c6, c7 and c8, many unanswered cells, we'll replace it by "no", 
+#and also replace "Yes" by "yes" and "No" by "no" to homogenize the answers
+for (i in c(581:585)){
+  HouseholdLaos_2C[,i] <- as.character(HouseholdLaos_2C[,i])
+  HouseholdLaos_2C[,i] <- ifelse(HouseholdLaos_2C$c3a != '' & HouseholdLaos_2C[,i] == '', 'no',HouseholdLaos_2C[,i])
+  HouseholdLaos_2C[,i] <- ifelse(HouseholdLaos_2C[,i] == 'Yes', 'yes',HouseholdLaos_2C[,i])
+  HouseholdLaos_2C[,i] <- ifelse(HouseholdLaos_2C[,i] == 'No', 'no',HouseholdLaos_2C[,i])
+  HouseholdLaos_2C[,i] <- as.factor(HouseholdLaos_2C[,i])
+}
+
+#b1:b12_1:b12_2
+x <- HouseholdLaos_2C[,c(1,80,697,700)]
+
+#Many households declared at b1 that they sold agri products but did not answered ar b12_1 and b12_2
+#As we cannot know their answer, we cannot solve this issue
+
+#b12_2:b13_02-b13_0211:b13_2:b14_2-b14_288:b15_2
+x <- HouseholdLaos_2C[,c(1,700,728:750,752)]
+
+#For b13_2 and related answers => Many answers are missing but we don't have this
+#information so we cannot solve it
+#For b14_2 and related answers => Many answers are missing but we don't have this
+#information so we cannot solve it
+#For b15_2 and related answers => Many answers are missing but we don't have this
+#information so we cannot solve it
+
+#d9_1:d9_2
+x <- HouseholdLaos_2C[,c(1,847,848)]
+
+#HHID: 3084,3433,3438,3447,3568 declared plots rented out but no information of number of plots
+#As we cannot know their answer, we cannot solve this issue
+
+#e5_5:e5_51
+x <- HouseholdLaos_2C[,c(1,1920,1921)]
+
+#HHID: 3048, 3045, 3035 the selling price is missing, REPLACE
+#As we cannot know their answer, we cannot solve this issue
+
+#e7_5:e7_51
+x <- HouseholdLaos_2C[,c(1,1967,1968)]
+
+#HHID: 3162,3147,3316 the selling price is missing, REPLACE
+#As we cannot know their answer, we cannot solve this issue
+
+#e12_3:e12_4
+x <- HouseholdLaos_2C[,c(1,1974:1975)]
+
+#Some households declared 0,1 or 2 m2 of pasture, we remove it
+HouseholdLaos_2C$e12_4 <- ifelse(HouseholdLaos_2C$e12_4 < 3, NA, HouseholdLaos_2C$e12_4)
+HouseholdLaos_2C$e12_3 <- as.character(HouseholdLaos_2C$e12_3)
+HouseholdLaos_2C$e12_3 <- ifelse(HouseholdLaos_2C$e12_3 == 'Yes' & is.na(HouseholdLaos_2C$e12_4), 'No', HouseholdLaos_2C$e12_3)
+HouseholdLaos_2C$e12_3 <- as.factor(HouseholdLaos_2C$e12_3)
+
+#e2_3:e30:e31:e32:e33:e34:e341-e3499
+x <- HouseholdLaos_2C[,c(17,1873,2042,2044:2058)]
+
+#For many households who raise pigs, no information about pig raising systems 
+#(Probably households with only adult pigs)
+#As we cannot know their answer, we cannot solve this issue
+
+#e2_8 :e44:e45:e46:e47:e48:e481-e4899
+x <- HouseholdLaos_2C[,c(17,1878,2103,2105:2119)]
+
+#For some households we have no information about their raising systems
+#As we cannot know their answer, we cannot solve this issue
+#For other households, there are information but they are no raising chickens, we remove these informations
+for (i in c(2072,2074:2088)){
+  HouseholdLaos_2C[,i] <- as.character(HouseholdLaos_2C[,i])
+  HouseholdLaos_2C[,i] <- ifelse(HouseholdLaos_2C$e2_8 == 0, '', HouseholdLaos_2C[,i])
+  HouseholdLaos_2C[,i] <- as.factor(HouseholdLaos_2C[,i])
+}
+
+#e44:e49:e50:e51:e52:e521-e5299:e53:e54:e56
+x <- HouseholdLaos_2C[,c(17,2103,2120:2134,2136,2143,2154)]
+
+#For some households we have no information about their raising systems
+#As we cannot know their answer, we cannot solve this issue
+#For other households, there are information but they are no raising pigs, we remove these informations
+for (i in c(2089:2103,2105,2111,2113)){
+  HouseholdLaos_2C[,i] <- as.character(HouseholdLaos_2C[,i])
+  HouseholdLaos_2C[,i] <- ifelse(HouseholdLaos_2C$e2_8 == 0, '', HouseholdLaos_2C[,i])
+  HouseholdLaos_2C[,i] <- as.factor(HouseholdLaos_2C[,i])
+}
+
+
+
 
 ## 4.2C Data cleaning for "HouMemberVietnam_2"
 
@@ -6140,6 +6242,9 @@ ClowlandVietnam_2C <- ClowlandVietnam_2C[!rownames(ClowlandVietnam_2C) %in% Dupl
 #Check again the duplicates:
 
 count_if("TRUE",duplicated(ClowlandVietnam_2C$pid))
+Dum <- ClowlandVietnam_2C[duplicated(ClowlandVietnam_2C$pid),]
+idDup <- unique(Dum$pid)
+DumReal <- ClowlandVietnam_2C[ClowlandVietnam_2C$pid %in% idDup,]
 
 # # #b Outliers part 1
 #Check amount of seeds according to Ky excel file
@@ -6161,9 +6266,8 @@ CuplandVietnam_2 <- CuplandVietnam_2[!rownames(CuplandVietnam_2) %in% Duplic,]
 #Check again the duplicates: 
 count_if("TRUE",duplicated(CuplandVietnam_2$pid))
 
-# Virer les NA
-# Inclure les données des cultures/ménages ou trouver un moyen de faire le lien
-# Corriger les cases contradictoires selon le rapport de Ky
+
+#We add the labels
 
 HouseholdVietnam_2C <- copy_labels(HouseholdVietnam_2C, HouseholdVietnam)
 HouMemberVietnam_2C <- copy_labels(HouMemberVietnam_2C, HouMemberVietnam)
