@@ -21,6 +21,10 @@ ClowlandLaos2 <- read.csv("ClowlandLaos2.csv")
 CuplandLaos2 <- read.csv("CuplandLaos2.csv")
 HouMemberLaos2 <- read.csv("HouMemberLaos2.csv")
 
+a <- ClowlandLaos[,c(2,12)]
+b <- ClowlandLaos2[,c(3,13)]
+x <- merge(a,b, by = "hhid_re2")
+
 #We check for columns correspondences and re-adjust when it is necesary
 #First for Household Laos database
 HouseholdLaos <- HouseholdLaos[,-c(2320:2325)]
@@ -5094,6 +5098,11 @@ x <- ClowlandLaos_2C[,c(2,8,10:12)]
 
 # # #c. Corresponding fields
 
+#We homogeinize answers for b1
+HouseholdLaos_2C$b1 <- as.character(HouseholdLaos_2C$b1)
+HouseholdLaos_2C$b1 <- ifelse(HouseholdLaos_2C$b1 == " selling agri-products", "selling agri-products",HouseholdLaos_2C$b1)
+HouseholdLaos_2C$b1 <- as.factor(HouseholdLaos_2C$b1)
+
 #There were 27 households who did no selling agri-products (at b1)
 #but they still selected 3 main sources of income from crop production and
 #livestock raising (b3). Please review list below to know and check record for
@@ -5972,7 +5981,7 @@ count_if("TRUE",duplicated(HouMemberLaos_2C$pid))
 # # #Corresponding field
 #Everything is ok in the table, we'll just check if number of household members
 #is corresponding with the other table
-x <- count(HouMemberLaos_2C, hhid_re1)
+x <- dplyr::count(HouMemberLaos_2C, hhid_re1)
 y <- HouseholdLaos_2C[,c(1,53)]
 G <- merge(x, y, by.x = "hhid_re1", by.y = "o9", all.x = T, all.y= T, sort = TRUE)
 #Some households did not answered to a0 while we have the correct number of members
@@ -6036,7 +6045,7 @@ ClowlandLaos_2C$d2_137 <- ifelse(ClowlandLaos_2C$d2_137 > 1000000, NA,ClowlandLa
 # # #c. Corresponding fields
 #Everything is ok in the table, we'll just check if number of crops
 #is corresponding with the other table
-x <- count(ClowlandLaos_2C, hhid_re2)
+x <- dplyr::count(ClowlandLaos_2C, hhid_re2)
 y <- HouseholdLaos_2C[,c(1,625)]
 G <- merge(x, y, by.x = "hhid_re2", by.y = "o9", all.x = T, all.y= T, sort = TRUE)
 #Some households did not answered to a0 while we have the correct number of members
@@ -6047,6 +6056,9 @@ HouseholdLaos_2C[HouseholdLaos_2C$o9 == 3261, 625] <-  4
 HouseholdLaos_2C[HouseholdLaos_2C$o9 == 3552, 625] <-  1
 # For following households, we know the number of households members but no details on them
 #HHID: 3019, 3303, 3340, 3368, 3550, 3558, 3565
+G$check <- G$n - G$no_crop2
+#Some households have different answers between nocrop1 and the number of lowland crops they declared
+#(HHid: 3444,3437,3027,3402,3442,3450,3542,3561,3610,3017,3308,3342, 3347,3544,3560)
 
 
 ## 4.4 Data cleaning for "CuplandLaos_2"
@@ -6088,7 +6100,7 @@ summary(as.factor(CuplandLaos_2$d2_23e))
 # # #c. Corresponding fields
 #Everything is ok in the table, we'll just check if number of crops
 #is corresponding with the other table
-x <- count(CuplandLaos_2, hhid_re3)
+x <- dplyr::count(CuplandLaos_2, hhid_re3)
 y <- HouseholdLaos_2C[,c(1,633)]
 G <- merge(x, y, by.x = "hhid_re3", by.y = "o9", all.x = T, all.y= T, sort = TRUE)
 #Some households did not answered to a0 while we have the correct number of members
@@ -6099,14 +6111,22 @@ HouseholdLaos_2C[HouseholdLaos_2C$o9 == 3542, 633] <-  2
 HouseholdLaos_2C[HouseholdLaos_2C$o9 == 3444, 633] <-  1
 # For following households, we know the number of households members but no details on them
 #HHID: 3447, 3451, 3551, 3564, 3565
+G$check <- G$n - G$no_crop2
+#Some households have different answers between nocrop1 and the number of lowland crops they declared
+#(HHid: 3017,3552,3541,3560,3450,3544,3557,3561)
 
 
+
+#We move o9 at the 1st column
+HouseholdLaos_2C <- HouseholdLaos_2C %>% relocate(o9, .before = start_time)
+#We remove 2 households with no information about district
+HouseholdLaos_2C <- HouseholdLaos_2C %>% filter(district_eng_preload != '')
 
 #HouMemberLaos_2C <- HouMemberLaos_2[,-6]
 #Add the proper labels to each columns
-HouseholdLaos_2C <- copy_labels(HouseholdLaos_2, HouseholdLaos)
-HouMemberLaos_2C <- copy_labels(HouMemberLaos_2, HouMemberLaos)
-ClowlandLaos_2 <- copy_labels(ClowlandLaos_2, ClowlandLaos)
+HouseholdLaos_2C <- copy_labels(HouseholdLaos_2C, HouseholdLaos)
+HouMemberLaos_2C <- copy_labels(HouMemberLaos_2C, HouMemberLaos)
+ClowlandLaos_2 <- copy_labels(ClowlandLaos_2C, ClowlandLaos)
 CuplandLaos_2 <- copy_labels(CuplandLaos_2, CuplandLaos)
 
 ##3.3 Export of the database under R format
@@ -6114,4 +6134,5 @@ saveRDS(HouseholdLaos_2C, "HouseholdLaos_2C.rds")
 saveRDS(HouMemberLaos_2C, "HouMemberLaos_2C.rds")
 saveRDS(ClowlandLaos_2, "ClowlandLaos_2.rds")
 saveRDS(CuplandLaos_2, "CuplandLaos_2.rds")
+
 

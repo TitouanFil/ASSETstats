@@ -24,6 +24,7 @@ ClowlandCambodia_2C <- readRDS("ClowlandCambodia_2C.rds")
 CuplandCambodia_2C <- readRDS("CuplandCambodia_2.rds")
 HouMemberCambodia_2C <- readRDS("HouMemberCambodia_2C.rds")
 
+summary(HouseholdCambodia_2C$commune_eng)
 ##1.2 - Preparation of functions and data
 
 # # #1.2.a. YES, NO, DNK, NA  PIE PLOT

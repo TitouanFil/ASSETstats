@@ -1,5 +1,5 @@
 ---
-title: "2.DataCheck_Cambodia.R"
+title: "2.DataCheck_Laos.R"
 author: "Titouan"
 date: "2023-06-22"
 output: 
@@ -20,28 +20,23 @@ library(kableExtra)
 library(rmarkdown)
 #dta format (from Ky) datasets import
 setwd("C:/Users/titou/OneDrive/Bureau/ASSET Stats/WORKDIRECTORY/1.ASSET_data_cleaning-Titouan/ASSET_data_cleaning")
-#We import all the dta files transmitted by Ky as *Cambodia* database
-HouseholdCambodia_2C <- readRDS("HouseholdCambodia_2C.rds")
-ClowlandCambodia_2C <- readRDS("ClowlandCambodia_2C.rds")
-CuplandCambodia_2 <- readRDS("CuplandCambodia_2.rds")
-HouMemberCambodia_2C <- readRDS("HouMemberCambodia_2C.rds")
-HomegardenCambodia_2 <- readRDS("HomegardenCambodia_2.rds")
+#We import all the dta files transmitted by Ky as *Laos* database
+HouseholdLaos_2C <- readRDS("HouseholdLaos_2C.rds")
+ClowlandLaos_2 <- readRDS("ClowlandLaos_2.rds")
+CuplandLaos_2 <- readRDS("CuplandLaos_2.rds")
+HouMemberLaos_2C <- readRDS("HouMemberLaos_2C.rds")
 
 #We select only quantitative variables
-Num1 <- HouseholdCambodia_2C %>% dplyr::select(where(is.numeric))
-Num1 <- Num1[,colSums(is.na(Num1))<nrow(Num1)]
-Num1 <- Num1[,-56]
-Num2 <- HouMemberCambodia_2C %>% dplyr::select(where(is.numeric))
-Num3 <- ClowlandCambodia_2C %>% dplyr::select(where(is.numeric))
-Num3 <- Num3[,colSums(is.na(Num3))<nrow(Num3)]
-Num4 <- CuplandCambodia_2 %>% dplyr::select(where(is.numeric))
-Num4 <- Num4[,colSums(is.na(Num4))<nrow(Num4)]
-Num5 <- HomegardenCambodia_2 %>% dplyr::select(where(is.numeric))
+Num1 <- HouseholdLaos_2C %>% dplyr::select(where(is.numeric))
+Num2 <- HouMemberLaos_2C %>% dplyr::select(where(is.numeric))
+Num3 <- ClowlandLaos_2 %>% dplyr::select(where(is.numeric))
+Num4 <- CuplandLaos_2 %>% dplyr::select(where(is.numeric))
+
 
 ### 2. Summary and Plots display loop
 
-# # #Loop for HouseholdCambodia_2C
-cat('\n#',"HouseholdCambodia_2C", '\n')
+# # #Loop for HouseholdLaos_2C
+cat('\n#',"HouseholdLaos_2C", '\n')
 for (i in 1:ncol(Num1)){
     #T2 - Title of Variable
     cat('\n##',i,var_label(Num1[,i]), '\n')
@@ -57,8 +52,8 @@ for (i in 1:ncol(Num1)){
 }
 cat('\n')
 
-# # #Loop for HouMemberCambodia_2C
-cat('\n#',"HouMemberCambodia_2C", '\n')
+# # #Loop for HouMemberLaos_2C
+cat('\n#',"HouMemberLaos_2C", '\n')
 for (i in 1:ncol(Num2)){
     #T2 - Title of Variable
     cat('\n##',i,var_label(Num2[,i]), '\n')
@@ -74,8 +69,8 @@ for (i in 1:ncol(Num2)){
 }
 cat('\n')
 
-# # #Loop for ClowlandCambodia_2CC
-cat('\n#',"ClowlandCambodia_2CC", '\n')
+# # #Loop for ClowlandLaos_2C
+cat('\n#',"ClowlandLaos_2C", '\n')
 for (i in 1:ncol(Num3)){
     #T2 - Title of Variable
     cat('\n##',i,var_label(Num3[,i]), '\n')
@@ -91,8 +86,8 @@ for (i in 1:ncol(Num3)){
 }
 cat('\n')
 
-# # #Loop for CuplandCambodia_2
-cat('\n#',"CuplandCambodia_2", '\n')
+# # #Loop for CuplandLaos_2
+cat('\n#',"CuplandLaos_2", '\n')
 for (i in 1:ncol(Num4)){
     #T2 - Title of Variable
     cat('\n##',i,var_label(Num4[,i]), '\n')
@@ -107,24 +102,6 @@ for (i in 1:ncol(Num4)){
     cat('\n')
 }
 cat('\n')
-
-# # #Loop for HomegardenCambodia_2
-cat('\n#',"HomegardenCambodia_2", '\n')
-for (i in 1:ncol(Num5)){
-    #T2 - Title of Variable
-    cat('\n##',i,var_label(Num5[,i]), '\n')
-    cat('\n####',"Summary", '\n')
-    SUM <- as.array(summary(Num5[,i]))
-    print(kable(SUM, "pipe", digits = 2))
-    x <- ggplot(Num5, aes(x= Num5[,i])) + geom_histogram(binwidth = max(Num5[,i],na.rm = TRUE)/20)+
-    ggtitle(var_label(Num5[,i]))+
-    xlab("number")
-    cat('\n####',"Histogramm", '\n')
-    print(x)
-    cat('\n')
-}
-cat('\n')
-
 
 
 ```
