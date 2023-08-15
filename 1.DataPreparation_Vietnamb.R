@@ -1582,7 +1582,7 @@ var_label(HouseholdVietnam$d11_43) <- "Certificate of occupancy"
 #C857 = FACT, replace label: "Registered will or registered certificate of hereditary acquisition"
 var_label(HouseholdVietnam$d11_44) <- "Registered will or registered certificate of hereditary acquisition"
 #C858 = REMOVE, (empty, correspond to nothing in the questionnaire)
-#C859 = REMOVE, (empty, correspond to nothing in the questionnaire)
+#C859 = FACT, REMOVE, (empty, correspond to nothing in the questionnaire)
 #C860 = REMOVE, (empty, correspond to nothing in the questionnaire)
 #C861 = FACT, replace label: "Do not know"
 var_label(HouseholdVietnam$d11_488) <- "Do not know"
@@ -5610,7 +5610,7 @@ for (i in c(1:3,7:9,11,13:34,36,38:42,48:54,57,68:76,77:78,80:99,101:104,113,
             501,503,506:519,521,523,526:539,541,543,546:559,562:574,576,578:579,
             581:589,591,593:601,603,605,607,610:625,627:644,647:656,658:659,661:667,686:697,700,704:715,717:725,727,729:740,742:750,752,
             762:778,781,784,787,790,793,796,799,802,805,808,811,814,817,820,823,826,
-            828:830,834,836,838,840,842,844,847,849,851,854:858,860:862,865:874,
+            828:830,834,836,838,840,842,844,847,849,851,854:858:862,865:874,
             877:888,891:902,905:916,919:930,933:944,947:958,961:972,975:986,989:997,
             1000:1011,1014:1025,1028:1039,1042:1053,1056:1067,1070:1081,1084:1095,
             1098:1109,1111:1112,1114:1125,1128:1139,1142:1153,1156:1167,1170:1181,
@@ -5639,7 +5639,7 @@ for (i in c(1:3,5:6,8:9,11:12,14,16:26,28,30,32,34:45,47:52,84,86:90)){
   HouMemberVietnam_2[,i] <- as.factor(HouMemberVietnam_2[,i])
 }
 #Convert columns to FACTOR - "ClowlandVietnam"
-for (i in c(1:2,4,10:12,17,19:23)){
+for (i in c(1:2,4:5,10:12,17,19:23)){
   ClowlandVietnam_2[,i] <- as.factor(ClowlandVietnam_2[,i])
 }
 #Convert columns to FACTOR - "CuplandVietnam"
@@ -5727,7 +5727,7 @@ count_if("TRUE",duplicated(HouseholdVietnam_2C$o9))
 
 # # #b Outliers part 1 - Ky
 
-#Corrections from enumetators updated base (07/26/2023)
+#Corrections from enumetators updated base NOFAMSI (07/26/2023)
 
 #b1
 HouseholdVietnam_2C[,80] <- as.character(HouseholdVietnam_2C[,80])
@@ -5749,21 +5749,61 @@ HouseholdVietnam_2C[,242] <- as.factor(HouseholdVietnam_2C[,242])
 HouseholdVietnam_2C[,1910] <- as.character(HouseholdVietnam_2C[,1910])
 HouseholdVietnam_2C[HouseholdVietnam_2C$o9 == 526, 1910] <- 1
 HouseholdVietnam_2C[HouseholdVietnam_2C$o9 == 551, 1910] <- 1
-HouseholdVietnam_2C[,1910] <- as.factor(HouseholdVietnam_2C[,1910])
+HouseholdVietnam_2C[,1910] <- as.numeric(HouseholdVietnam_2C[,1910])
 
 #e6_a - Nb of breeds, 2nd animal
 HouseholdVietnam_2C[,1938] <- as.character(HouseholdVietnam_2C[,1938])
 HouseholdVietnam_2C[HouseholdVietnam_2C$o9 == 186, 1938] <- 1
 HouseholdVietnam_2C[HouseholdVietnam_2C$o9 == 551, 1938] <- 1
 HouseholdVietnam_2C[HouseholdVietnam_2C$o9 == 557, 1938] <- 1
-HouseholdVietnam_2C[,1938] <- as.factor(HouseholdVietnam_2C[,1938])
+HouseholdVietnam_2C[,1938] <- as.numeric(HouseholdVietnam_2C[,1938])
 
 #e7_a - Nb of breeds, 3rd animal
 HouseholdVietnam_2C[,1957] <- as.character(HouseholdVietnam_2C[,1957])
 HouseholdVietnam_2C[HouseholdVietnam_2C$o9 == 139, 1957] <- 1
 HouseholdVietnam_2C[HouseholdVietnam_2C$o9 == 577, 1957] <- 1
 HouseholdVietnam_2C[HouseholdVietnam_2C$o9 == 653, 1957] <- 1
-HouseholdVietnam_2C[,1957] <- as.factor(HouseholdVietnam_2C[,1957])
+HouseholdVietnam_2C[,1957] <- as.numeric(HouseholdVietnam_2C[,1957])
+
+#Corrections from enumetators updated base FAVRI (08/11/2023)
+#e5_a
+HouseholdVietnam_2C$e5_a <- as.character(HouseholdVietnam_2C$e5_a)
+HouseholdVietnam_2C$e5_a <- ifelse(HouseholdVietnam_2C$o9 == 276, 1, HouseholdVietnam_2C$e5_a)
+HouseholdVietnam_2C$e5_a <- ifelse(HouseholdVietnam_2C$o9 == 353, 1, HouseholdVietnam_2C$e5_a)
+HouseholdVietnam_2C$e5_a <- ifelse(HouseholdVietnam_2C$o9 == 755, 1, HouseholdVietnam_2C$e5_a)
+HouseholdVietnam_2C$e5_a <- ifelse(HouseholdVietnam_2C$o9 == 380, 1, HouseholdVietnam_2C$e5_a)
+HouseholdVietnam_2C$e5_a <- as.numeric(HouseholdVietnam_2C$e5_a)
+
+#e6_a
+HouseholdVietnam_2C$e6_a <- as.character(HouseholdVietnam_2C$e6_a)
+HouseholdVietnam_2C$e6_a <- ifelse(HouseholdVietnam_2C$o9 == 716, 1, HouseholdVietnam_2C$e6_a)
+HouseholdVietnam_2C$e6_a <- ifelse(HouseholdVietnam_2C$o9 == 691, 1, HouseholdVietnam_2C$e6_a)
+HouseholdVietnam_2C$e6_a <- ifelse(HouseholdVietnam_2C$o9 == 715, 1, HouseholdVietnam_2C$e6_a)
+HouseholdVietnam_2C$e6_a <- ifelse(HouseholdVietnam_2C$o9 == 328, 1, HouseholdVietnam_2C$e6_a)
+HouseholdVietnam_2C$e6_a <- ifelse(HouseholdVietnam_2C$o9 == 739, 1, HouseholdVietnam_2C$e6_a)
+HouseholdVietnam_2C$e6_a <- ifelse(HouseholdVietnam_2C$o9 == 655, 1, HouseholdVietnam_2C$e6_a)
+HouseholdVietnam_2C$e6_a <- ifelse(HouseholdVietnam_2C$o9 == 291, 1, HouseholdVietnam_2C$e6_a)
+HouseholdVietnam_2C$e6_a <- as.numeric(HouseholdVietnam_2C$e6_a)
+
+#e7_a
+HouseholdVietnam_2C$e7_a <- as.character(HouseholdVietnam_2C$e7_a)
+HouseholdVietnam_2C$e7_a <- ifelse(HouseholdVietnam_2C$o9 == 323, 1, HouseholdVietnam_2C$e7_a)
+HouseholdVietnam_2C$e7_a <- ifelse(HouseholdVietnam_2C$o9 == 739, 1, HouseholdVietnam_2C$e7_a)
+HouseholdVietnam_2C$e7_a <- ifelse(HouseholdVietnam_2C$o9 == 334, 1, HouseholdVietnam_2C$e7_a)
+HouseholdVietnam_2C$e7_a <- ifelse(HouseholdVietnam_2C$o9 == 291, 1, HouseholdVietnam_2C$e7_a)
+HouseholdVietnam_2C$e7_a <- ifelse(HouseholdVietnam_2C$o9 == 329, 1, HouseholdVietnam_2C$e7_a)
+HouseholdVietnam_2C$e7_a <- as.numeric(HouseholdVietnam_2C$e7_a)
+
+#k2_15
+HouseholdVietnam_2C$k2_15 <- as.character(HouseholdVietnam_2C$k2_15)
+HouseholdVietnam_2C$k2_15 <- ifelse(HouseholdVietnam_2C$o9 == 676, 1, HouseholdVietnam_2C$k2_15)
+HouseholdVietnam_2C$k2_15 <- ifelse(HouseholdVietnam_2C$o9 == 689, 1, HouseholdVietnam_2C$k2_15)
+HouseholdVietnam_2C$k2_15 <- as.numeric(HouseholdVietnam_2C$k2_15)
+
+#k2_19
+HouseholdVietnam_2C$k2_19 <- as.character(HouseholdVietnam_2C$k2_19)
+HouseholdVietnam_2C$k2_19 <- ifelse(HouseholdVietnam_2C$o9 == 714, 0, HouseholdVietnam_2C$k2_19)
+HouseholdVietnam_2C$k2_19 <- as.numeric(HouseholdVietnam_2C$k2_19)
 
 ### CHECK b5_1, b5_2, b5_3
 
@@ -5772,477 +5812,1027 @@ sum(is.na(HouseholdVietnam_2C[HouseholdVietnam_2C$o9 == "397",660:1868]))
 #The row is empty, we delete this row
 HouseholdVietnam_2C <- HouseholdVietnam_2C[!HouseholdVietnam_2C$o9 == "397", ]
 
+#d5_3
 #HHid 199 (row 161) declared 2,940,000 m2 of forest land (Ky), we check: 
 h199 <- HouseholdVietnam_2C[HouseholdVietnam_2C$o9 == "199", ]
 #@The value will be checked with enumerators, but removed for now
 HouseholdVietnam_2C$d5_3 <- ifelse(HouseholdVietnam_2C$d5_3 > 100000, 29400,HouseholdVietnam_2C$d5_3)
 
+#d9_2, d10_2, d11_2
 #High number of plots for some Households, number of plots rented-in and owned
 HouseholdVietnam_2C$d9_2 <- ifelse(HouseholdVietnam_2C$d9_2 > 100, NA,HouseholdVietnam_2C$d9_2)
 HouseholdVietnam_2C$d10_2 <- ifelse(HouseholdVietnam_2C$d10_2 > 100, NA,HouseholdVietnam_2C$d10_2)
 HouseholdVietnam_2C$d11_2 <- ifelse(HouseholdVietnam_2C$d11_2 > 100, NA,HouseholdVietnam_2C$d11_2)
 
+#e5_a, e6_a, e7_a
 #Some sensitive figure for number of breed (e5_a) of the 1st, 2nd and 3rd most important
 #livestock as table below
 HouseholdVietnam_2C$e5_a <- ifelse(HouseholdVietnam_2C$e5_a > 6, NA,HouseholdVietnam_2C$e5_a)
 HouseholdVietnam_2C$e6_a <- ifelse(HouseholdVietnam_2C$e6_a > 6, NA,HouseholdVietnam_2C$e6_a)
 HouseholdVietnam_2C$e7_a <- ifelse(HouseholdVietnam_2C$e7_a > 6, NA,HouseholdVietnam_2C$e7_a)
 
+#k2_15, k2_19
 #please do cross-check number of Motor pump sprayer" (k2_15) and Irrigation system (k2_19).
 #It seems to me that they are outliers or mistaken by typing errors
 HouseholdVietnam_2C$k2_15 <- ifelse(HouseholdVietnam_2C$k2_15 > 10, NA,HouseholdVietnam_2C$k2_15)
 HouseholdVietnam_2C$k2_19 <- ifelse(HouseholdVietnam_2C$k2_19 > 10, NA,HouseholdVietnam_2C$k2_19)
 
+# Corrections from outlier report
+#b5_1 '1000' value
+HouseholdVietnam_2C$b5_1 <- as.character(HouseholdVietnam_2C$b5_1)
+HouseholdVietnam_2C$b5_1 <- ifelse(HouseholdVietnam_2C$o9 == 1000, 100, HouseholdVietnam_2C$b5_1)
+HouseholdVietnam_2C$b5_1 <- as.numeric(HouseholdVietnam_2C$b5_1)
+
+#d5_2 '88' values
+HouseholdVietnam_2C$d5_2 <- as.character(HouseholdVietnam_2C$d5_2)
+HouseholdVietnam_2C$d5_2 <- ifelse(HouseholdVietnam_2C$o9 == 88, NA, HouseholdVietnam_2C$d5_2)
+HouseholdVietnam_2C$d5_2 <- as.numeric(HouseholdVietnam_2C$d5_2)
+
+#d5_3 '88' values
+HouseholdVietnam_2C$d5_3 <- as.character(HouseholdVietnam_2C$d5_3)
+HouseholdVietnam_2C$d5_3 <- ifelse(HouseholdVietnam_2C$o9 == 88, NA, HouseholdVietnam_2C$d5_3)
+HouseholdVietnam_2C$d5_3 <- as.numeric(HouseholdVietnam_2C$d5_3)
+
 
 # # #c. Corresponding fields - Ky remarks
-#-	There were 13 households who did no selling agri-products (at b1) but they still selected 3
-#main sources of income from crop production and livestock raising (b3). Please review list below
-#to know and check record for validating data
-#MANUAL, NEED TO MODIFY IT
-HouseholdVietnam_2C$b1 <- as.character(HouseholdVietnam_2C$b1)
-HouseholdVietnam_2C[c(65,96,119,132,154,166,492),80] <- "1"
-HouseholdVietnam_2C[c(93,174),80] <- "2"
-HouseholdVietnam_2C[c(67,318),80] <- "3"
 
-#For selling livestock, we based on b1 & b2 to find 308 households selling fresh or processed
-#livestock product, but there were 318 ones answered at b17. So, we should delete 10 households
-#through check_b10inc_liv (0=no sell livestock products, 1=sold livestock products). Households
-#MANUAL, NEED TO MODIFY IT
-HouseholdVietnam_2C[424,80] <- "3"
-HouseholdVietnam_2C[177,80] <- "0"
-HouseholdVietnam_2C$b1 <- as.factor(HouseholdVietnam_2C$b1)
-HouseholdVietnam_2C$b17 <- as.character(HouseholdVietnam_2C$b17)
-HouseholdVietnam_2C[c(67,93,174,319),242] <- "88"
-HouseholdVietnam_2C$b17 <- as.factor(HouseholdVietnam_2C$b17)
-
-#Another problem that we missed data for 45 households at b13_01, we had 362 households sold
-#crop products for the 1st buyers (at b12_1), but only 317 households listed crop they sold at
-#b13_01. 
-#NOTHING TO DO HERE FOR NOW
-
-#Need validate unlogic between d81 (576 respondents) and d81_1a (578 respondents)
-HouseholdVietnam_2C$d81_1a <- as.character(HouseholdVietnam_2C$d81_1a)
-HouseholdVietnam_2C$d81_1a <- ifelse(is.na(HouseholdVietnam_2C$d81) & !is.na(HouseholdVietnam_2C$d81_1a), NA, HouseholdVietnam_2C$d81_1a)
-HouseholdVietnam_2C$d81_1a <- as.factor(HouseholdVietnam_2C$d81_1a)
-
-#Need validate unlogic between d82 (521 respondents) and d82_1a (533 respondents)
-HouseholdVietnam_2C$d82_1a <- as.character(HouseholdVietnam_2C$d82_1a)
-HouseholdVietnam_2C$d82_1a <- ifelse(is.na(HouseholdVietnam_2C$d82) & !is.na(HouseholdVietnam_2C$d82_1a), NA, HouseholdVietnam_2C$d82_1a)
-HouseholdVietnam_2C$d82_1a  <- as.factor(HouseholdVietnam_2C$d82_1a)
-
-#Need validate unlogic between d83 (397 respondents) and d83_1a (414 respondents)
-HouseholdVietnam_2C$d83_1a <- as.character(HouseholdVietnam_2C$d83_1a)
-HouseholdVietnam_2C$d83_1a <- ifelse(is.na(HouseholdVietnam_2C$d83) & !is.na(HouseholdVietnam_2C$d83_1a), NA, HouseholdVietnam_2C$d83_1a)
-HouseholdVietnam_2C$d83_1a  <- as.factor(HouseholdVietnam_2C$d83_1a)
-
-#We have 578 hhs with lowland or upland but d12 on water conservation practice have 581
-#MANUAL, NEED TO MODIFY IT
-HouseholdVietnam_2C$d12 <- ifelse(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2), NA, HouseholdVietnam_2C$d12)
-for (i in c(865:874)){
-  HouseholdVietnam_2C[,i] <- as.character(HouseholdVietnam_2C[,i])
-  HouseholdVietnam_2C[,i] <- ifelse(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2), NA, HouseholdVietnam_2C[,i])
-  HouseholdVietnam_2C[,i] <- as.factor(HouseholdVietnam_2C[,i])
-}
-
-#Check for d131_1 & d131_2, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d131_1 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d131_2))
-#Check for d133_1 & d133_2, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d133_1 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d133_2))
-#Check for d134_1 & d134_2, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d134_1 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d134_2))
-#Check for d135_1 & d135_2, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d135_1 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d135_2))
-#Check for d136_1 & d136_2, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d136_1 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d136_2))
-#Check for d137_1 & d137_2, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d137_1 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d137_2))
-#Check for d138_1 & d138_2, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d138_1 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d138_2))
-
-#We have 578 hhs with lowland or upland but d14 on soil conservation practice have 575
-#MANUAL, NEED TO MODIFY IT
-#1st, there are 2 '0' values for households with no crops, we replace it by ''
-HouseholdVietnam_2C$d14 <- ifelse(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2), NA, HouseholdVietnam_2C$d14)
-for (i in c(989:997)){
-  HouseholdVietnam_2C[,i] <- as.character(HouseholdVietnam_2C[,i])
-  HouseholdVietnam_2C[,i] <- ifelse(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2), NA, HouseholdVietnam_2C[,i])
-  HouseholdVietnam_2C[,i] <- as.factor(HouseholdVietnam_2C[,i])
-}
-
-#Then, there are 7 values with answers to column corresponding to each practices,
-#but not on column 13, we replace '' by '0':
-HouseholdVietnam_2C$d14 <- ifelse(HouseholdVietnam_2C$d14 == '' & HouseholdVietnam_2C$d140 == 2, '0', HouseholdVietnam_2C$d14)
-
-#Check for d151_1 & d151_2, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d151_1 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d151_2))
-#Check for d152_1 & d152_2, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d152_1 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d152_2))
-#Check for d153_1 & d153_2, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d153_1 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d153_2))
-#Check for d154_1 & d154_2, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d154_1 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d154_2))
-#Check for d155_1 & d155_2, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d155_1 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d155_2))
-#Check for d156_1 & d156_2, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d156_1 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d156_2))
-#Check for d157_1 & d157_2, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d157_1 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d157_2))
-#Check for d158_1 & d158_2, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d158_1 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d158_2))
-
-#We have 3 answers for d16 for hhs without lowland or upland
-#MANUAL, NEED TO MODIFY IT
-HouseholdVietnam_2C$d16 <- as.character(HouseholdVietnam_2C$d16)
-HouseholdVietnam_2C$d16 <- ifelse(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2), NA, HouseholdVietnam_2C$d16)
-HouseholdVietnam_2C$d16 <- as.factor(HouseholdVietnam_2C$d16)
-
-#For d18, there are different issues solved below
-#MANUAL, NEED TO MODIFY IT
-HouseholdVietnam_2C$d18 <- ifelse(HouseholdVietnam_2C$d181 == '1' & HouseholdVietnam_2C$d18 == '', '1', HouseholdVietnam_2C$d18)
-HouseholdVietnam_2C$d18 <- ifelse(HouseholdVietnam_2C$d1899 == '1' & HouseholdVietnam_2C$d18 == '', as.character('99'), HouseholdVietnam_2C$d18)
-#For d17, there are 3 '0' values for households with no crops, we replace it by ''
-HouseholdVietnam_2C$d17 <- as.character(HouseholdVietnam_2C$d17)
-HouseholdVietnam_2C$d17 <- ifelse(HouseholdVietnam_2C$d17 != '2' & !is.na(HouseholdVietnam_2C$d18), '2', HouseholdVietnam_2C$d17)
-HouseholdVietnam_2C$d17 <- ifelse(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2), NA, HouseholdVietnam_2C$d17)
-HouseholdVietnam_2C$d17 <- as.factor(HouseholdVietnam_2C$d17)
-
-## 3 NA remains for households with crops, see later if necesary to change it
-#for "no practice"
-
-#Check for d18_11 & d18_12, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d18_11 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d18_12))
-#Check for d18_21 & d18_22, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d18_21 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d18_22))
-#Check for d18_31 & d18_32, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d18_31 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d18_32))
-#Check for d18_41 & d18_42, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d18_41 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d18_42))
-#Check for d18_51 & d18_52, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d18_51 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d18_52))
-#Check for d18_61 & d18_62, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d18_61 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d18_62))
-#Check for d18_71 & d18_72, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d18_71 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d18_72))
-#Check for d18_81 & d18_82, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d18_81 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d18_82))
-#Check for d18_91 & d18_92, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d18_91 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d18_92))
-#Check for d18_101 & d18_102, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d18_101 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d18_102))
-#Check for d18_111_a & d18_112, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d18_111_a != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d18_112))
-
-#For d19, one hh answered while he mentionned to have implemented this practice
-HouseholdVietnam_2C$d19 <- as.character(HouseholdVietnam_2C$d19)
-HouseholdVietnam_2C$d19 <- ifelse(HouseholdVietnam_2C$d17 == '2' & !is.na(HouseholdVietnam_2C$d19), NA, HouseholdVietnam_2C$d19)
-HouseholdVietnam_2C$d19 <- as.factor(HouseholdVietnam_2C$d19)
-
-#For d20 & d21, there are different issues solved below
-#MANUAL, NEED TO MODIFY IT
-HouseholdVietnam_2C$d21 <- ifelse(HouseholdVietnam_2C$d2110 == '1' & HouseholdVietnam_2C$d21 == '', '10', HouseholdVietnam_2C$d21)
-#For d20, different issues solved below
-HouseholdVietnam_2C$d20 <- as.character(HouseholdVietnam_2C$d20)
-HouseholdVietnam_2C$d20 <- ifelse(HouseholdVietnam_2C$no_crop1 == '' & HouseholdVietnam_2C$no_crop2 == '' , NA, HouseholdVietnam_2C$d20)
-HouseholdVietnam_2C$d20 <- ifelse(!is.na(HouseholdVietnam_2C$no_crop1) & !is.na(HouseholdVietnam_2C$no_crop2) & is.na(HouseholdVietnam_2C$d20), '0', HouseholdVietnam_2C$d20)
-HouseholdVietnam_2C$d20 <- as.factor(HouseholdVietnam_2C$d20)
-x <- cbind(HouseholdVietnam_2C$no_crop1,HouseholdVietnam_2C$no_crop2,HouseholdVietnam_2C$d20)
-
-#Check for d21_12 & d21_13, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d21_12 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d21_13))
-#Check for d21_22 & d21_23, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d21_22 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d21_23))
-#Check for d21_32 & d21_33, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d21_32 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d21_33))
-#Check for d21_42 & d21_43, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d21_42 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d21_43))
-#Check for d21_52 & d21_53, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d21_52 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d21_53))
-#Check for d21_62 & d21_63, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d21_62 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d21_63))
-#Check for d21_72 & d21_73, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d21_72 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d21_73))
-#Check for d21_82 & d21_83, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d21_82 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d21_83))
-#Check for d21_92 & d21_93, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d21_92 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d21_93))
-#Check for d21_102 & d21_103, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d21_102 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d21_103))
-#Check for d21_112 & d21_113, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d21_112 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d21_113))
-#Check for d21_122 & d21_123, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d21_122 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d21_123))
-#Check for d21_132 & d21_133, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d21_132 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d21_133))
-#Check for d21_992 & d21_993, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d21_992 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d21_993))
-
-#For d22, one hh answered while he mentionned to have implemented this practice
-HouseholdVietnam_2C$d22 <- as.character(HouseholdVietnam_2C$d22)
-HouseholdVietnam_2C$d22 <- ifelse(HouseholdVietnam_2C$d20 == '2' & !is.na(HouseholdVietnam_2C$d22), NA, HouseholdVietnam_2C$d22)
-HouseholdVietnam_2C$d22 <- as.factor(HouseholdVietnam_2C$d22)
-
-#One household didn't answered to d22 but we don't fulfil it as we don't know his answer
-
-#For d24, different issues solved below
-HouseholdVietnam_2C$d24 <- as.character(HouseholdVietnam_2C$d24)
-HouseholdVietnam_2C$d24 <- ifelse(HouseholdVietnam_2C$no_crop1 == '' & HouseholdVietnam_2C$no_crop2 == '' , NA, HouseholdVietnam_2C$d24)
-HouseholdVietnam_2C$d24 <- as.factor(HouseholdVietnam_2C$d24)
-
-#For d26, different issues solved below
-HouseholdVietnam_2C$d26 <- as.character(HouseholdVietnam_2C$d26)
-HouseholdVietnam_2C$d26 <- ifelse(HouseholdVietnam_2C$no_crop1 == '' & HouseholdVietnam_2C$no_crop2 == '' , NA, HouseholdVietnam_2C$d26)
-HouseholdVietnam_2C$d26 <- as.factor(HouseholdVietnam_2C$d26)
-
-#Check for d27_11 & d27_12, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d27_11 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d27_12))
-#Check for d27_21 & d27_22, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d27_21 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d27_22))
-#Check for d27_31 & d27_32, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d27_31 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d27_32))
-#Check for d27_41 & d27_42, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d27_41 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d27_42))
-#Check for d27_51 & d27_52, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d27_51 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d27_52))
-#Check for d27_61 & d27_62, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d27_61 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d27_62))
-#Check for d27_71 & d27_72, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d27_71 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d27_72))
-#Check for d27_81 & d27_82, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d27_81 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d27_82))
-#Check for d27_91 & d27_92, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d27_91 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d27_92))
-#Check for d27_101 & d27_102, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d27_101 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d27_102))
-#Check for d27_111_a & d27_112_a, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d27_111_a != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d27_112_a))
-#Check for d27_121 & d27_122, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d27_121 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d27_122))
-#Check for d27_131 & d27_132, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d27_131 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d27_132))
-#Check for d27_141 & d27_142, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d27_141 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d27_142))
-#Check for d27_991 & d27_992, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & HouseholdVietnam_2C$d27_991 != '')
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d27_992))
-
-#For d28, different issues solved below
-HouseholdVietnam_2C$d28 <- as.character(HouseholdVietnam_2C$d28)
-HouseholdVietnam_2C$d28 <- ifelse(is.na(HouseholdVietnam_2C$d26) & !is.na(HouseholdVietnam_2C$d28), NA, HouseholdVietnam_2C$d28)
-HouseholdVietnam_2C$d28 <- as.factor(HouseholdVietnam_2C$d28)
-
-#For d30_1, different issues solved below
-HouseholdVietnam_2C$d30_1 <- as.character(HouseholdVietnam_2C$d30_1)
-HouseholdVietnam_2C$d30_1 <- ifelse(HouseholdVietnam_2C$d30_2 == '' & HouseholdVietnam_2C$d30_1 == '1' , '0', HouseholdVietnam_2C$d30_1)
-HouseholdVietnam_2C$d30_1 <- ifelse(HouseholdVietnam_2C$no_crop1 == '' & HouseholdVietnam_2C$no_crop2 == '' , NA, HouseholdVietnam_2C$d30_1)
-HouseholdVietnam_2C$d30_1 <- as.factor(HouseholdVietnam_2C$d30_1)
-
-#Check for d30_3 & d30_4, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d30_3))
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d30_4))
-#Check for d30_5 & d30_6, Crops for which you use this practice and main motivation
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d30_5))
-sum(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2) & !is.na(HouseholdVietnam_2C$d30_6))
-
-#For d32 & d32_2, different issues solved below
-HouseholdVietnam_2C$d32 <- as.character(HouseholdVietnam_2C$d32)
-HouseholdVietnam_2C$d32 <- ifelse(HouseholdVietnam_2C$no_crop1 == '' & HouseholdVietnam_2C$no_crop2 == '' , NA, HouseholdVietnam_2C$d32)
-HouseholdVietnam_2C$d32 <- ifelse(HouseholdVietnam_2C$d32_1 == '' & HouseholdVietnam_2C$d32 == '2' , '1', HouseholdVietnam_2C$d32)
-HouseholdVietnam_2C$d32 <- as.factor(HouseholdVietnam_2C$d32)
-HouseholdVietnam_2C$d32_2 <- as.character(HouseholdVietnam_2C$d32_2)
-HouseholdVietnam_2C$d32_2 <- ifelse(HouseholdVietnam_2C$no_crop1 == '' & HouseholdVietnam_2C$no_crop2 == '' , NA, HouseholdVietnam_2C$d32_2)
-HouseholdVietnam_2C$d32_2 <- as.factor(HouseholdVietnam_2C$d32_2)
-
-#For module E3. Cattle and buffalo system, households having other kind of cattle 
-#didn't fulfil this part
-
-#One household is raising cattle/buffalo and didn't fulfil E3 = Nothing more to do...
-
-#There were 317 households raised buffalo and cattle as important animals. However, I found 328 
-#households participated in the module E3. In fact, these households raise pig and the data
-#In module E3 is probably the data supposed to be in module E4, so we'll transfer these data at the right place
-#First we set columns in the same order
-HouseholdVietnam_2C <- HouseholdVietnam_2C %>% relocate(e3899 , .after = e3888)
-#Then we extract household id of concerned households
-x <- HouseholdVietnam_2C[HouseholdVietnam_2C$e2_1 == '0' & HouseholdVietnam_2C$e2_2 == '0' & !is.na(HouseholdVietnam_2C$e16),]
-hid <- x$o9
-#And finally we create a loop to replace the values in E4 and remove them from E3
-for (i in hid){
-  HouseholdVietnam_2C[HouseholdVietnam_2C$o9 == i,c(2044:2102)] <- HouseholdVietnam_2C[HouseholdVietnam_2C$o9 == i,c(1982:1996,1998:2041)]
-  HouseholdVietnam_2C[HouseholdVietnam_2C$o9 == i,c(1982:1996,1998:2041)] <- 'NA'
-}
-
-#For module E4, There are 11 households raising pigs without information at E4,
-#nothing more to do here
-
-#For module E5, A lot of households are raising poultry (mainly chicken), but didn't fulfiled E5
-#Nothing more to do here for now
-#There were 391 households raised poultries as important animals, but 378 households participated
-#in the module E5. So please check and impute missing data for 13 households (in fact more than 13)
-
-#Only households raised buffalo and cattle as important animals (317) will be asked e58,
-#but we have 338 ones replied the question in reality. So please check and redundant data
-#We create a loop to solve this issue
-for (i in 2165:2178){
-HouseholdVietnam_2C[,i] <- as.character(HouseholdVietnam_2C[,i])
-HouseholdVietnam_2C[,i] <- ifelse(HouseholdVietnam_2C$e2_1 == '0' & HouseholdVietnam_2C$e2_2 == '0',
-                                             NA,HouseholdVietnam_2C[,i])
-HouseholdVietnam_2C[,i] <- as.factor(HouseholdVietnam_2C[,i])
-}
-summary(HouseholdVietnam_2C$b1)
-# # #d. Corresponding fields - Additionnal checks
-#The following part is based on Laos script but we removed all parts for which
-#no issue was highligted for Laos, assuming no issue was permitted by Kobo for 
-#these fields
-
+#a14:a15
+sum(HouseholdVietnam_2C$a14 >0)-sum(HouseholdVietnam_2C$a15 != '')
+#OK
+#b2:b2_1:b2_2
+x <- HouseholdVietnam_2C[,c(81,82,101)]
+#OK
+#b3: b31-b388
+#OK
+#b4_1: b5_1
+sum(HouseholdVietnam_2C$b4_1 !='')-sum(!is.na(HouseholdVietnam_2C$b5_1))
+#OK
+#b4_2: b5_2
+sum(HouseholdVietnam_2C$b4_2 !='')-sum(!is.na(HouseholdVietnam_2C$b5_2))
+#OK
+#b4_3: b5_3
+x <- HouseholdVietnam_2C[,c(1,148,154)]
+#OK
+#b6: b7: b8: b8_1: b9: b9_1: b9_2.: b9_3
+#OK
 #b1:b10:b11
 x <- HouseholdVietnam_2C[,c(1,80,230,239)]
-
-#5 households declared that they sold crops products but did not anwered to b10 & b11
-#HHID: 3044,3054,3303,3551,3222
-#As we cannot know their answer, we cannot solve this issue
-
+#6 households declared that they sold crops products but did not anwered to b10 & b11
+#HHID: 119,148,165,195,210,648
+#As we cannot know their answer, we cannot solve this issue => ASK ENUM
+#b10:b10_1
+#OK
+#b1:b16:b17
+x <- HouseholdVietnam_2C[,c(1,80,240,242)]
+#1 households did not answered to b17
+#HHID: 515
+#As we cannot know their answer, we cannot solve this issue => ASK ENUM
+#b16:b16a
+#OK
+#b1:b22
+x <- HouseholdVietnam_2C[,c(80,243)]
+#OK
+#b22:b22_1:b22_11-b22_199:b25:b26
+x <- HouseholdVietnam_2C[,c(1,243:259,562,563)]
+#Many answers to b25 and b26 for households not selling certified products => ASK ENUM
+#b27:b27_1:b27_11-b27:188
+x <- HouseholdVietnam_2C[,c(1,564:574)]
+#OK
+#b28:b28_1
+#OK
 #c2:c3:c3a:c4:c5:c9:c6:c7:c8:c10:c11
-x <- HouseholdVietnam_2C[,c(1,591,592,603,605,607,609,622:626)]
-
-#For c6, c7 and c8, many unanswered cells, we'll replace it by "no", 
-#and also replace "Yes" by "yes" and "No" by "no" to homogenize the answers
-for (i in c(581:585)){
-  HouseholdVietnam_2C[,i] <- as.character(HouseholdVietnam_2C[,i])
-  HouseholdVietnam_2C[,i] <- ifelse(HouseholdVietnam_2C$c3a != '' & HouseholdVietnam_2C[,i] == '', 'no',HouseholdVietnam_2C[,i])
-  HouseholdVietnam_2C[,i] <- ifelse(HouseholdVietnam_2C[,i] == 'Yes', 'yes',HouseholdVietnam_2C[,i])
-  HouseholdVietnam_2C[,i] <- ifelse(HouseholdVietnam_2C[,i] == 'No', 'no',HouseholdVietnam_2C[,i])
-  HouseholdVietnam_2C[,i] <- as.factor(HouseholdVietnam_2C[,i])
-}
-
+x <- HouseholdVietnam_2C[,c(1,592,622:626)]
+#For c6, c7 and c8, some unanswered cells => ASK ENUM
+#d1:d1_1-d1_7
+#OK
+#d2_sum:d2_sum1-d2_sum11
+#OK
 #b1:b12_1:b12_2
 x <- HouseholdVietnam_2C[,c(1,80,697,700)]
-
-#Many households declared at b1 that they sold agri products but did not answered ar b12_1 and b12_2
-#As we cannot know their answer, we cannot solve this issue
-
+#Many households did not answered to b12_1 and b12_2 while they are selling crops according to b1 answer
+# => ASK ENUM
+#Many households answered to b12_1 and b12_2 while they are not selling crops according to b1 answer
+# => ASK ENUM
+#b12_1:b13_1:b13_01-b13_0111:b14_1-b14_188:b15_1
+x <- HouseholdVietnam_2C[,c(1,697,703:725)]
+#Many issues of corresponding fields, i.e. lack of answers at b13_01, b14_1...
+#ASK ENUM
 #b12_2:b13_02-b13_0211:b13_2:b14_2-b14_288:b15_2
 x <- HouseholdVietnam_2C[,c(1,700,728:750,752)]
-
-#For b13_2 and related answers => Many answers are missing but we don't have this
-#information so we cannot solve it
-#For b14_2 and related answers => Many answers are missing but we don't have this
-#information so we cannot solve it
-#For b15_2 and related answers => Many answers are missing but we don't have this
-#information so we cannot solve it
-
+#For b13_2, b14_2 and b15_2 and related answers => Many answers are missing but we don't have this
+#information so we cannot solve it => ASK ENUM
+#d1:d3_2:d3_3
+x <- HouseholdVietnam_2C[,c(1,660,753:754)]
+#OK
+#d1:d4_2:d4_3
+x <- HouseholdVietnam_2C[,c(1,660,755:756)]
+#OK
+#d1:d5_2:d5_3
+x <- HouseholdVietnam_2C[,c(1,660,757:758)]
+#OK
+#d1:d6_2:d6_3
+x <- HouseholdVietnam_2C[,c(1,660,759:760)]
+#OK
+#d7-d799
+x <- HouseholdVietnam_2C[,c(1,761:778)]
+#OK
+#d71:d7_11:d7_12:d7:13
+x <- HouseholdVietnam_2C[,c(1,763,780:782)]
+#OK
+#d72:d7_21:d7_22:d7:23
+x <- HouseholdVietnam_2C[,c(1,764,783:785)]
+#OK
+#d73:d7_31:d7_32:d7:33
+x <- HouseholdVietnam_2C[,c(1,765,786:788)]
+#OK
+#d74:d7_41:d7_42:d7:43
+x <- HouseholdVietnam_2C[,c(1,766,789:791)]
+#OK
+#d75:d7_51:d7_52:d7:53
+x <- HouseholdVietnam_2C[,c(1,767,792:794)]
+#OK
+#d76:d7_61:d7_62:d7:63
+x <- HouseholdVietnam_2C[,c(1,768,795:797)]
+#OK
+#d77:d7_71:d7_72:d7:73
+x <- HouseholdVietnam_2C[,c(1,769,798:800)]
+#OK
+#d78:d7_81:d7_82:d7:83
+x <- HouseholdVietnam_2C[,c(1,770,801:803)]
+#OK
+#d79:d7_91:d7_92:d7:93
+x <- HouseholdVietnam_2C[,c(1,771,804:806)]
+#OK
+#d710:d7_101:d7_102:d7:103
+x <- HouseholdVietnam_2C[,c(1,772,807:809)]
+#OK
+#d711:d7_111:d7_112:d7:113
+x <- HouseholdVietnam_2C[,c(1,773,810:812)]
+#OK
+#d712:d7_121:d7_122:d7:123
+x <- HouseholdVietnam_2C[,c(1,774,813:815)]
+#OK
+#d713:d7_131:d7_132:d7:133
+x <- HouseholdVietnam_2C[,c(1,775,816:818)]
+#OK
+#d714:d7_141:d7_142:d7:143
+x <- HouseholdVietnam_2C[,c(1,776,819:821)]
+#OK
+#d715:d7_151:d7_152:d7:153
+x <- HouseholdVietnam_2C[,c(1,777,822:824)]
+#OK
+#d799:d7_991:d7_992:d7:993
+x <- HouseholdVietnam_2C[,c(1,778,825:827)]
+#OK
+#d2a_1:d2b_1:d81:d81_1a:d81_1b
+x <- HouseholdVietnam_2C[,c(1,668,676,828,834,836)]
+#2 households didn't answered to d81 while they have crops and answered to a and b
+#We change their answer to 1
+HouseholdVietnam_2C$d81 <- as.character(HouseholdVietnam_2C$d81)
+HouseholdVietnam_2C$d81 <- ifelse(!is.na(HouseholdVietnam_2C$d81_1a), 1, HouseholdVietnam_2C$d81)
+HouseholdVietnam_2C$d81 <- as.factor(HouseholdVietnam_2C$d81)
+#d2a_1:d2b_1 :d82:d82_1a:d82_1b
+x <- HouseholdVietnam_2C[,c(1,668,676,829,838,840)]
+#Some Households didn't answered to d82 alone, or d82 and associated answers
+#while they have >1 crops 
+#Not possible to solve this issue without the information => ASK ENUM
+#SOme households have answers to d82_1a and b while no crops
+#We change their answer to NA
+HouseholdVietnam_2C$d82_1a <- as.character(HouseholdVietnam_2C$d82_1a)
+HouseholdVietnam_2C$d82_1a <- ifelse(ifelse(is.na(HouseholdVietnam_2C$no_crop1), 0,HouseholdVietnam_2C$no_crop1) + ifelse(is.na(HouseholdVietnam_2C$no_crop2), 0,HouseholdVietnam_2C$no_crop2) < 2, NA, HouseholdVietnam_2C$d82_1a)
+HouseholdVietnam_2C$d82_1a <- as.factor(HouseholdVietnam_2C$d82_1a)
+HouseholdVietnam_2C$d82_1b <- as.character(HouseholdVietnam_2C$d82_1b)
+HouseholdVietnam_2C$d82_1b <- ifelse(ifelse(is.na(HouseholdVietnam_2C$no_crop1), 0,HouseholdVietnam_2C$no_crop1) + ifelse(is.na(HouseholdVietnam_2C$no_crop2), 0,HouseholdVietnam_2C$no_crop2) < 2, NA, HouseholdVietnam_2C$d82_1b)
+HouseholdVietnam_2C$d82_1b <- as.factor(HouseholdVietnam_2C$d82_1b)
+#d2a_1:d2b_1:d83:d83_1a:d83_1b
+x <- HouseholdVietnam_2C[,c(1,668,676,830,842,844)]
+#Several households didn't answered to d83 alone, or d83 and associated answers
+#while they have >2 crops 
+#Not possible to solve this issue without the information => ASK ENUM
+#Some households have answers to d83_1a and b while no crops
+#We change their answer to NA
+HouseholdVietnam_2C$d83_1a <- as.character(HouseholdVietnam_2C$d83_1a)
+HouseholdVietnam_2C$d83_1a <- ifelse(ifelse(is.na(HouseholdVietnam_2C$no_crop1), 0,HouseholdVietnam_2C$no_crop1) + ifelse(is.na(HouseholdVietnam_2C$no_crop2), 0,HouseholdVietnam_2C$no_crop2) < 3, NA, HouseholdVietnam_2C$d83_1a)
+HouseholdVietnam_2C$d83_1a <- as.factor(HouseholdVietnam_2C$d83_1a)
+HouseholdVietnam_2C$d83_1b <- as.character(HouseholdVietnam_2C$d83_1b)
+HouseholdVietnam_2C$d83_1b <- ifelse(ifelse(is.na(HouseholdVietnam_2C$no_crop1), 0,HouseholdVietnam_2C$no_crop1) + ifelse(is.na(HouseholdVietnam_2C$no_crop2), 0,HouseholdVietnam_2C$no_crop2) < 3, NA, HouseholdVietnam_2C$d83_1b)
+HouseholdVietnam_2C$d83_1b <- as.factor(HouseholdVietnam_2C$d83_1b)
 #d9_1:d9_2
 x <- HouseholdVietnam_2C[,c(1,847,848)]
-
-#HHID: 3084,3433,3438,3447,3568 declared plots rented out but no information of number of plots
-#As we cannot know their answer, we cannot solve this issue
-
+#HHID: 36,43,87,111 declared plots rented out but no information of number of plots
+#As we cannot know their answer, we cannot solve this issue => ASK ENUM
+#d10_1:d10_2
+x <- HouseholdVietnam_2C[,c(1,849,850)]
+#For one household, the number of plot is unknown => ASK ENUM
+#HHid: 80
+#d11_1:d11_2:d11_4-d11_499
+x <- HouseholdVietnam_2C[,c(1,851:862)]
+#For several households, the number of plot is unknown => ASK ENUM
+#OK
+#d2a_1:d2b_1:d12-d120
+x <- HouseholdVietnam_2C[,c(1,668,676,864:874)]
+#For several households, empty cell for d12 while answered at d120, we correct it
+HouseholdVietnam_2C$d12 <- as.character(HouseholdVietnam_2C$d12)
+HouseholdVietnam_2C$d12 <- ifelse(HouseholdVietnam_2C$d121 != '' & HouseholdVietnam_2C$d12 == '',0,HouseholdVietnam_2C$d12 )
+HouseholdVietnam_2C$d12 <- as.factor(HouseholdVietnam_2C$d12)
+# For 3 households, there is information for d121:d120 while no crops and no answers to d12
+for (i in 865:874){
+  HouseholdVietnam_2C[,i] <- as.character(HouseholdVietnam_2C[,i]) 
+  HouseholdVietnam_2C[,i] <- ifelse(HouseholdVietnam_2C$d12 == '', NA,HouseholdVietnam_2C[,i] )
+  HouseholdVietnam_2C[,i] <- as.factor(HouseholdVietnam_2C[,i])
+}
+#d121:d131_1:d131_11-d131_111:d131_2
+sum(HouseholdVietnam_2C$d121 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d131_1 != '')
+for (i in c(877:887)){
+  print(sum(HouseholdVietnam_2C$d121 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d121 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d131_2 != '', na.rm = T)
+#OK
+#d122:d132_1:d132_11-d132_111:d132_2
+#No household having this practice = OK
+#d123:d133_1:d133_11-d133_111:d133_2
+sum(HouseholdVietnam_2C$d123 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d133_1 != '')
+for (i in c(905:915)){
+  print(sum(HouseholdVietnam_2C$d123 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d123 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d133_2 != '', na.rm = T)
+#1 answer is missing for d133_1 and associated answers => ASK ENUM
+#d124:d134_1:d134_11-d134_111:d134_2
+sum(HouseholdVietnam_2C$d124 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d134_1 != '')
+for (i in c(919:929)){
+  print(sum(HouseholdVietnam_2C$d124 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d124 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d134_2 != '', na.rm = T)
+#OK
+#d125:d135_1:d135_11-d135_111:d135_2
+sum(HouseholdVietnam_2C$d125 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d135_1 != '')
+for (i in c(933:943)){
+  print(sum(HouseholdVietnam_2C$d125 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d125 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d135_2 != '', na.rm = T)
+#OK
+#d126:d136_1:d136_11-d136_111:d136_2
+sum(HouseholdVietnam_2C$d126 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d136_1 != '')
+for (i in c(947:957)){
+  print(sum(HouseholdVietnam_2C$d126 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d126 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d136_2 != '', na.rm = T)
+#OK
+#d127:d137_1:d137_11-d137_111:d137_2
+sum(HouseholdVietnam_2C$d127 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d137_1 != '')
+for (i in c(961:971)){
+  print(sum(HouseholdVietnam_2C$d127 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d127 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d137_2 != '', na.rm = T)
+#OK
+#d1299:d138_1:d138_11-d138_111:d138_2
+sum(HouseholdVietnam_2C$d1299 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d138_1 != '')
+for (i in c(975:985)){
+  print(sum(HouseholdVietnam_2C$d1299 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d1299 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d138_2 != '', na.rm = T)
+#1 answer is missing for d138_1 and associated answers => ASK ENUM
+#d2a_1:d2b_1 :d14-d1499
+x <- HouseholdVietnam_2C[,c(1,668,676,988:997)]
+#For several households, empty cell for d14 while answered at d140, we correct it
+HouseholdVietnam_2C$d14 <- as.character(HouseholdVietnam_2C$d14)
+HouseholdVietnam_2C$d14 <- ifelse(HouseholdVietnam_2C$d141 != '' & HouseholdVietnam_2C$d14 == '',0,HouseholdVietnam_2C$d14 )
+HouseholdVietnam_2C$d14 <- as.factor(HouseholdVietnam_2C$d14)
+# For 3 households, there is information for d121:d120 while no crops and no answers to d12
+for (i in 989:997){
+  HouseholdVietnam_2C[,i] <- as.character(HouseholdVietnam_2C[,i]) 
+  HouseholdVietnam_2C[,i] <- ifelse(HouseholdVietnam_2C$d14 == '', NA,HouseholdVietnam_2C[,i] )
+  HouseholdVietnam_2C[,i] <- as.factor(HouseholdVietnam_2C[,i])
+}
+#d141:d151_1:d151_11-d151_111:d151_2
+sum(HouseholdVietnam_2C$d141 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d151_1 != '')
+for (i in c(1000:1010)){
+  print(sum(HouseholdVietnam_2C$d141 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d141 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d151_2 != '', na.rm = T)
+#OK
+#d142:d152_1:d152_11-d152_111:d152_2
+sum(HouseholdVietnam_2C$d142 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d152_1 != '')
+for (i in c(1014:1024)){
+  print(sum(HouseholdVietnam_2C$d142 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d142 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d152_2 != '', na.rm = T)
+#OK
+#d143:d153_1:d153_11-d153_111:d153_2
+sum(HouseholdVietnam_2C$d143 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d153_1 != '')
+for (i in c(1028:1038)){
+  print(sum(HouseholdVietnam_2C$d143 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d143 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d153_2 != '', na.rm = T)
+#OK
+#d144:d154_1:d154_11-d154_111:d154_2
+sum(HouseholdVietnam_2C$d144 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d154_1 != '')
+for (i in c(1042:1052)){
+  print(sum(HouseholdVietnam_2C$d144 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d144 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d154_2 != '', na.rm = T)
+#OK
+#d145:d155_1:d155_11-d155_111:d155_2
+sum(HouseholdVietnam_2C$d145 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d155_1 != '')
+for (i in c(1056:1066)){
+  print(sum(HouseholdVietnam_2C$d145 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d145 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d155_2 != '', na.rm = T)
+#OK
+#d146:d156_1:d156_11-d156_111:d156_2
+sum(HouseholdVietnam_2C$d146 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d156_1 != '')
+for (i in c(1070:1080)){
+  print(sum(HouseholdVietnam_2C$d146 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d146 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d156_2 != '', na.rm = T)
+#OK
+#d147:d157_1:d157_11-d157_111:d157_2
+sum(HouseholdVietnam_2C$d147 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d157_1 != '')
+for (i in c(1084:1094)){
+  print(sum(HouseholdVietnam_2C$d147 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d147 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d157_2 != '', na.rm = T)
+#OK
+#d1499:d158_1:d158_11-d158_111:d158_2
+sum(HouseholdVietnam_2C$d1499 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d158_1 != '')
+for (i in c(1098:1108)){
+  print(sum(HouseholdVietnam_2C$d1499 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d1499 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d158_2 != '', na.rm = T)
+#OK
+#d2a_1:d2b_1 :d140:d16
+x <- HouseholdVietnam_2C[,c(1,668,676,989,1111)]
+#OK
+#d2a_1:d2b_1 :d17:d18:d181-d1899
+x <- HouseholdVietnam_2C[,c(1,668,676,1112:1125)]
+#For several households, they declared practices while they answered "no" or "do not know" at d17
+# 3 households answered to d17 while they do not have crops
+# 3 households didn't answer to d17 while they have crops
+HouseholdVietnam_2C$d17 <- as.character(HouseholdVietnam_2C$d17)
+HouseholdVietnam_2C$d17 <- ifelse(HouseholdVietnam_2C$d18 != '' & HouseholdVietnam_2C$d17 == '0',1,HouseholdVietnam_2C$d17)
+HouseholdVietnam_2C$d17 <- ifelse(HouseholdVietnam_2C$d18 != '' & HouseholdVietnam_2C$d17 == '88',1,HouseholdVietnam_2C$d17)
+HouseholdVietnam_2C$d17 <- ifelse(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2),NA,HouseholdVietnam_2C$d17)
+HouseholdVietnam_2C$d17 <- ifelse(!is.na(HouseholdVietnam_2C$no_crop2) & is.na(HouseholdVietnam_2C$d17),0,HouseholdVietnam_2C$d17)
+HouseholdVietnam_2C$d17 <- as.factor(HouseholdVietnam_2C$d17)
+#d181:d18_11:d18_111- d18_1111:d18_12
+sum(HouseholdVietnam_2C$d181 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d18_11 != '')
+for (i in c(1128:1138)){
+  print(sum(HouseholdVietnam_2C$d181 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d181 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d18_12 != '', na.rm = T)
+#OK
+#d182:d18_21:d18_211- d18_2111:d18_22
+sum(HouseholdVietnam_2C$d182 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d18_21 != '')
+for (i in c(1142:1152)){
+  print(sum(HouseholdVietnam_2C$d182 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d182 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d18_22 != '')
+#OK
+#d183:d18_31:d18_311- d18_3111:d18_32
+sum(HouseholdVietnam_2C$d183 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d18_31 != '')
+for (i in c(1156:1166)){
+  print(sum(HouseholdVietnam_2C$d183 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d183 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d18_32 != '', na.rm = T)
+#OK
+#d184:d18_41:d18_411- d18_4111:d18_42
+sum(HouseholdVietnam_2C$d184 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d18_41 != '')
+for (i in c(1170:1180)){
+  print(sum(HouseholdVietnam_2C$d184 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d184 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d18_42 != '', na.rm = T)
+#OK
+#d185:d18_51:d18_511- d18_5111:d18_52
+sum(HouseholdVietnam_2C$d185 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d18_51 != '')
+for (i in c(1184:1194)){
+  print(sum(HouseholdVietnam_2C$d185 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d185 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d18_52 != '', na.rm = T)
+#OK
+#d186:d18_61:d18_611- d18_6111:d18_62
+sum(HouseholdVietnam_2C$d186 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d18_61 != '')
+for (i in c(1198:1208)){
+  print(sum(HouseholdVietnam_2C$d186 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d186 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d18_62 != '', na.rm = T)
+#OK
+#d187:d18_71:d18_711- d18_7111:d18_72
+sum(HouseholdVietnam_2C$d187 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d18_71 != '', na.rm = T)
+for (i in c(1212:1222)){
+  print(sum(HouseholdVietnam_2C$d187 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d187 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d18_72 != '', na.rm = T)
+#OK
+#d188:d18_81:d18_811- d18_8111:d18_82
+sum(HouseholdVietnam_2C$d188 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d18_81 != '')
+for (i in c(1226:1236)){
+  print(sum(HouseholdVietnam_2C$d188 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d188 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d18_82 != '', na.rm = T)
+#OK
+#d189:d18_91:d18_911- d18_9111:d18_92
+sum(HouseholdVietnam_2C$d189 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d18_91 != '', na.rm = T)
+for (i in c(1240:1250)){
+  print(sum(HouseholdVietnam_2C$d189 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d189 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d18_92 != '', na.rm = T)
+#OK
+#d1810:d18_101:d18_1011- d18_10111:d18_102
+sum(HouseholdVietnam_2C$d1810 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d18_101 != '', na.rm = T)
+for (i in c(1254:1264)){
+  print(sum(HouseholdVietnam_2C$d1810 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d1810 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d18_102 != '', na.rm = T)
+#OK
+#d1811:d18_111:d18_1111- d18_11111:d18_112_a
+#No household implemented this practice
+#d1899:d18_991:d18_9911- d18_99111:d18_992
+sum(HouseholdVietnam_2C$d1899 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d18_991 != '')
+for (i in c(1282:1292)){
+  print(sum(HouseholdVietnam_2C$d1899 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d1899 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d18_992 != '', na.rm = T)
+#OK
+#d2a_1:d2b_1:d17:d19
+x <- HouseholdVietnam_2C[,c(1,668,676,1112,1295)]
+#Some households answered to d19 while they had a practice (d17)
+#Some households answered to d19 while they had no crops
+HouseholdVietnam_2C$d19 <- as.character(HouseholdVietnam_2C$d19)
+HouseholdVietnam_2C$d19 <- ifelse(HouseholdVietnam_2C$d17 == 1 ,NA,HouseholdVietnam_2C$d19)
+HouseholdVietnam_2C$d19 <- ifelse(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2),NA,HouseholdVietnam_2C$d19)
+HouseholdVietnam_2C$d19 <- as.factor(HouseholdVietnam_2C$d19)
+#Some households had no practices but did not answered to d19 => ASK ENUM
+#d2a_1:d2b_1:d20:d21:d211-d2199
+x <- HouseholdVietnam_2C[,c(1,668,676,1296:1312)]
+# 1 household didn't answer to d20 while they have crops
+#3 households answered to d20 while they do not have crops
+HouseholdVietnam_2C$d20 <- as.character(HouseholdVietnam_2C$d20)
+HouseholdVietnam_2C$d20 <- ifelse(!is.na(HouseholdVietnam_2C$no_crop2) & is.na(HouseholdVietnam_2C$d20),0,HouseholdVietnam_2C$d20)
+HouseholdVietnam_2C$d20 <- ifelse(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2),NA,HouseholdVietnam_2C$d20)
+HouseholdVietnam_2C$d20 <- as.factor(HouseholdVietnam_2C$d20)
+#d211:d21_12:d21_121-d21_1211:d21_13
+#//
+#d212:d21_22:d21_221- d21_2211:d21_23
+sum(HouseholdVietnam_2C$d212 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d21_22 != '')
+for (i in c(1316:1326)){
+  print(sum(HouseholdVietnam_2C$d212 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d212 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d21_23 != '', na.rm = T)
+#OK
+#d213:d21_32:d21_321- d21_3211:d21_33
+sum(HouseholdVietnam_2C$d213 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d21_32 != '', na.rm = T)
+for (i in c(1330:1340)){
+  print(sum(HouseholdVietnam_2C$d213 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d213 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d21_33 != '', na.rm = T)
+#OK
+#d214:d21_42:d21_421- d21_4211:d21_43
+sum(HouseholdVietnam_2C$d214 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d21_42 != '', na.rm = T)
+for (i in c(1344:1354)){
+  print(sum(HouseholdVietnam_2C$d214 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d214 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d21_43 != '', na.rm = T)
+#OK
+#d215:d21_52:d21_521- d21_5211:d21_53
+#No household implemented this practice
+#d216:d21_62:d21_621- d21_6211:d21_63
+sum(HouseholdVietnam_2C$d216 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d21_62 != '')
+for (i in c(1372:1382)){
+  print(sum(HouseholdVietnam_2C$d216 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d216 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d21_63 != '', na.rm = T)
+#OK
+#d217:d21_72:d21_721- d21_7211:d21_73
+sum(HouseholdVietnam_2C$d217 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d21_72 != '')
+for (i in c(1386:1396)){
+  print(sum(HouseholdVietnam_2C$d217 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d217 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d21_73 != '', na.rm = T)
+#OK
+#d218:d21_82:d21_821- d21_8211:d21_83
+sum(HouseholdVietnam_2C$d218 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d21_82 != '')
+for (i in c(1400:1410)){
+  print(sum(HouseholdVietnam_2C$d218 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d218 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d21_83 != '', na.rm = T)
+#OK
+#d219:d21_92:d21_921- d21_9211:d21_93
+sum(HouseholdVietnam_2C$d219 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d21_92 != '')
+for (i in c(1414:1424)){
+  print(sum(HouseholdVietnam_2C$d219 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d219 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d21_93 != '', na.rm = T)
+#OK
+#d2110:d21_102:d21_1021- d21_10211:d21_103
+sum(HouseholdVietnam_2C$d2110 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d21_102 != '')
+for (i in c(1428:1438)){
+  print(sum(HouseholdVietnam_2C$d2110 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d2110 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d21_103 != '', na.rm = T)
+#OK
+#d2111:d21_112:d21_1121- d21_11211:d21_113
+sum(HouseholdVietnam_2C$d2111 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d21_112 != '')
+for (i in c(1442:1452)){
+  print(sum(HouseholdVietnam_2C$d2111 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d2111 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d21_113 != '', na.rm = T)
+#OK
+#d2112:d21_122:d21_1221- d21_12211:d21_123
+sum(HouseholdVietnam_2C$d2112 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d21_122_a != '')
+for (i in c(1456:1466)){
+  print(sum(HouseholdVietnam_2C$d2112 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d2112 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d21_123_a != '', na.rm = T)
+#OK
+#d2113:d21_132:d21_1321- d21_13211:d21_133
+sum(HouseholdVietnam_2C$d2113 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d21_132 != '')
+for (i in c(1470:1480)){
+  print(sum(HouseholdVietnam_2C$d2113 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d2113 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d21_133 != '', na.rm = T)
+#OK
+#d2114:d21_142:d21_1421- d21_14211:d21_143
+sum(HouseholdVietnam_2C$d2114 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d21_142 != '')
+for (i in c(1484:1494)){
+  print(sum(HouseholdVietnam_2C$d2114 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d2114 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d21_143 != '', na.rm = T)
+#OK
+#d2199:d21_992:d21_9921- d21_99211:d21_993
+sum(HouseholdVietnam_2C$d2199 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d21_992 != '')
+for (i in c(1498:1508)){
+  print(sum(HouseholdVietnam_2C$d2199 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d2199 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d21_993 != '', na.rm = T)
+#OK
+#d2a_1:d2b_1:d20:d22
+x <- HouseholdVietnam_2C[,c(1,668,676,1296,1511)]
+#Some households answered to d22 while they had no crops
+HouseholdVietnam_2C$d22 <- as.character(HouseholdVietnam_2C$d22)
+HouseholdVietnam_2C$d22 <- ifelse(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2),NA,HouseholdVietnam_2C$d22)
+HouseholdVietnam_2C$d22 <- as.factor(HouseholdVietnam_2C$d22)
+#Some households had no practices but did not answered to d22 => ASK ENUM
+#d2a_1:d2b_1:d24:d25
+x <- HouseholdVietnam_2C[,c(1,668,676,1513:1514)]
+#Some households answered to d24 while they had no crops
+HouseholdVietnam_2C$d24 <- as.character(HouseholdVietnam_2C$d24)
+HouseholdVietnam_2C$d24 <- ifelse(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2),NA,HouseholdVietnam_2C$d24)
+HouseholdVietnam_2C$d24 <- as.factor(HouseholdVietnam_2C$d24)
+#Some households answered yes to d24 but not to d25 => ASK ENUM
+#d2a_1:d2b_1:d2c_1:d26:d27:d271-d2799
+x <- HouseholdVietnam_2C[,c(17,668,676,1515:1531)]
+#Some households answered to d26 while they had no crops
+HouseholdVietnam_2C$d26 <- as.character(HouseholdVietnam_2C$d26)
+HouseholdVietnam_2C$d26 <- ifelse(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2),NA,HouseholdVietnam_2C$d26)
+HouseholdVietnam_2C$d26 <- as.factor(HouseholdVietnam_2C$d26)
+#Some households answered yes to d26 but not to d25 => ASK ENUM
+#d271:d27_11:d27_111-d27_1111:d27_12
+sum(HouseholdVietnam_2C$d271 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d27_11 != '')
+for (i in c(1534:1544)){
+  print(sum(HouseholdVietnam_2C$d271 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d271 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d27_12 != '', na.rm = T)
+#OK
+#d272:d27_21:d27_211- d27_2111:d27_22
+#No household implemented this practice
+#d273:d27_31:d27_311- d27_3111:d27_32
+sum(HouseholdVietnam_2C$d273 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d27_31 != '', na.rm = T)
+for (i in c(1562:1572)){
+  print(sum(HouseholdVietnam_2C$d272 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d273 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d27_32 != '', na.rm = T)
+#OK
+#d274:d27_41:d27_411- d27_4111:d27_42
+sum(HouseholdVietnam_2C$d274 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d27_41 != '', na.rm = T)
+for (i in c(1576:1586)){
+  print(sum(HouseholdVietnam_2C$d274 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d274 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d27_42 != '', na.rm = T)
+#OK
+#d275:d27_51:d27_511- d27_5111:d27_52
+sum(HouseholdVietnam_2C$d275 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d27_51 != '')
+for (i in c(1590:1600)){
+  print(sum(HouseholdVietnam_2C$d275 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d275 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d27_52 != '', na.rm = T)
+#OK
+#d276:d27_61:d27_611- d27_6111:d27_62
+sum(HouseholdVietnam_2C$d276 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d27_61 != '')
+for (i in c(1604:1614)){
+  print(sum(HouseholdVietnam_2C$d276 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d276 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d27_62 != '', na.rm = T)
+#OK
+#d277:d27_71:d27_711- d27_7111:d27_72
+sum(HouseholdVietnam_2C$d277 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d27_71 != '')
+for (i in c(1618:1628)){
+  print(sum(HouseholdVietnam_2C$d277 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d277 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d27_72 != '', na.rm = T)
+#OK
+#d278:d27_81:d27_811- d27_8111:d27_82
+sum(HouseholdVietnam_2C$d278 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d27_81 != '')
+for (i in c(1632:1642)){
+  print(sum(HouseholdVietnam_2C$d278 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d278 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d27_82 != '', na.rm = T)
+#OK
+#d279:d27_91:d27_911- d27_9111:d27_92
+sum(HouseholdVietnam_2C$d279 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d27_91 != '')
+for (i in c(1646:1656)){
+  print(sum(HouseholdVietnam_2C$d279 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d279 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d27_92 != '', na.rm = T)
+#OK
+#d2710:d27_101:d27_1011- d27_10111:d27_102
+sum(HouseholdVietnam_2C$d2710 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d27_101 != '')
+for (i in c(1660:1670)){
+  print(sum(HouseholdVietnam_2C$d2710 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d2710 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d27_102 != '', na.rm = T)
+#OK
+#d2711:d27_111:d27_1111- d27_11111:d27_112
+sum(HouseholdVietnam_2C$d2711 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d27_111_a != '', na.rm = T)
+for (i in c(1674:1684)){
+  print(sum(HouseholdVietnam_2C$d2711 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d2711 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d27_112_a != '', na.rm = T)
+#OK
+#d2712:d27_121:d27_1211- d27_12111:d27_122
+#No household implemented this practice
+#d2713:d27_131:d27_1311- d27_13111:d27_132
+sum(HouseholdVietnam_2C$d2713 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d27_131 != '', na.rm = T)
+for (i in c(1702:1712)){
+  print(sum(HouseholdVietnam_2C$d2713 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d2713 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d27_132 != '', na.rm = T)
+#OK
+#d2714:d27_141:d27_1411- d27_14111:d27_142
+sum(HouseholdVietnam_2C$d2714 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d27_141 != '', na.rm = T)
+for (i in c(1716:1726)){
+  print(sum(HouseholdVietnam_2C$d2714 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d2714 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d27_142 != '', na.rm = T)
+#OK
+#d2799:d27_991:d27_9911- d27_99111:d27_992
+sum(HouseholdVietnam_2C$d2799 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d27_991 != '')
+for (i in c(1730:1740)){
+  print(sum(HouseholdVietnam_2C$d2799 == 1, na.rm = T)-sum(!is.na(HouseholdVietnam_2C[,i])))
+}
+sum(HouseholdVietnam_2C$d2799 == 1, na.rm = T)-sum(HouseholdVietnam_2C$d27_992 != '', na.rm = T)
+#OK
+#d2a_1:d2b_1:d26:d28
+x <- HouseholdVietnam_2C[,c(1,668,676,1515,1743)]
+#Some households answered to d28 while they had no crops
+HouseholdVietnam_2C$d28 <- as.character(HouseholdVietnam_2C$d28)
+HouseholdVietnam_2C$d28 <- ifelse(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2),NA,HouseholdVietnam_2C$d28)
+HouseholdVietnam_2C$d28 <- as.factor(HouseholdVietnam_2C$d28)
+#Some households had no practices but did not answered to d28 => ASK ENUM
+#d2a_1:d2b_1:d30_1:d30_2:d30_21-d30_211
+x <- HouseholdVietnam_2C[,c(1,668,676,1745:1757)]
+#Some households answered to d30_1 while they had no crops
+#Some households answered yes to d30_1 while no answers to following questions
+HouseholdVietnam_2C$d30_1 <- as.character(HouseholdVietnam_2C$d30_1)
+HouseholdVietnam_2C$d30_1 <- ifelse(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2),NA,HouseholdVietnam_2C$d30_1)
+HouseholdVietnam_2C$d30_1 <- ifelse(is.na(HouseholdVietnam_2C$d30_21) & HouseholdVietnam_2C$d30_1 == 1,0,HouseholdVietnam_2C$d30_1)
+HouseholdVietnam_2C$d30_1 <- as.factor(HouseholdVietnam_2C$d30_1)
+#d2a_1:d2b_1:d30_3:d30_4:d30_41-d30_411
+x <- HouseholdVietnam_2C[,c(1,668,676,1758:1770)]
+#Some households answered to d30_3 while they had no crops
+#Some households answered yes to d30_3 while no answers to following questions
+HouseholdVietnam_2C$d30_3 <- as.character(HouseholdVietnam_2C$d30_3)
+HouseholdVietnam_2C$d30_3 <- ifelse(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2),NA,HouseholdVietnam_2C$d30_3)
+HouseholdVietnam_2C$d30_3 <- ifelse(is.na(HouseholdVietnam_2C$d30_41) & HouseholdVietnam_2C$d30_3 == 1,0,HouseholdVietnam_2C$d30_3)
+HouseholdVietnam_2C$d30_3 <- as.factor(HouseholdVietnam_2C$d30_3)
+#d2a_1:d2b_1:d30_5:d30_6:d30_61-d30_611
+x <- HouseholdVietnam_2C[,c(1,668,676,1771:1783)]
+#2 households answered to d30_5 while they have no crops
+HouseholdVietnam_2C$d30_5 <- as.character(HouseholdVietnam_2C$d30_5)
+HouseholdVietnam_2C$d30_5 <- ifelse(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2),NA,HouseholdVietnam_2C$d30_5)
+HouseholdVietnam_2C$d30_5 <- as.factor(HouseholdVietnam_2C$d30_5)
+#d2a_1:d2b_1:d32:d32_1:d32_11-d32_111
+x <- HouseholdVietnam_2C[,c(1,668,676,1784:1796)]
+#Some households answered to d32 while they had no crops
+#Some households answered yes to d32 while no answers to following questions
+HouseholdVietnam_2C$d32 <- as.character(HouseholdVietnam_2C$d32)
+HouseholdVietnam_2C$d32 <- ifelse(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2),NA,HouseholdVietnam_2C$d32)
+HouseholdVietnam_2C$d32 <- ifelse(is.na(HouseholdVietnam_2C$d32_11) & HouseholdVietnam_2C$d32 == 1,0,HouseholdVietnam_2C$d32)
+HouseholdVietnam_2C$d32 <- as.factor(HouseholdVietnam_2C$d32)
+#d2a_1:d2b_1:d32:d32_2
+x <- HouseholdVietnam_2C[,c(1,668,676,1784,1797)]
+#Some households answered to d32_2 while they had no crops
+HouseholdVietnam_2C$d32_2 <- as.character(HouseholdVietnam_2C$d32_2)
+HouseholdVietnam_2C$d32_2 <- ifelse(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2),NA,HouseholdVietnam_2C$d32_2)
+HouseholdVietnam_2C$d32_2 <- as.factor(HouseholdVietnam_2C$d32_2)
+#Some households had no practices but did not answered to d32_2 => ASK ENUM
+#d2a_1:d2b_1:d33_1:d33_10-d33_13
+x <- HouseholdVietnam_2C[,c(1,668,676,1799:1803)]
+#Some households answered to d33_1 while they had no crops
+for (i in 1799:1803){
+  HouseholdVietnam_2C[,i] <- as.character(HouseholdVietnam_2C[,i])
+  HouseholdVietnam_2C[,i] <- ifelse(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2),NA,HouseholdVietnam_2C[,i])
+  HouseholdVietnam_2C[,i] <- as.factor(HouseholdVietnam_2C[,i])
+}
+#d2a_1:d2b_1:d33_2 :d33_20:d33_23
+x <- HouseholdVietnam_2C[,c(1,668,676,1804:1808)]
+#Some households answered to d33_2 while they had no crops
+for (i in 1804:1808){
+  HouseholdVietnam_2C[,i] <- as.character(HouseholdVietnam_2C[,i])
+  HouseholdVietnam_2C[,i] <- ifelse(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2),NA,HouseholdVietnam_2C[,i])
+  HouseholdVietnam_2C[,i] <- as.factor(HouseholdVietnam_2C[,i])
+}
+#d2a_1:d2b_1:d33_3 :d33_30:d33_33
+x <- HouseholdVietnam_2C[,c(1,668,676,1809:1813)]
+#Some households answered to d33_3 while they had no crops
+for (i in 1809:1813){
+  HouseholdVietnam_2C[,i] <- as.character(HouseholdVietnam_2C[,i])
+  HouseholdVietnam_2C[,i] <- ifelse(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2),NA,HouseholdVietnam_2C[,i])
+  HouseholdVietnam_2C[,i] <- as.factor(HouseholdVietnam_2C[,i])
+}
+#d2a_1:d2b_1:d33_4:d33_40:d33_43
+x <- HouseholdVietnam_2C[,c(1,668,676,1814:1818)]
+#Some households answered to d33_4 while they had no crops
+for (i in 1814:1818){
+  HouseholdVietnam_2C[,i] <- as.character(HouseholdVietnam_2C[,i])
+  HouseholdVietnam_2C[,i] <- ifelse(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2),NA,HouseholdVietnam_2C[,i])
+  HouseholdVietnam_2C[,i] <- as.factor(HouseholdVietnam_2C[,i])
+}
+#d2a_1:d2b_1:d33_5 :d33_50:d33_53
+x <- HouseholdVietnam_2C[,c(1,668,676,1819:1823)]
+#Some households answered to d33_5 while they had no crops
+for (i in 1819:1823){
+  HouseholdVietnam_2C[,i] <- as.character(HouseholdVietnam_2C[,i])
+  HouseholdVietnam_2C[,i] <- ifelse(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2),NA,HouseholdVietnam_2C[,i])
+  HouseholdVietnam_2C[,i] <- as.factor(HouseholdVietnam_2C[,i])
+}
+#d2a_1:d2b_1:d33_6:d33_60:d33_63
+x <- HouseholdVietnam_2C[,c(1,668,676,1824:1828)]
+#Some households answered to d33_6 while they had no crops
+for (i in 1824:1828){
+  HouseholdVietnam_2C[,i] <- as.character(HouseholdVietnam_2C[,i])
+  HouseholdVietnam_2C[,i] <- ifelse(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2),NA,HouseholdVietnam_2C[,i])
+  HouseholdVietnam_2C[,i] <- as.factor(HouseholdVietnam_2C[,i])
+}
+#d2a_1:d2b_1:d33_7:d33_70:d33_73
+x <- HouseholdVietnam_2C[,c(1,668,676,1829:1833)]
+#Some households answered to d33_7 while they had no crops
+for (i in 1829:1833){
+  HouseholdVietnam_2C[,i] <- as.character(HouseholdVietnam_2C[,i])
+  HouseholdVietnam_2C[,i] <- ifelse(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2),NA,HouseholdVietnam_2C[,i])
+  HouseholdVietnam_2C[,i] <- as.factor(HouseholdVietnam_2C[,i])
+}
+#d2a_1:d2b_1:d33_8:d33_80:d33_83
+x <- HouseholdVietnam_2C[,c(1,668,676,1834:1838)]
+#Some households answered to d33_8 while they had no crops
+for (i in 1834:1838){
+  HouseholdVietnam_2C[,i] <- as.character(HouseholdVietnam_2C[,i])
+  HouseholdVietnam_2C[,i] <- ifelse(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2),NA,HouseholdVietnam_2C[,i])
+  HouseholdVietnam_2C[,i] <- as.factor(HouseholdVietnam_2C[,i])
+}
+#d2a_1:d2b_1:d33_9:d33_90:d33_93
+x <- HouseholdVietnam_2C[,c(1,668,676,1839:1843)]
+#Some households answered to d33_9 while they had no crops
+for (i in 1839:1843){
+  HouseholdVietnam_2C[,i] <- as.character(HouseholdVietnam_2C[,i])
+  HouseholdVietnam_2C[,i] <- ifelse(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2),NA,HouseholdVietnam_2C[,i])
+  HouseholdVietnam_2C[,i] <- as.factor(HouseholdVietnam_2C[,i])
+}
+#d2a_1:d2b_1:d33_10:d33_100:d33_103
+x <- HouseholdVietnam_2C[,c(1,668,676,1844:1848)]
+#Some households answered to d33_10 while they had no crops
+for (i in 1844:1848){
+  HouseholdVietnam_2C[,i] <- as.character(HouseholdVietnam_2C[,i])
+  HouseholdVietnam_2C[,i] <- ifelse(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2),NA,HouseholdVietnam_2C[,i])
+  HouseholdVietnam_2C[,i] <- as.factor(HouseholdVietnam_2C[,i])
+}
+#d2a_1:d2b_1:d33_11:d33_110:d33_113
+x <- HouseholdVietnam_2C[,c(1,668,676,1849:1853)]
+#Some households answered to d33_11 while they had no crops
+for (i in 1849:1853){
+  HouseholdVietnam_2C[,i] <- as.character(HouseholdVietnam_2C[,i])
+  HouseholdVietnam_2C[,i] <- ifelse(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2),NA,HouseholdVietnam_2C[,i])
+  HouseholdVietnam_2C[,i] <- as.factor(HouseholdVietnam_2C[,i])
+}
+#d2a_1:d2b_1:d34:d35
+x <- HouseholdVietnam_2C[,c(1,668,676,1854:1855)]
+#OK
+#d2a_1:d2b_1:d36:d361-d3699
+x <- HouseholdVietnam_2C[,c(1,668,676,1856:1867)]
+#Some households answered to d36 and associated answers while they had no crops
+for (i in 1856:1867){
+  HouseholdVietnam_2C[,i] <- as.character(HouseholdVietnam_2C[,i])
+  HouseholdVietnam_2C[,i] <- ifelse(is.na(HouseholdVietnam_2C$no_crop1) & is.na(HouseholdVietnam_2C$no_crop2),NA,HouseholdVietnam_2C[,i])
+  HouseholdVietnam_2C[,i] <- as.factor(HouseholdVietnam_2C[,i])
+}
+#e1:e2:e2_1:e2_99
+#OK
+#e1 :e2_1 :e3_1:e3_2
+x <- HouseholdVietnam_2C[,c(1,1869,1871,1886,1887)]
+#OK
+#e1 :e2_2 :e3_3:e3_4
+x <- HouseholdVietnam_2C[,c(1,1869,1872,1888,1889)]
+#OK
+#e1 :e2_3 :e3_5:e3_6
+x <- HouseholdVietnam_2C[,c(1,1869,1873,1890,1891)]
+#OK
+#e1 :e2_4 :e3_7:e3_8
+x <- HouseholdVietnam_2C[,c(1,1869,1874,1892,1893)]
+#OK
+#e1 :e2_5 :e3_9:e3_10
+x <- HouseholdVietnam_2C[,c(1,1869,1875,1894,1895)]
+#OK
+#e1 :e2_6 :e3_11
+x <- HouseholdVietnam_2C[,c(1,1869,1876,1896)]
+#OK
+#e1 :e2_7 :e3_12
+x <- HouseholdVietnam_2C[,c(1,1869,1877,1897)]
+#OK
+#e1 :e2_8 :e3_13
+x <- HouseholdVietnam_2C[,c(1,1869,1878,1898)]
+#OK
+#e1 :e2_9 :e3_14
+x <- HouseholdVietnam_2C[,c(1,1869,1879,1899)]
+#OK
+#e1 :e2_10 :e3_15
+x <- HouseholdVietnam_2C[,c(1,1869,1880,1900)]
+#OK
+#e1 :e2_11 :e3_16
+x <- HouseholdVietnam_2C[,c(1,1869,1881,1901)]
+#OK
+#e1 :e2_98 :e3_98
+x <- HouseholdVietnam_2C[,c(1,1869,1882,1902)]
+#OK
+#e1 :e2_99 :e3_99
+x <- HouseholdVietnam_2C[,c(1,1869,1883,1903)]
+#OK
+#e1:e4_1:e5_a:e5_b:e5_2:e5_1-e5_4:e5_5:b18_1:b19_1:b20_1:b20_10:b20_188:b21_1
+x <- HouseholdVietnam_2C[,c(1,1869,1904,1910:1911,1915:1918,1920,1922,1925:1935,1937)]
+#For 1 household, no information for e5_a while raising animals => ASK ENUM
+#e5_4:e5_41
+x <- HouseholdVietnam_2C[,c(1,1918,1919)]
+#For 1 household, no information for e41 while answered to e5_4 => ASK ENUM
 #e5_5:e5_51
 x <- HouseholdVietnam_2C[,c(1,1920,1921)]
-
-#HHID: 3048, 3045, 3035 the selling price is missing, REPLACE
-#As we cannot know their answer, we cannot solve this issue
-
+#OK
+#e1:e4_2:e6_a:e6_b:e6_1-e6_5:b18_2:b19_2:b20_2:b21_2
+x <- HouseholdVietnam_2C[,c(1,1869,1906,1938,1939,1943:1946,1948,1950,1953:1954,1956)]
+#OK
+#e6_4:e6_41
+x <- HouseholdVietnam_2C[,c(1,1946,1947)]
+#OK
+#e6_5:e6_51
+x <- HouseholdVietnam_2C[,c(1,1948,1949)]
+#For 1 household, no information for e6_51 while answered to e6_5 => ASK ENUM
+#e1:e4_3:e7_a:e7_b:e7_2:e7_1-e7_4:e7_5
+x <- HouseholdVietnam_2C[,c(1,1869,1908,1957,1958,1962,1965,1967)]
+#For 1 household, no information for e7_a while answered to e4_3 => ASK ENUM
+#e7_4:e7_41
+x <- HouseholdVietnam_2C[,c(1,1965,1966)]
+#OK
 #e7_5:e7_51
 x <- HouseholdVietnam_2C[,c(1,1967,1968)]
-
-#HHID: 3162,3147,3316 the selling price is missing, REPLACE
-#As we cannot know their answer, we cannot solve this issue
-
+#Many missing prices
+#As we cannot know their answer, we cannot solve this issue => ASK ENUM
+#e8:e9:e10
+x <- HouseholdVietnam_2C[,c(1,1969:1971)]
+#OK
+#e12_1:e12_2
+x <- HouseholdVietnam_2C[,c(1,1972:1973)]
+#OK
 #e12_3:e12_4
 x <- HouseholdVietnam_2C[,c(1,1974:1975)]
-
-#Some households declared 0,1 or 2 m2 of pasture, we remove it
-HouseholdVietnam_2C$e12_4 <- ifelse(HouseholdVietnam_2C$e12_4 < 3, NA, HouseholdVietnam_2C$e12_4)
-HouseholdVietnam_2C$e12_3 <- as.character(HouseholdVietnam_2C$e12_3)
-HouseholdVietnam_2C$e12_3 <- ifelse(HouseholdVietnam_2C$e12_3 == 'Yes' & is.na(HouseholdVietnam_2C$e12_4), 'No', HouseholdVietnam_2C$e12_3)
-HouseholdVietnam_2C$e12_3 <- as.factor(HouseholdVietnam_2C$e12_3)
-
+#OK
+#e12_5:e12_6
+x <- HouseholdVietnam_2C[,c(1,1976:1977)]
+#OK
+#e13:e13_1
+x <- HouseholdVietnam_2C[,c(1,1978:1979)]
+#OK
+#e2_1:e2_2:e16:e17:e18:e19:e191-e1999
+x <- HouseholdVietnam_2C[,c(1,1871,1872,1982:1996)]
+#For many households, information about raising system while they declare to raise nothing
+for (i in 1982:1996){
+  HouseholdVietnam_2C[,i] <- as.character(HouseholdVietnam_2C[,i])
+  HouseholdVietnam_2C[,i] <- ifelse(HouseholdVietnam_2C$e2_1 == 0 & HouseholdVietnam_2C$e2_2 ==  0,NA,HouseholdVietnam_2C[,i])
+  HouseholdVietnam_2C[,i] <- as.factor(HouseholdVietnam_2C[,i])
+}
+#e2_1:e2_2:e21:e22:e23:e24:e241-e2499
+x <- HouseholdVietnam_2C[,c(1,1871,1872,1998:2012)]
+#For many households, information about raising system while they declare to raise nothing
+for (i in 1998:2012){
+  HouseholdVietnam_2C[,i] <- as.character(HouseholdVietnam_2C[,i])
+  HouseholdVietnam_2C[,i] <- ifelse(HouseholdVietnam_2C$e2_1 == 0 & HouseholdVietnam_2C$e2_2 ==  0,NA,HouseholdVietnam_2C[,i])
+  HouseholdVietnam_2C[,i] <- as.factor(HouseholdVietnam_2C[,i])
+}
+#e2_1:e2_2:e25:e26
+x <- HouseholdVietnam_2C[,c(1,1871,1872,2014,2021)]
+#For many households, information about raising system while they declare to raise nothing
+for (i in 2014:2021){
+  HouseholdVietnam_2C[,i] <- as.character(HouseholdVietnam_2C[,i])
+  HouseholdVietnam_2C[,i] <- ifelse(HouseholdVietnam_2C$e2_1 == 0 & HouseholdVietnam_2C$e2_2 ==  0,NA,HouseholdVietnam_2C[,i])
+  HouseholdVietnam_2C[,i] <- as.factor(HouseholdVietnam_2C[,i])
+}
+#e25:e25_1:e25_11-e25_199
+x <- HouseholdVietnam_2C[,c(1,2014:2020)]
+#2 answers are missing at e25_1 => ASK ENUM
+#e26:e26_1
+x <- HouseholdVietnam_2C[,c(1,2021,2022)]
+#OK
+#e26:e27:e270-e272:e27a_1
+x <- HouseholdVietnam_2C[,c(1,2021,2023:2027)]
+#OK
+#e2_1:e2_2:e28
+x <- HouseholdVietnam_2C[,c(1,1871,1872,2031)]
+#For many households, information about raising system while they declare to raise nothing
+HouseholdVietnam_2C$e28 <- as.character(HouseholdVietnam_2C$e28)
+HouseholdVietnam_2C$e28 <- ifelse(HouseholdVietnam_2C$e2_1 == 0 & HouseholdVietnam_2C$e2_2 ==  0,NA,HouseholdVietnam_2C$e28)
+HouseholdVietnam_2C$e28 <- as.factor(HouseholdVietnam_2C$e28)
+#e2_1:e2_2:e29:e29_1:e29_11:e29_10
+x <- HouseholdVietnam_2C[,c(1,1871,1872,2032:2038)]
+#For many households, information about raising system while they declare to raise nothing
+for (i in 2032:2038){
+  HouseholdVietnam_2C[,i] <- as.character(HouseholdVietnam_2C[,i])
+  HouseholdVietnam_2C[,i] <- ifelse(HouseholdVietnam_2C$e2_1 == 0 & HouseholdVietnam_2C$e2_2 ==  0,NA,HouseholdVietnam_2C[,i])
+  HouseholdVietnam_2C[,i] <- as.factor(HouseholdVietnam_2C[,i])
+}
 #e2_3:e30:e31:e32:e33:e34:e341-e3499
-x <- HouseholdVietnam_2C[,c(17,1873,2042,2044:2058)]
-
+x <- HouseholdVietnam_2C[,c(1,1873,2042,2044:2058)]
 #For many households who raise pigs, no information about pig raising systems 
-#(Probably households with only adult pigs)
-#As we cannot know their answer, we cannot solve this issue
-
-#e2_8 :e44:e45:e46:e47:e48:e481-e4899
-x <- HouseholdVietnam_2C[,c(17,1878,2103,2105:2119)]
-
+#As we cannot know their answer, we cannot solve this issue => ASK ENUM
+#e30:e35:e36:e37:e38:e381-38499
+x <- HouseholdVietnam_2C[,c(1,2042,2059:2073)]
+#OK
+#e30:e39
+x <- HouseholdVietnam_2C[,c(1,2042,2075)]
+#OK
+#e39:e39_1:e39_11-e39_199
+x <- HouseholdVietnam_2C[,c(1,2075:2081)]
+#Some answers are missing at e39_1 => ASK ENUM
+#e30:e40
+x <- HouseholdVietnam_2C[,c(1,2042,2082)]
+#OK
+#e40:e40_1:e41:e410:e412
+x <- HouseholdVietnam_2C[,c(1,2082:2087)]
+#OK
+#e30:e42
+x <- HouseholdVietnam_2C[,c(1,2042,2092)]
+#OK
+#e42 :e43
+x <- HouseholdVietnam_2C[,c(1,2092:2093)]
+#OK
+#e43:e43_1:e43_11-e43_10
+x <- HouseholdVietnam_2C[,c(1,2093:2098)]
+#OK
+#e2_8:e44:e45:e46:e47:e48:e481-e4899
+x <- HouseholdVietnam_2C[,c(1,1878,2103,2105:2119)]
 #For some households we have no information about their raising systems
-#As we cannot know their answer, we cannot solve this issue
+#As we cannot know their answer, we cannot solve this issue => ASK ENUM
 #For other households, there are information but they are no raising chickens, we remove these informations
 for (i in c(2072,2074:2088)){
   HouseholdVietnam_2C[,i] <- as.character(HouseholdVietnam_2C[,i])
   HouseholdVietnam_2C[,i] <- ifelse(HouseholdVietnam_2C$e2_8 == 0, '', HouseholdVietnam_2C[,i])
   HouseholdVietnam_2C[,i] <- as.factor(HouseholdVietnam_2C[,i])
 }
-
-#e44:e49:e50:e51:e52:e521-e5299:e53:e54:e56
-x <- HouseholdVietnam_2C[,c(17,2103,2120:2134,2136,2143,2154)]
-
+#e2_8:e44:e49:e50:e51:e52:e521-e5299:e53:e54:e56
+x <- HouseholdVietnam_2C[,c(1,1878,2103,2120:2134,2136,2143,2154)]
 #For some households we have no information about their raising systems
-#As we cannot know their answer, we cannot solve this issue
+#As we cannot know their answer, we cannot solve this issue => ASK ENUM
 #For other households, there are information but they are no raising pigs, we remove these informations
 for (i in c(2089:2103,2105,2111,2113)){
   HouseholdVietnam_2C[,i] <- as.character(HouseholdVietnam_2C[,i])
   HouseholdVietnam_2C[,i] <- ifelse(HouseholdVietnam_2C$e2_8 == 0, '', HouseholdVietnam_2C[,i])
   HouseholdVietnam_2C[,i] <- as.factor(HouseholdVietnam_2C[,i])
 }
-
-
+#e53:e53_1:e53_11-e53_199
+x <- HouseholdVietnam_2C[,c(1,2136:2142)]
+#OK
+#e54:e54_1:e55:e550-e552
+x <- HouseholdVietnam_2C[,c(1,2143:2148)]
+#OK
+#e56:e57
+x <- HouseholdVietnam_2C[,c(1,2154,2155)]
+#OK
+#e57:e57_1:e57_11-e57_10
+x <- HouseholdVietnam_2C[,c(1,2155:2160)]
+#OK
+#e2_1,e2_2,e58
+x <- HouseholdVietnam_2C[,c(1,1871,1872,2165)]
+#OK
+#e58:e58_1:e58_11-e58_112
+x <- HouseholdVietnam_2C[,c(1,2165:2178)]
+#OK
+#e1,e59
+x <- HouseholdVietnam_2C[,c(1,1869,2179)]
+#OK
+#e59:e59_1:e59_11:e59_112
+x <- HouseholdVietnam_2C[,c(1,2179:2192)]
+#OK
+#e1:e60
+x <- HouseholdVietnam_2C[,c(1,1869,2193)]
+#OK
+#h4_1:h4_11-h4_188
+x <- HouseholdVietnam_2C[,c(1,2210:2216)]
+#OK
 
 
 ## 4.2C Data cleaning for "HouMemberVietnam_2"
@@ -6272,6 +6862,17 @@ HouMemberVietnam_2C$pid <- paste(HouMemberVietnam_2C$hhid_re1,HouMemberVietnam_2
 #Check again the duplicates: 
 count_if("TRUE",duplicated(HouMemberVietnam_2C$pid))
 
+# # # b. Corresponding fields
+#Everything is ok in the table, we'll just check if number of household members
+#is corresponding with the other table
+x <- dplyr::count(HouMemberVietnam_2C, hhid_re1)
+y <- HouseholdVietnam_2C[,c(1,59)]
+G <- merge(x, y, by.x = "hhid_re1", by.y = "o9", all.x = T, all.y= T, sort = TRUE)
+G$check <- G$n - G$a0
+#Some households have different answers between a0 and the number of household members they declared => ASK ENUM
+#(HHid: 716,507,174,388,399,400,780,100,126,18,73,106,246)
+
+
 ## 4.3 Data cleaning for "ClowlandVietnam_2C"
 
 # # #a. Duplicates
@@ -6298,8 +6899,25 @@ DumReal <- ClowlandVietnam_2C[ClowlandVietnam_2C$pid %in% idDup,]
 ClowlandVietnam_2C$d2_133 <- as.character(ClowlandVietnam_2C$d2_133)
 ClowlandVietnam_2C$d2_133 <- ifelse(ClowlandVietnam_2C$d2_13e == "Spring onion", "Tuber", ClowlandVietnam_2C$d2_133)
 ClowlandVietnam_2C$d2_133 <- as.factor(ClowlandVietnam_2C$d2_133)
-
 #Check amount of seeds according to Ky excel file
+
+# Corrections from outlier report
+#d2_137 '8888888', '888888', '88888' values
+ClowlandVietnam_2C$d2_137 <- as.character(ClowlandVietnam_2C$d2_137)
+ClowlandVietnam_2C$d2_137 <- ifelse(ClowlandVietnam_2C$d2_137 == 8888888, NA, ClowlandVietnam_2C$d2_137)
+ClowlandVietnam_2C$d2_137 <- ifelse(ClowlandVietnam_2C$d2_137 == 888888, NA, ClowlandVietnam_2C$d2_137)
+ClowlandVietnam_2C$d2_137 <- ifelse(ClowlandVietnam_2C$d2_137 == 88888, NA, ClowlandVietnam_2C$d2_137)
+ClowlandVietnam_2C$d2_137 <- as.factor(ClowlandVietnam_2C$d2_137)
+
+# # #c. Corresponding fields
+#Everything is ok in the table, we'll just check if number of crops
+#is corresponding with the other table
+x <- dplyr::count(ClowlandVietnam_2C, hhid_re2)
+y <- HouseholdVietnam_2C[,c(1,668)]
+G <- merge(x, y, by.x = "hhid_re2", by.y = "o9", all.x = T, all.y= T, sort = TRUE)
+G$check <- G$n - G$no_crop1
+#Some households have different answers between nocrop1 and the number of lowland crops they declared => ASK ENUM
+#(HHid: 100,126,174,402,507,512,716,106)
 
 
 ## 4.4 Data cleaning for "CuplandVietnam_2"
@@ -6318,6 +6936,17 @@ Duplic <- rownames(Dupli)
 CuplandVietnam_2 <- CuplandVietnam_2[!rownames(CuplandVietnam_2) %in% Duplic,]
 #Check again the duplicates: 
 count_if("TRUE",duplicated(CuplandVietnam_2$pid))
+
+# # #b. Corresponding fields
+#Everything is ok in the table, we'll just check if number of crops
+#is corresponding with the other table
+x <- dplyr::count(CuplandVietnam_2, hhid_re3)
+y <- HouseholdVietnam_2C[,c(1,676)]
+G <- merge(x, y, by.x = "hhid_re3", by.y = "o9", all.x = T, all.y= T, sort = TRUE)
+G$check <- G$n - G$no_crop2
+#Some households have different answers between nocrop1 and the number of lowland crops they declared => ASK ENUM
+#(HHid: 512,716,507,400,402,780,388,399)
+
 
 
 #We add the labels

@@ -5074,26 +5074,22 @@ CuplandLaos_2 <- copy_labels(CuplandLaos_2, CuplandLaos)
 HouseholdLaos_2C$o11 <- as.character(HouseholdLaos_2C$o11)
 HouseholdLaos_2C$o11 <- ifelse(HouseholdLaos_2C$o11 == '', "Both man and woman", HouseholdLaos2$o11)
 HouseholdLaos_2C$o11 <- as.factor(HouseholdLaos_2C$o11)
-HouseholdLaos_2C$o11 <- as.factor(HouseholdLaos_2C$o11)
 
 #Four households have extreme surprised number of plots rented-in (at d9_2), we check
 x <- HouseholdLaos_2C[HouseholdLaos_2C$d9_2 >= 100,]
 HouseholdLaos_2C$d9_2 <- ifelse(HouseholdLaos_2C$d9_2 > 100, NA,HouseholdLaos_2C$d9_2)
 
-x <- ClowlandLaos_2C[,c(2,8,10:12)]
 
-#For 3rd most important animal, I found selling price/kg (e7_41) of pig, goat, chicken 
-#below surprise higher than that at other households. Please check and validate,
-#I assume that enumerator asked selling price for a pig or for a flock of chickens
-# - - -> Solved through outlier report
+#Outlier report
+#d3_2
+HouseholdLaos_2C$d3_2 <- as.character(HouseholdLaos_2C$d3_2)
+HouseholdLaos_2C$d3_2 <- ifelse(HouseholdLaos_2C$d3_2 > 1000, NA, HouseholdLaos2$d3_2)
+HouseholdLaos_2C$d3_2 <- as.factor(HouseholdLaos_2C$d3_2)
 
-#There are some outliers at area of private land for growing forage (e12_1) one household had 
-#area around 4 m2 (hhid: 3458) and 2 hhs had area equal 500 000 m2 (hhid: 3509, 3610)
-# - - -> Solved through outlier report
-
-#Similarly, we have 6 households with nature pasture area from 0 to 5 m2 (hhid: 3178, 3262,
-#3458, 3542, 3546, 3560). Please check and confirm
-# - - -> Solved through outlier report
+#e6_a
+HouseholdLaos_2C$e6_a <- as.character(HouseholdLaos_2C$e6_a)
+HouseholdLaos_2C$e6_a <- ifelse(HouseholdLaos_2C$e6_a > 5, NA, HouseholdLaos2$e6_a)
+HouseholdLaos_2C$e6_a <- as.factor(HouseholdLaos_2C$e6_a)
 
 
 # # #c. Corresponding fields
@@ -6042,6 +6038,12 @@ ClowlandLaos_2C$d2_132 <- as.numeric(ClowlandLaos_2C$d2_132)
 #others are 1000 at d2_137.
 ClowlandLaos_2C$d2_137 <- ifelse(ClowlandLaos_2C$d2_137 > 1000000, NA,ClowlandLaos_2C$d2_137)
 
+#d2_137, too high value
+ClowlandLaos_2C$d2_137 <- as.numeric(ClowlandLaos_2C$d2_137)
+ClowlandLaos_2C$d2_137 <- ifelse(ClowlandLaos_2C$d2_137 > 500000, NA, ClowlandLaos_2C$d2_137)
+ClowlandLaos_2C$d2_137 <- as.numeric(ClowlandLaos_2C$d2_137)
+
+
 # # #c. Corresponding fields
 #Everything is ok in the table, we'll just check if number of crops
 #is corresponding with the other table
@@ -6056,7 +6058,7 @@ HouseholdLaos_2C[HouseholdLaos_2C$o9 == 3261, 625] <-  4
 HouseholdLaos_2C[HouseholdLaos_2C$o9 == 3552, 625] <-  1
 # For following households, we know the number of households members but no details on them
 #HHID: 3019, 3303, 3340, 3368, 3550, 3558, 3565
-G$check <- G$n - G$no_crop2
+G$check <- G$n - G$no_crop1
 #Some households have different answers between nocrop1 and the number of lowland crops they declared
 #(HHid: 3444,3437,3027,3402,3442,3450,3542,3561,3610,3017,3308,3342, 3347,3544,3560)
 
@@ -6097,6 +6099,22 @@ CuplandLaos_2$d2_23e <- str_replace(CuplandLaos_2$d2_23e, "ginger", "Ginger, rhi
 CuplandLaos_2$d2_23e <- str_replace(CuplandLaos_2$d2_23e, "Other orchards crop", "Other fruit crop")
 summary(as.factor(CuplandLaos_2$d2_23e))
 
+# # #Outliers
+#d2_235, too high value
+CuplandLaos_2$d2_235 <- as.numeric(CuplandLaos_2$d2_235)
+CuplandLaos_2$d2_235 <- ifelse(CuplandLaos_2$d2_235 > 100000, NA, CuplandLaos_2$d2_235)
+CuplandLaos_2$d2_235 <- as.numeric(CuplandLaos_2$d2_235)
+
+#d2_236, too high value
+CuplandLaos_2$d2_236 <- as.numeric(CuplandLaos_2$d2_236)
+CuplandLaos_2$d2_236 <- ifelse(CuplandLaos_2$d2_236 > 100000, NA, CuplandLaos_2$d2_236)
+CuplandLaos_2$d2_236 <- as.numeric(CuplandLaos_2$d2_236)
+
+#d2_237, too high value
+CuplandLaos_2$d2_237 <- as.numeric(CuplandLaos_2$d2_237)
+CuplandLaos_2$d2_237 <- ifelse(CuplandLaos_2$d2_237 > 500000, NA, CuplandLaos_2$d2_237)
+CuplandLaos_2$d2_237 <- as.numeric(CuplandLaos_2$d2_237)
+
 # # #c. Corresponding fields
 #Everything is ok in the table, we'll just check if number of crops
 #is corresponding with the other table
@@ -6114,8 +6132,6 @@ HouseholdLaos_2C[HouseholdLaos_2C$o9 == 3444, 633] <-  1
 G$check <- G$n - G$no_crop2
 #Some households have different answers between nocrop1 and the number of lowland crops they declared
 #(HHid: 3017,3552,3541,3560,3450,3544,3557,3561)
-
-
 
 #We move o9 at the 1st column
 HouseholdLaos_2C <- HouseholdLaos_2C %>% relocate(o9, .before = start_time)

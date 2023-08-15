@@ -6687,7 +6687,7 @@ x <- dplyr::count(HouMemberCambodia_2C, hhid_re1)
 y <- HouseholdCambodia_2C[,c(1,59)]
 G <- merge(x, y, by.x = "hhid_re1", by.y = "o9", all.x = T, all.y= T, sort = TRUE)
 G$check <- G$n - G$a0
-#Some households have different answers between a0 and the number of household members they declared
+#Some households have different answers between a0 and the number of household members they declared => ASK ENUM
 #(HHid: 2179, 2031, 2222, 2283, 2686, 2026, 2153)
 
 
@@ -6727,7 +6727,7 @@ x <- dplyr::count(ClowlandCambodia_2C, hhid_re2)
 y <- HouseholdCambodia_2C[,c(1,590)]
 G <- merge(x, y, by.x = "hhid_re2", by.y = "o9", all.x = T, all.y= T, sort = TRUE)
 G$check <- G$n - G$no_crop1
-#Some households have different answers between nocrop1 and the number of lowland crops they declared
+#Some households have different answers between nocrop1 and the number of lowland crops they declared => ASK ENUM
 #(HHid: 2167,2196,2220,2233,2235,2255,2270,2274,2275,2276,2279,2670,2679,2686,2689,2692)
 
 
@@ -6770,7 +6770,7 @@ x <- dplyr::count(CuplandCambodia_2, hhid_re3)
 y <- HouseholdCambodia_2C[,c(1,600)]
 G <- merge(x, y, by.x = "hhid_re3", by.y = "o9", all.x = T, all.y= T, sort = TRUE)
 G$check <- G$n - G$no_crop2
-#Some households have different answers between nocrop1 and the number of lowland crops they declared
+#Some households have different answers between nocrop1 and the number of lowland crops they declared => ASK ENUM
 #(HHid: 2179)
 
 ## 4.5 Data cleaning for "HomegardenCambodia_2"
