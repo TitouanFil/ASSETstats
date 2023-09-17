@@ -10,6 +10,7 @@ library(ExcelFunctionsR)
 library(corrplot)
 library(hrbrthemes)
 library(rstatix)
+library(stringr)
 
 #WARNING: NA To be considered
 
@@ -31,8 +32,8 @@ HouMemberVietnam_2C <- readRDS("HouMemberVietnam_2C.rds")
 #Limits: does not really represent access to NTFP as maybe longer for some households
   #Column 2731
 
+
 #Script for all crops 
-{
   #Lowland part
   #First we turn upland and lowland data to wide format (Duplicate alert = Normal,
   #we had no time to take care of it yet)
@@ -43,7 +44,7 @@ HouMemberVietnam_2C <- readRDS("HouMemberVietnam_2C.rds")
   dlowc2wide <- reshape(dlowc2, direction = "wide", idvar = "pid", timevar = "d2_13e",v.names= c("d2_132"))
   lowlandC <- dlowc2wide %>%
     group_by(o9) %>%
-    summarize(across(3:58, sum, na.rm = T))
+    dplyr::summarize(across(3:58, sum, na.rm = T))
   #Upland part
   dupc2 <- CuplandVietnam_2C[,c(1,2,3,8,10)]
   dupc2$d2_232 <- as.character(dupc2$d2_232)
@@ -52,7 +53,7 @@ HouMemberVietnam_2C <- readRDS("HouMemberVietnam_2C.rds")
   dupc2wide <- reshape(dupc2, direction = "wide", idvar = "pid", timevar = "d2_23e",v.names= c("d2_232"))
   uplandC <- dupc2wide %>%
     group_by(o9) %>%
-    summarize(across(3:40, sum, na.rm = T))
+    dplyr::summarize(across(3:40, sum, na.rm = T))
   HouseholdVietnam_2C <- join(HouseholdVietnam_2C, lowlandC, by = "o9")
   HouseholdVietnam_2C <- join(HouseholdVietnam_2C, uplandC, by = "o9")
   #3.2 Paddy area (ha)
@@ -67,29 +68,25 @@ HouMemberVietnam_2C <- readRDS("HouMemberVietnam_2C.rds")
                                                               2801,2804,2805,2807,2811,2815,2817:2819,2821)], na.rm = T)
   ## 3.6 Vegetables area (ha): total area - NOT USED ANYMORE
   HouseholdVietnam_2C$'6.Vegetables' <- rowSums(HouseholdVietnam_2C[,c(2733,2735,2737,2740,2741,2745,2746,2748:2760,2762:2766,
-                                                                   2768,2769,2771:2775,2777,2779:2781,2783,2784,2792,2799,
-                                                                   2800,2802,2803,2806,2809,2810,2812,2813,2814,
-                                                                   2816,2822,2824)], na.rm = T)
+                                                                   2768,2769,2771:2775,2777,2779:2781,2783,2784,
+                                                                   2800,2802,2810,2812,2813,2816,2822,2824)], na.rm = T)
   
   ## 3.7 Tea area (ha)
   HouseholdVietnam_2C$'7.Tea' <- rowSums(HouseholdVietnam_2C[,c(2736,2794)], na.rm = T)
-  }
+
   
 #Columns 2826:2831
   
-  ## 3.8 Nb of cattle heads
+  ## 3.8 Nb of cattle & buffalo heads
   HouseholdVietnam_2C$Calf <- HouseholdVietnam_2C[,1889]/2
-  HouseholdVietnam_2C$'8.Cattle' <- rowSums(HouseholdVietnam_2C[,c(1888,2832)], na.rm = T)
-  #Column 2833
-  
-  ## 3.9 Nb of buffalo heads 
   HouseholdVietnam_2C$CalfBuff <- HouseholdVietnam_2C[,1887]/2
-  HouseholdVietnam_2C$'9.Buffalo' <- rowSums(HouseholdVietnam_2C[,c(1886,2834)], na.rm = T)
-  #Column 2835
+  HouseholdVietnam_2C$'CattleBuff' <- rowSums(HouseholdVietnam_2C[,c(1886,1888,2832,2833)], na.rm = T)
+  #Column 2834
 
-  ## 3.10 Nb of pig heads
+  ## 3.10 Nb of pig & goat heads
   HouseholdVietnam_2C$Piglet <- HouseholdVietnam_2C[,1891]/2
-  HouseholdVietnam_2C$'10.Pig' <- rowSums(HouseholdVietnam_2C[,c(1890,2836)], na.rm = T)
+  HouseholdVietnam_2C$Kid <- HouseholdVietnam_2C[,1893]/2
+  HouseholdVietnam_2C$'PigGoat' <- rowSums(HouseholdVietnam_2C[,c(1890,1892,2835,2836)], na.rm = T)
   #Column 2837
   
   ## 3.11 Nb of poultry
@@ -138,15 +135,44 @@ HouseholdVietnam_2C <- join(HouseholdVietnam_2C, list, by = "village_eng_preload
 
 #Column 2840
 
+#3.16 Number of active household members
+HouMemberVietnam_2C$a6 <- as.numeric(HouMemberVietnam_2C$a6)
+Active <- HouMemberVietnam_2C %>% dplyr::filter(a6 == 1 | a6 == 2 | a6 == 3 |
+                                               a6 == 4 | a6 == 5 | a6 == 6 |
+                                               a6 == 7 | a6 == 9 | a6 == 11)
+Active <- Active %>% dplyr::count(hhid_re1)
+colnames(Active)[1] <- "o9"
+colnames(Active)[2] <- "Active"
+HouseholdVietnam_2C <- join(HouseholdVietnam_2C, Active, by = "o9")
+x <- unique(HouseholdVietnam_2C$o9)
+y <- unique(HouMemberVietnam_2C$hhid_re1)
+z <- intersect(x,y)
+a <- setdiff(x,z)
+HouseholdVietnam_2C[,2841] <- ifelse(is.na(HouseholdVietnam_2C[,2841]) & !HouseholdVietnam_2C$o9 %in% a,
+                                  0,HouseholdVietnam_2C[,2841])
+#Column 2841
+
   ##3.14 Number of household members working on the farm
-  FarmW <- HouMemberVietnam_2C %>% dplyr::filter(a6 == 1)
-  FarmW <- FarmW %>% dplyr::count(hhid_re1)
-  colnames(FarmW)[1] <- "o9"
-  colnames(FarmW)[2] <- "14.FarmW"
-  HouseholdVietnam_2C <- join(HouseholdVietnam_2C, FarmW, by = "o9")
-  HouseholdVietnam_2C[,2841] <- ifelse(is.na(HouseholdVietnam_2C[,2841]),'0',HouseholdVietnam_2C[,2841])
+FarmW1 <- HouMemberVietnam_2C %>% dplyr::filter(a6 == 1)
+FarmW1 <- FarmW1 %>% dplyr::count(hhid_re1)
+colnames(FarmW1)[1] <- "o9"
+colnames(FarmW1)[2] <- "FarmW1"
+HouseholdVietnam_2C <- join(HouseholdVietnam_2C, FarmW1, by = "o9")
+FarmW2 <- HouMemberVietnam_2C %>% dplyr::filter(a7 == 1)
+FarmW2 <- FarmW2 %>% dplyr::count(hhid_re1)
+colnames(FarmW2)[1] <- "o9"
+colnames(FarmW2)[2] <- "FarmW2"
+HouseholdVietnam_2C <- join(HouseholdVietnam_2C, FarmW2, by = "o9")
+HouseholdVietnam_2C$FarmW1 <- as.numeric(HouseholdVietnam_2C$FarmW1)
+HouseholdVietnam_2C$FarmW2 <- as.numeric(HouseholdVietnam_2C$FarmW2)
+HouseholdVietnam_2C$FarmW <- ifelse(!is.na(HouseholdVietnam_2C$FarmW1),HouseholdVietnam_2C$FarmW1,
+                                 0) + ifelse(!is.na(HouseholdVietnam_2C$FarmW2),
+                                             (HouseholdVietnam_2C$FarmW2/2),0)
+HouseholdVietnam_2C$FarmW <- ifelse(is.na(HouseholdVietnam_2C$FarmW1) & is.na(HouseholdVietnam_2C$FarmW2), NA, HouseholdVietnam_2C$FarmW)
+HouseholdVietnam_2C[,2844] <- ifelse(is.na(HouseholdVietnam_2C[,2844]) & !HouseholdVietnam_2C$o9 %in% a,
+                                  0,HouseholdVietnam_2C[,2844])
   
-  #Column 2841
+  #Column 2844
 
   ##3.15 Total number of household members
   #Column 59
@@ -168,73 +194,85 @@ HouseholdVietnam_2C <- join(HouseholdVietnam_2C, list, by = "village_eng_preload
   ifelse(!is.na(HouseholdVietnam_2C$b5_3),HouseholdVietnam_2C$b5_3,0)
 #WARNING: It is possible that some households earn non-farm income but not as one of the 
 #first source of revenue, it is then not considered here
-
-#2842                
+#2845                
 
   ##3.17 % of hh members that migrate
   Migr <- HouMemberVietnam_2C %>% dplyr::filter(a10 == 1)
   Migr <- Migr %>% dplyr::count(hhid_re1)
   colnames(Migr)[1] <- "o9"
-  colnames(Migr)[2] <- "17.%Migr"
+  colnames(Migr)[2] <- "Migr"
   HouseholdVietnam_2C <- join(HouseholdVietnam_2C, Migr, by = "o9")
-  HouseholdVietnam_2C$'17.%Migr' <- as.numeric(HouseholdVietnam_2C$'17.%Migr')
-  HouseholdVietnam_2C$'17.%Migr' <- HouseholdVietnam_2C$'17.%Migr' / HouseholdVietnam_2C$a0*100
-  HouseholdVietnam_2C[,2843] <- ifelse(is.na(HouseholdVietnam_2C[,2843]),'0',HouseholdVietnam_2C[,2843])
-  #Column 2843
+  HouseholdVietnam_2C$Migr <- as.numeric(HouseholdVietnam_2C$Migr)
+  HouseholdVietnam_2C$Migr2 <- ifelse(is.na(HouseholdVietnam_2C$a14),0,HouseholdVietnam_2C$a14) +
+    ifelse(is.na(HouseholdVietnam_2C$Migr),0,HouseholdVietnam_2C$Migr)
+  HouseholdVietnam_2C$Migr2 <- HouseholdVietnam_2C$Migr2 / HouseholdVietnam_2C$Active
+  HouseholdVietnam_2C[,2847] <- ifelse(is.na(HouseholdVietnam_2C[,2847]) & !HouseholdVietnam_2C$o9 %in% a,
+                                    0,HouseholdVietnam_2C[,2847])
+  HouseholdVietnam_2C$Migr2 <- ifelse(HouseholdVietnam_2C$Migr2 >= 1 | HouseholdVietnam_2C$Migr2 == 'inf',0.75,HouseholdVietnam_2C$Migr2)
+  #Column 2847
   
   ##3.18 Nr of hired labor
   #Column 1855
   
   ##4. Final Table creation
-  VarPCA <- HouseholdVietnam_2C[,c(23,32,2731,2826:2831,2833,2835,2837:2841,59,2842,2843,1855)]
-  colnames(VarPCA)[c(15,17,20)] <- c("13.DistanceD","15.HouM","18.HiredW")
-  for (i in 3:20){
+  VarPCA <- HouseholdVietnam_2C[,c(1,23,32,1855,2731,2826:2831,2834,2837,2839,2840,2841,2844,2845,2847)]
+  colnames(VarPCA) <- c("ID","Province","Village","1.HLabor","2.NTFP","3.Paddy","4.Maize","5.Cassava",
+                        "6.Fruit","7.Vegetables","8.Tea","9.CattleBuff","10.PigGoat",
+                        "11.LU","12.DistanceP","13.Active","14.FarmW","15.%incNF","16.%Migr")
+  for (i in c(4,18)){
         VarPCA[,i] <- ifelse(is.na(VarPCA[,i]),'0',VarPCA[,i])
         VarPCA[,i] <- as.numeric(VarPCA[,i])
   }
   #We split the table depending on the province
-  PCAMC <- VarPCA[VarPCA$province_eng_preload == 'Son La province',]
-  PCADB <- VarPCA[VarPCA$province_eng_preload == 'Dien Bien province',]
+  PCAMC <- VarPCA[VarPCA$Province == 'Son La province',]
+  PCADB <- VarPCA[VarPCA$Province == 'Dien Bien province',]
+  # Removing of households without land or animals
+  #Crops / Land
+  CropCheck <- HouseholdVietnam_2C[,c(1,661:668,676,1870,1886:1903)]
+  #No household with neither crops nor animals
 
   #5. Descriptive statistics
   {
   #Son La province
   #Summary statistics
-  summary(PCAMC[,c(4:10,12:15,17:20)])
+  summary(PCAMC[,c(4:18)])
   #Histogramm for each variable
-  for (i in c(4:10,12:15,17:20)){
+  for (i in c(4:18)){
     x <- ggplot(PCAMC, aes(x= PCAMC[,i])) + geom_histogram(binwidth = max(PCAMC[,i],na.rm = TRUE)/20)+
       ggtitle(colnames(PCAMC)[i])+
       xlab("number")
     print(x)
   }
   #Matrix of correlation
-  res <- cor(PCAMC[,c(4:10,12:15,17:20)])
-  round(res, 2)
-  corrplot(res, type = "upper", 
-         tl.col = "black", tl.srt = 45)
+    res <- cor(PCAMC[,c(4:18)], use="pairwise.complete.obs")
+    round(res, 2)
+    corrplot(res, type = "upper", 
+             tl.col = "black", tl.srt = 45)
 
   #Dien Bien province
   #Summary statistics
-  summary(PCADB[,c(3:6,8,10:18,20)])
+  summary(PCADB[,c(4:18)])
   #Histogramm for each variable
-  for (i in c(3:6,8,10:18,20)){
+  for (i in c(4:18)){
     x <- ggplot(PCADB, aes(x= PCADB[,i])) + geom_histogram(binwidth = max(PCADB[,i],na.rm = TRUE)/20)+
       ggtitle(colnames(PCADB)[i])+
       xlab("number")
     print(x)
   }
   #Matrix of correlation
-  res <- cor(PCADB[,c(3:6,8,10:18,20)])
+  res <- cor(PCADB[,c(4:10,12:18)], use="pairwise.complete.obs")
   round(res, 2)
-  corrplot(res, type = "upper", order = "hclust", 
-          tl.col = "black", tl.srt = 45)
+  corrplot(res, type = "upper", 
+           tl.col = "black", tl.srt = 45)
   }
   
   ## 7. PCA
   ## 7.1 PCA 
   #PCA - Moc Chau
-  res.pca <- PCA(PCAMC[,c(4:10,12:15,17:20)], scale.unit = T, ncp = 12, graph = TRUE)
+  PCAMC = PCAMC[PCAMC$ID != 610,]
+  PCAMC = PCAMC[PCAMC$ID != 606,]
+  res.pca <- PCA(PCAMC[,c(1:2,4:18)], scale.unit = T, ncp = 15, graph = TRUE,
+                 quali.sup = c("ID","Province"))
   # Scale.unit: une valeur logique. Si TRUE, les donn?es sont standardis?es/normalis?es avant l'analyse.
   # Ncp: nombre de dimensions conserv?es dans les r?sultats finaux.
   # Graph: une valeur logique. Si TRUE un graphique est affich?.
@@ -242,36 +280,22 @@ HouseholdVietnam_2C <- join(HouseholdVietnam_2C, list, by = "village_eng_preload
   contrib <- as.data.frame(res.pca$var$contrib)
   #Get eigen values
   eig.val <- as.data.frame(get_eigenvalue(res.pca))
-  eig.val <- eig.val[c(1:16),]
-  #Merge it
-  contrib <- rbind(contrib,eig.val$eigenvalue)
-  contrib$contribTot <- 1
-  for (i in 1:(nrow(contrib)-1)){
-    contrib[i,17] <- contrib[i,1]*contrib[24,1]+contrib[i,2]*contrib[24,2]+
-      contrib[i,3]*contrib[24,3]+contrib[i,4]*contrib[24,4]+
-      contrib[i,5]*contrib[24,5]+contrib[i,6]*contrib[24,6]+
-      contrib[i,7]*contrib[24,7]+contrib[i,8]*contrib[24,8]+
-      contrib[i,9]*contrib[24,9]+contrib[i,10]*contrib[24,10]+
-      contrib[i,11]*contrib[24,11]+contrib[i,12]*contrib[24,12]+
-      contrib[i,13]*contrib[24,13]+contrib[i,14]*contrib[24,14]+
-      contrib[i,15]*contrib[24,15]+contrib[i,16]*contrib[24,16]
-    }
-  contrib <- contrib[order(contrib$sum2),]
-  contrib$sum2 <- rowSums(contrib[,c(1:8)])
 
   ## 7.2 PCA results extraction - MOC Chau
   #Biplot with arrow for variables and individuals
-  PCAMC$village_eng_preload <- as.character(PCAMC$village_eng_preload)
-  PCAMC$village_eng_preload <- as.factor(PCAMC$village_eng_preload)
-  fviz_pca_biplot(res.pca, label = "var", habillage=PCAMC$village_eng_preload,
-                addEllipses = F, ellipse.level=0.95,
+  PCAMC$Village <- as.character(PCAMC$Village)
+  PCAMC$Village <- as.factor(PCAMC$Village)
+  Mypalette <- c("#6633FF","#CC6600","#CCFF00","#CC0000","#3399FF","#330066",
+                "#66CC00","#336600","#33FF99","#FF6633")
+  fviz_pca_biplot(res.pca, label = "var", habillage=PCAMC$Village,
+                palette = Mypalette, addEllipses = F, ellipse.level=0.95,
                 ggtheme = theme_minimal())
 
   ## 7.3 AHC: https://www.youtube.com/watch?v=3tT29UtHqd0&t=34s
   #RUn AHC
   res.hcpc <- HCPC(res.pca)
   #Add cluster numbers in the database:
-  Table1 <- res.hcpc$data.clust
+  TableMC <- res.hcpc$data.clust
   #Table export
   write.csv2(Table1, file  = 'Datacluster.csv')
   #Description des classes par les variables :
@@ -283,50 +307,96 @@ HouseholdVietnam_2C <- join(HouseholdVietnam_2C, list, by = "village_eng_preload
   
   ## 7.4 AHC additionnal material
   
+  #Additionnal information
+  #Product selling
+  TableMC$ID <- str_replace(TableMC$ID, "ID_", "")
+  colnames(TableMC)[1] <- "o9"
+  Selling <- join(TableMC[,c(1,18)],HouseholdVietnam_2C[,c(1,80)], by = "o9")
+  table(Selling[,c(2,3)])
+  TableDB$ID <- str_replace(TableDB$ID, "ID_", "")
+  colnames(TableDB)[1] <- "o9"
+  Selling <- join(TableDB[,c(1,14)],HouseholdVietnam_2C[,c(1,80)], by = "o9")
+  table(Selling[,c(2,3)])
+  #Maize upland or lowland
+  MC <- HouseholdVietnam_2C[HouseholdVietnam_2C$province_eng_preload == "Son La province",]
+  sum(MC[,c(2742)], na.rm = T) / sum(MC[,c(2742,2776,2790)], na.rm = T)
+  sum(MC[,c(2776)], na.rm = T) / sum(MC[,c(2742,2776,2790)], na.rm = T)
+  sum(MC[,c(2790)], na.rm = T) / sum(MC[,c(2742,2776,2790)], na.rm = T)
+
+  DB <- HouseholdVietnam_2C[HouseholdVietnam_2C$province_eng_preload == "Dien Bien province",]
+  sum(DB[,c(2742)], na.rm = T) / sum(DB[,c(2742,2776,2790)], na.rm = T)
+  sum(DB[,c(2776)], na.rm = T) / sum(DB[,c(2742,2776,2790)], na.rm = T)
+  sum(DB[,c(2790)], na.rm = T) / sum(DB[,c(2742,2776,2790)], na.rm = T)
+  Corn <- join(TableDB[,c(1,14)],HouseholdVietnam_2C[,c(1,2742,2776,2790)], by = "o9")
+  Corn %>%
+    group_by(clust) %>% 
+    get_summary_stats(`d2_132.Maize (corn)`, type = "mean")
+  Corn %>%
+    group_by(clust) %>% 
+    get_summary_stats(`d2_132.Maize biomass` , type = "mean")
+  Corn %>%
+    group_by(clust) %>% 
+    get_summary_stats(`d2_232.Maize (corn)` , type = "mean")
+  
   #Number of households in each cluster
   summary(Table1$clust)
   
   #Missing average values - PCAMC
-  AVERAGEIF(Table1$clust, "3", Table1$'3.Maize')
-  AVERAGEIF(Table1$clust, "3", Table1$'5.Fruit')
-  AVERAGEIF(Table1$clust, "2", Table1$'8.Cattle')
-  AVERAGEIF(Table1$clust, "3", Table1$'10.Pig')
-  AVERAGEIF(Table1$clust, "3", Table1$'11.Poultry')
-  AVERAGEIF(Table1$clust, "2", Table1$'15.HouM')
-  AVERAGEIF(Table1$clust, "1", Table1$'16.%incNF')
-  AVERAGEIF(Table1$clust, "3", Table1$'16.%incNF')
-  AVERAGEIF(Table1$clust, "2", Table1$'17.%Migr')
-  AVERAGEIF(Table1$clust, "3", Table1$'18.HiredW')
+  AVERAGEIF(TableMC$clust, "1", TableMC$'1.HLabor')
+  AVERAGEIF(TableMC$clust, "4", TableMC$'1.HLabor')
+  AVERAGEIF(TableMC$clust, "1", TableMC$'2.NTFP')
+  AVERAGEIF(TableMC$clust, "4", TableMC$'2.NTFP')
+  AVERAGEIF(TableMC$clust, "1", TableMC$'4.Maize')
+  AVERAGEIF(TableMC$clust, "4", TableMC$'4.Maize')
+  AVERAGEIF(TableMC$clust, "1", TableMC$'6.Fruit')
+  AVERAGEIF(TableMC$clust, "4", TableMC$'6.Fruit')
+  AVERAGEIF(TableMC$clust, "1", TableMC$'7.Vegetables')
+  AVERAGEIF(TableMC$clust, "1", TableMC$'8.Tea')
+  AVERAGEIF(TableMC$clust, "3", TableMC$'9.CattleBuff')
+  AVERAGEIF(TableMC$clust, "4", TableMC$'10.PigGoat')
+  AVERAGEIF(TableMC$clust, "1", TableMC$'12.DistanceP')
+  AVERAGEIF(TableMC$clust, "2", TableMC$'13.Active')
+  AVERAGEIF(TableMC$clust, "3", TableMC$'13.Active')
+  AVERAGEIF(TableMC$clust, "3", TableMC$'14.FarmW')
+  AVERAGEIF(TableMC$clust, "4", TableMC$'14.FarmW')
+  AVERAGEIF(TableMC$clust, "4", TableMC$'15.%incNF')
+  
   
   #Missing average values - PCADB
-  AVERAGEIF(Table1$clust, "1", Table1$'1.NTFP')
-  AVERAGEIF(Table1$clust, "2", Table1$'1.NTFP')
-  AVERAGEIF(Table1$clust, "2", Table1$'3.Maize')
-  AVERAGEIF(Table1$clust, "2", Table1$'8.Cattle')
-  AVERAGEIF(Table1$clust, "3", Table1$'9.Buffalo')
-  AVERAGEIF(Table1$clust, "3", Table1$'10.Pig')
-  AVERAGEIF(Table1$clust, "3", Table1$'12.LU')
-  AVERAGEIF(Table1$clust, "2", Table1$'18.HiredW')
-  
+  AVERAGEIF(TableDB$clust, "3", TableDB$'3.Paddy')
+  AVERAGEIF(TableDB$clust, "2", TableDB$'4.Maize')
+  AVERAGEIF(TableDB$clust, "3", TableDB$'4.Maize')
+  AVERAGEIF(TableDB$clust, "4", TableDB$'7.Vegetables')
+  AVERAGEIF(TableDB$clust, "2", TableDB$'9.CattleBuff')
+  AVERAGEIF(TableDB$clust, "3", TableDB$'9.CattleBuff')
+  AVERAGEIF(TableDB$clust, "3", TableDB$'10.PigGoat')
+  AVERAGEIF(TableDB$clust, "1", TableDB$'11.LU')
+  AVERAGEIF(TableDB$clust, "2", TableDB$'11.LU')
+  AVERAGEIF(TableDB$clust, "3", TableDB$'11.LU')
+  AVERAGEIF(TableDB$clust, "3", TableDB$'13.Active')
+
   #Plotting variables depending on clusters - Moc Chau
   #Histogramm for each variable
-  for (i in 1:15){
-  x <- ggplot(Table1, aes(x= Table1[,i], fill = Table1$clust)) + geom_histogram(position = 'dodge',binwidth = max(Table1[,i],na.rm = TRUE)/10)+
-    ggtitle(colnames(Table1[i]))+
+  for (i in 3:18){
+  x <- ggplot(TableDB, aes(x= TableDB[,i], fill = TableDB$clust)) + geom_histogram(position = 'dodge',binwidth = max(TableDB[,i],na.rm = TRUE)/10)+
+    ggtitle(colnames(TableDB[i]))+
     xlab("number")
   print(x)
   }
 
 
   #PCA - Dien Bien
-  res.pca <- PCA(PCADB[,c(3:6,8,10:18,20)], scale.unit = TRUE, ncp = 12, graph = TRUE)
+  res.pca <- PCA(PCADB[,c(1:2,6:8,10,12:18)], scale.unit = TRUE, ncp = 14, graph = TRUE,
+                 quali.sup = c("ID","Province"))
   
   ## 7.5 PCA results extraction - Moc Chau
   #Biplot with arrow for variables and individuals
-  PCADB$village_eng_preload <- as.character(PCADB$village_eng_preload)
-  PCADB$village_eng_preload <- as.factor(PCADB$village_eng_preload)
-  fviz_pca_biplot(res.pca, label = "var", habillage=PCADB$village_eng_preload,
-                  addEllipses = F, ellipse.level=0.95,
+  PCADB$Village <- as.character(PCADB$Village)
+  PCADB$Village <- as.factor(PCADB$Village)
+  Mypalette <- c("#6633FF","#CCFF00","#3399FF","#66CC00","#336600","#330066","#33FF99",
+                 "#003300","#00FFCC","#999900")
+  fviz_pca_biplot(res.pca, label = "var", habillage=PCADB$Village,
+                  palette = Mypalette, addEllipses = F, ellipse.level=0.95,
                   ggtheme = theme_minimal())
 
   

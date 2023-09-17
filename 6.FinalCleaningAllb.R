@@ -57,88 +57,105 @@ HouMemberVietnam_2C <- HouMemberVietnam_2C[,-c(59:83,90:91,95)]
 ClowlandVietnam_2C <- ClowlandVietnam_2C[,c(7,24,25,29)]
 CuplandLaos_2C <- CuplandLaos_2C[,-c(0,34)]
 
-# # #2. Database creation under different format
+# # #3. Removal of personal information
+##3.1. Cambodia
+#Remove unwanted columns for each datasets
+HouseholdCambodia_2C <- HouseholdCambodia_2C[,-c(33,48:49,2494:2499)]
+HouMemberCambodia_2C <- HouMemberCambodia_2C[,-5]
+
+##3.2. Laos
+#Remove unwanted columns for each datasets
+HouseholdLaos_2C <- HouseholdLaos_2C[,-c(29,43:44,2287:2291)]
+HouMemberLaos_2C <- HouMemberLaos_2C[,-4]
+
+##3.3. Vietnam
+#Remove unwanted columns for each datasets
+HouseholdVietnam_2C <- HouseholdVietnam_2C[,-c(48:49,2271:2274)]
+HouMemberVietnam_2C <- HouMemberVietnam_2C[,-4]
+
+
+# # #4. Database creation under different format
 #Select the output folder
-setwd("C:/Users/titou/OneDrive/Bureau/ASSET Stats/WORKDIRECTORY/1.ASSET_data_cleaning-Titouan/ASSETOutputs")
+setwd("C:/Users/titou/OneDrive/Bureau/ASSET Stats/WORKDIRECTORY/1.ASSET_data_cleaning-Titouan/ASSETOutputs/Anonymized database")
 
-##2.1 Export of the database under rds format
+##4.1 Export of the database under rds format
 #Cambodia
-saveRDS(HouseholdCambodia_2C, "HouseholdCambodia_TF.rds")
-saveRDS(HouMemberCambodia_2C, "HouMemberCambodia_TF.rds")
-saveRDS(ClowlandCambodia_2C, "ClowlandCambodia_TF.rds")
-saveRDS(CuplandCambodia_2C, "CuplandCambodia_TF.rds")
-saveRDS(HomegardenCambodia_2C, "HomegardenCambodia_TF.rds")
+saveRDS(HouseholdCambodia_2C, "HouseholdCambodia_TFano.rds")
+saveRDS(HouMemberCambodia_2C, "HouMemberCambodia_TFano.rds")
+saveRDS(ClowlandCambodia_2C, "ClowlandCambodia_TFano.rds")
+saveRDS(CuplandCambodia_2C, "CuplandCambodia_TFano.rds")
+saveRDS(HomegardenCambodia_2C, "HomegardenCambodia_TFano.rds")
 #Laos
-saveRDS(HouseholdLaos_2C, "HouseholdLaos_TF.rds")
-saveRDS(HouMemberLaos_2C, "HouMemberLaos_TF.rds")
-saveRDS(ClowlandLaos_2C, "ClowlandLaos_TF.rds")
-saveRDS(CuplandLaos_2C, "CuplandLaos_TF.rds")
+saveRDS(HouseholdLaos_2C, "HouseholdLaos_TFano.rds")
+saveRDS(HouMemberLaos_2C, "HouMemberLaos_TFano.rds")
+saveRDS(ClowlandLaos_2C, "ClowlandLaos_TFano.rds")
+saveRDS(CuplandLaos_2C, "CuplandLaos_TFano.rds")
 #Vietnam
-saveRDS(HouseholdVietnam_2C, "HouseholdVietnam_TF.rds")
-saveRDS(HouMemberVietnam_2C, "HouMemberVietnam_TF.rds")
-saveRDS(ClowlandVietnam_2C, "ClowlandVietnam_TF.rds")
-saveRDS(CuplandVietnam_2C, "CuplandVietnam_TF.rds")
+saveRDS(HouseholdVietnam_2C, "HouseholdVietnam_TFano.rds")
+saveRDS(HouMemberVietnam_2C, "HouMemberVietnam_TFano.rds")
+saveRDS(ClowlandVietnam_2C, "ClowlandVietnam_TFano.rds")
+saveRDS(CuplandVietnam_2C, "CuplandVietnam_TFano.rds")
 
-##2.2 Export of the database under dta format
+##4.2 Export of the database under dta format
 #Cambodia
-write_dta(HouseholdCambodia_2C, "HouseholdCambodia_TF.dta")
-write_dta(HouMemberCambodia_2C, "HouMemberCambodia_TF.dta")
-write_dta(ClowlandCambodia_2C, "ClowlandCambodia_TF.dta")
-write_dta(CuplandCambodia_2C, "CuplandCambodia_TF.dta")
-write_dta(HomegardenCambodia_2C, "HomegardenCambodia_TF.dta")
+write_dta(HouseholdCambodia_2C, "HouseholdCambodia_TFano.dta")
+write_dta(HouMemberCambodia_2C, "HouMemberCambodia_TFano.dta")
+write_dta(ClowlandCambodia_2C, "ClowlandCambodia_TFano.dta")
+write_dta(CuplandCambodia_2C, "CuplandCambodia_TFano.dta")
+write_dta(HomegardenCambodia_2C, "HomegardenCambodia_TFano.dta")
 #Laos
-write_dta(HouseholdLaos_2C, "HouseholdLaos_TF.dta")
-write_dta(HouMemberLaos_2C, "HouMemberLaos_TF.dta")
-write_dta(ClowlandLaos_2C, "ClowlandLaos_TF.dta")
-write_dta(CuplandLaos_2C, "CuplandLaos_TF.dta")
+write_dta(HouseholdLaos_2C, "HouseholdLaos_TFano.dta")
+write_dta(HouMemberLaos_2C, "HouMemberLaos_TFano.dta")
+write_dta(ClowlandLaos_2C, "ClowlandLaos_TFano.dta")
+write_dta(CuplandLaos_2C, "CuplandLaos_TFano.dta")
 #Vietnam
 colnames(HouseholdVietnam_2C) <- gsub("\\.","_",colnames(HouseholdVietnam_2C))
-write_dta(HouseholdVietnam_2C, "HouseholdVietnam_TF.dta")
-write_dta(HouMemberVietnam_2C, "HouMemberVietnam_TF.dta")
-write_dta(ClowlandVietnam_2C, "ClowlandVietnam_TF.dta")
-write_dta(CuplandVietnam_2C, "CuplandVietnam_TF.dta")
+write_dta(HouseholdVietnam_2C, "HouseholdVietnam_TFano.dta")
+write_dta(HouMemberVietnam_2C, "HouMemberVietnam_TFano.dta")
+write_dta(ClowlandVietnam_2C, "ClowlandVietnam_TFano.dta")
+write_dta(CuplandVietnam_2C, "CuplandVietnam_TFano.dta")
 
-##2.3 Export of the database under csv format
+##4.3 Export of the database under csv format
 
 #Cambodia (the labels are included into colnames)
 colnames(HouseholdCambodia_2C) <- paste(colnames(HouseholdCambodia_2C),"_(",
                                         var_label(HouseholdCambodia_2C),")")
-write.table(HouseholdCambodia_2C, "HouseholdCambodia_TF.csv",sep=";",row.names=F)
+write.table(HouseholdCambodia_2C, "HouseholdCambodia_TFano.csv",sep=";",row.names=F)
 colnames(HouMemberCambodia_2C) <- paste(colnames(HouMemberCambodia_2C),"_(",
                                         var_label(HouMemberCambodia_2C),")")
-write.table(HouMemberCambodia_2C, "HouMemberCambodia_TF.csv",sep=";",row.names=F)
+write.table(HouMemberCambodia_2C, "HouMemberCambodia_TFano.csv",sep=";",row.names=F)
 colnames(ClowlandCambodia_2C) <- paste(colnames(ClowlandCambodia_2C),"_(",
                                        var_label(ClowlandCambodia_2C),")")
-write.table(ClowlandCambodia_2C, "ClowlandCambodia_TF.csv",sep=";",row.names=F)
+write.table(ClowlandCambodia_2C, "ClowlandCambodia_TFano.csv",sep=";",row.names=F)
 colnames(CuplandCambodia_2C) <- paste(colnames(CuplandCambodia_2C),"_(",
                                       var_label(CuplandCambodia_2C),")")
-write.table(CuplandCambodia_2C, "CuplandCambodia_TF.csv",sep=";",row.names=F)
+write.table(CuplandCambodia_2C, "CuplandCambodia_TFano.csv",sep=";",row.names=F)
 colnames(HomegardenCambodia_2C) <- paste(colnames(HomegardenCambodia_2C),"_(",
                                          var_label(HomegardenCambodia_2C),")")
-write.table(HomegardenCambodia_2C, "HomegardenCambodia_TF.csv",sep=";",row.names=F)
+write.table(HomegardenCambodia_2C, "HomegardenCambodia_TFano.csv",sep=";",row.names=F)
 #Laos
 colnames(HouseholdLaos_2C) <- paste(colnames(HouseholdLaos_2C),"_(",
                                     var_label(HouseholdLaos_2C),")")
-write.table(HouseholdLaos_2C, "HouseholdLaos_TF.csv",sep=";",row.names=F)
+write.table(HouseholdLaos_2C, "HouseholdLaos_TFano.csv",sep=";",row.names=F)
 colnames(HouMemberLaos_2C) <- paste(colnames(HouMemberLaos_2C),"_(",
                                     var_label(HouMemberLaos_2C),")")
-write.table(HouMemberLaos_2C, "HouMemberLaos_TF.csv",sep=";",row.names=F)
+write.table(HouMemberLaos_2C, "HouMemberLaos_TFano.csv",sep=";",row.names=F)
 colnames(ClowlandLaos_2C) <- paste(colnames(ClowlandLaos_2C),"_(",
                                    var_label(ClowlandLaos_2C),")")
-write.table(ClowlandLaos_2C, "ClowlandLaos_TF.csv",sep=";",row.names=F)
+write.table(ClowlandLaos_2C, "ClowlandLaos_TFano.csv",sep=";",row.names=F)
 colnames(CuplandLaos_2C) <- paste(colnames(CuplandLaos_2C),"_(",
                                   var_label(CuplandLaos_2C),")")
-write.table(CuplandLaos_2C, "CuplandLaos_TF.csv",sep=";",row.names=F)
+write.table(CuplandLaos_2C, "CuplandLaos_TFano.csv",sep=";",row.names=F)
 #Vietnam
 colnames(HouseholdVietnam_2C) <- paste(colnames(HouseholdVietnam_2C),"_(",
                                        var_label(HouseholdVietnam_2C),")")
-write.table(HouseholdVietnam_2C, "HouseholdVietnam_TF.csv",sep=";",row.names=F)
+write.table(HouseholdVietnam_2C, "HouseholdVietnam_TFano.csv",sep=";",row.names=F)
 colnames(HouMemberVietnam_2C) <- paste(colnames(HouMemberVietnam_2C),"_(",
                                        var_label(HouMemberVietnam_2C),")")
-write.table(HouMemberVietnam_2C, "HouMemberVietnam_TF.csv",sep=";",row.names=F)
+write.table(HouMemberVietnam_2C, "HouMemberVietnam_TFano.csv",sep=";",row.names=F)
 colnames(ClowlandVietnam_2C) <- paste(colnames(ClowlandVietnam_2C),"_(",
                                       var_label(ClowlandVietnam_2C),")")
-write.table(ClowlandVietnam_2C, "ClowlandVietnam_TF.csv",sep=";",row.names=F)
+write.table(ClowlandVietnam_2C, "ClowlandVietnam_TFano.csv",sep=";",row.names=F)
 colnames(CuplandVietnam_2C) <- paste(colnames(CuplandVietnam_2C),"_(",
                                      var_label(CuplandVietnam_2C),")")
-write.table(CuplandVietnam_2C, "CuplandVietnam_TF.csv",sep=";",row.names=F)
+write.table(CuplandVietnam_2C, "CuplandVietnam_TFano.csv",sep=";",row.names=F)
